@@ -311,8 +311,6 @@ No usar canciones con derechos.
 - Decenas de personajes.
 - Cinco niveles antes de cerrar el primero.
 
-## Siguiente Paso
-
 ## Estado Actual
 
 ### V1
@@ -324,6 +322,8 @@ No usar canciones con derechos.
 
 ### V2
 
+Estado: cerrada tecnicamente.
+
 - Salto ajustado para que no reemplace a las escaleras.
 - Pelotas generadas desde Cristiano en la parte superior.
 - Pelotas con gravedad, caida por bordes y limpieza al tocar el fondo.
@@ -334,4 +334,8 @@ No usar canciones con derechos.
 
 ## Siguiente Paso
 
-Cerrar v2 probando el checklist mobile y luego avanzar a v3: mejorar arte placeholder hacia pixel-art propio, agregar feedback visual de impacto/victoria y pulir sonido basico.
+Avanzar a V2.1: QA y balance fino. La prioridad ahora es probar el nivel en mobile, ajustar velocidad, salto, frecuencia de pelotas, posiciones de plataformas/escaleras y comodidad de controles.
+
+## Roadmap
+
+El plan de versiones necesarias antes de entrar en Fase 2 esta documentado en `docs/ROADMAP_HASTA_FASE_2.md`.

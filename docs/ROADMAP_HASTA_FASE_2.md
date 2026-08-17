@@ -1,0 +1,250 @@
+# Roadmap Hasta Fase 2
+
+Este documento define las versiones necesarias para cerrar una v1/v2 solida y llegar ordenadamente a Fase 2.
+
+La regla principal sigue siendo mobile-only: cada version debe probarse en portrait y con controles tactiles.
+
+## Estado Actual
+
+### V1 - Prototipo Jugable
+
+Estado: completada.
+
+Incluye:
+
+- Proyecto Next.js + TypeScript.
+- Canvas 2D mobile portrait.
+- Motor separado de React.
+- Nivel 1 con plataformas, escaleras, pelota enemiga, vidas, meta y reinicio.
+- Controles tactiles iniciales.
+
+### V2 - Gameplay Base Ajustado
+
+Estado: cerrada tecnicamente.
+
+Incluye:
+
+- Salto ajustado para que no reemplace a las escaleras.
+- Pelotas generadas desde Cristiano en la parte superior.
+- Pelotas con gravedad, caida por bordes y limpieza al tocar fondo.
+- Respawn limpio.
+- HUD con puntaje y maximo local.
+- Pausa mobile.
+- QA documentado en `docs/QA_V2.md`.
+
+Nota de cierre: V2 no significa que el juego ya este balanceado o presentable. Significa que el nucleo tecnico mobile ya existe y que la siguiente version puede concentrarse en probar, ajustar y mejorar sensacion de juego.
+
+### V2.1 - QA Y Balance Fino
+
+Estado: siguiente version activa.
+
+Foco inmediato:
+
+- Probar el nivel varias veces en mobile.
+- Detectar donde se siente injusto, incomodo o lento.
+- Ajustar parametros sin agregar mecanicas nuevas.
+- Cerrar una version que ya se pueda jugar de punta a punta con confianza.
+
+## Versiones Recomendadas Antes De Fase 2
+
+## V2.1 - QA Y Balance Fino
+
+Objetivo: confirmar que el nivel se puede terminar y que las muertes se sienten justas.
+
+Alcance:
+
+- Probar todos los casos de `docs/QA_V2.md`.
+- Ajustar velocidad de Messi.
+- Ajustar salto.
+- Ajustar frecuencia de pelotas.
+- Ajustar posicion de escaleras y plataformas.
+- Revisar que los botones no tapen rutas importantes.
+
+Criterio de cierre:
+
+- El nivel puede completarse 3 veces seguidas en mobile.
+- El salto no permite subir de plataforma sin escalera.
+- Ningun respawn genera muerte inmediata.
+- Los controles no quedan pegados.
+
+## V2.2 - Feedback Visual
+
+Objetivo: que el jugador entienda mejor lo que pasa sin agregar mecanicas nuevas.
+
+Alcance:
+
+- Parpadeo breve de Messi tras recibir impacto.
+- Pequena animacion o flash al perder vida.
+- Indicador visual cuando Messi puede usar escalera.
+- Efecto simple al tocar la meta.
+- Mejor diferenciacion entre pelota, jugador, rival y objetivo.
+
+Criterio de cierre:
+
+- El golpe se entiende sin leer texto.
+- La escalera activa se percibe visualmente.
+- La victoria se siente clara.
+
+## V2.3 - Control Mobile Pulido
+
+Objetivo: mejorar ergonomia tactil antes de sumar contenido.
+
+Alcance:
+
+- Revisar tamano y ubicacion de botones.
+- Mejorar soporte multitouch.
+- Evaluar si subir/bajar debe aparecer solo cerca de escaleras.
+- Evitar que un dedo tape a Messi en zonas criticas.
+- Agregar zonas tactiles invisibles mas comodas si hace falta.
+
+Criterio de cierre:
+
+- Se puede jugar con dos pulgares sin mirar los botones todo el tiempo.
+- Saltar y moverse a la vez se siente confiable.
+- Subir y bajar escaleras no requiere precision excesiva.
+
+## V2.4 - Pantallas Y Flujo
+
+Objetivo: hacer que el juego se sienta como una experiencia completa aunque tenga un solo nivel.
+
+Alcance:
+
+- Mejorar portada.
+- Mejorar Game Over.
+- Mejorar Level Complete.
+- Mostrar resumen de puntos.
+- Agregar boton para volver al inicio.
+- Agregar texto minimo de "Como jugar" en pantalla separada o modal.
+
+Criterio de cierre:
+
+- Un jugador nuevo entiende como empezar.
+- Perder y reiniciar es inmediato.
+- Ganar deja claro que el nivel termino.
+
+## V2.5 - Audio Basico
+
+Objetivo: sumar respuesta sensorial sin depender de assets externos con derechos.
+
+Alcance:
+
+- Sonido de salto.
+- Sonido de golpe.
+- Sonido de pelota lanzada.
+- Sonido de victoria.
+- Toggle simple de sonido.
+- Audio generado por Web Audio o assets propios.
+
+Criterio de cierre:
+
+- El audio no bloquea el primer input mobile.
+- Los sonidos son cortos y no molestan.
+- El juego puede mutearse.
+
+## V2.6 - Arte Placeholder Mejorado
+
+Objetivo: pasar de rectangulos funcionales a una identidad visual propia, sin hacer aun arte final.
+
+Alcance:
+
+- Messi placeholder mas reconocible.
+- Cristiano placeholder mas reconocible.
+- Pelota mas legible.
+- Plataformas con estilo futbolero simple.
+- Fondo de Rosario mas claro.
+- Meta superior mas identificable como camiseta o trofeo.
+
+Criterio de cierre:
+
+- En una captura se entiende que es un arcade futbolero.
+- Los elementos jugables se distinguen al instante.
+- El arte no reduce legibilidad ni rendimiento.
+
+## V2.7 - Persistencia Y Rejugabilidad Minima
+
+Objetivo: darle motivo para repetir el nivel antes de crear nuevos escenarios.
+
+Alcance:
+
+- High score persistente ya iniciado.
+- Mejorar calculo de puntos.
+- Bonus por terminar con vidas restantes.
+- Bonus por tiempo.
+- Guardar mejor tiempo local.
+- Mostrar resumen al completar nivel.
+
+Criterio de cierre:
+
+- Completar mas rapido o con mas vidas mejora el resultado.
+- El jugador puede intentar superar su marca.
+
+## V2.8 - Preparacion Para Multiples Niveles
+
+Objetivo: dejar el motor preparado para Fase 2 sin duplicar codigo.
+
+Alcance:
+
+- Revisar `LevelDefinition`.
+- Separar configuracion de dificultad.
+- Permitir cargar otro nivel por indice.
+- Preparar selector interno simple, aunque solo haya un nivel visible.
+- Asegurar que spawners, plataformas, escaleras y metas sean 100% data-driven.
+
+Criterio de cierre:
+
+- Crear un segundo nivel requiere tocar principalmente `data/levels.ts`.
+- El motor no tiene valores hardcodeados del Nivel 1 salvo dimensiones globales.
+
+## V2.9 - Candidate Build
+
+Objetivo: cerrar la etapa pre-Fase 2 con una version estable y presentable.
+
+Alcance:
+
+- Ejecutar QA completo.
+- Corregir bugs encontrados.
+- Revisar performance mobile.
+- Revisar legibilidad en pantallas chicas.
+- Limpiar archivos temporales.
+- Actualizar README y roadmap.
+
+Criterio de cierre:
+
+- Build productivo correcto.
+- QA manual aprobado.
+- Nivel 1 divertido y repetible.
+- Base tecnica lista para contenido nuevo.
+
+## Entrada A Fase 2
+
+Fase 2 empieza cuando el Nivel 1 ya funciona como juego completo de una pantalla.
+
+La Fase 2 deberia incluir:
+
+- Sistema generico de obstaculos.
+- Primer power-up.
+- Mejoras de animacion.
+- Nivel 2 basado en datos.
+- Selector de nivel.
+- Primer rescate opcional.
+- Mas identidad visual y sonora.
+
+## Orden Sugerido
+
+1. Cerrar V2.1 con QA y balance.
+2. Hacer V2.2 y V2.3 juntas si los controles siguen incomodos.
+3. Hacer V2.4 para que el flujo sea presentable.
+4. Hacer V2.5 solo despues de que el gameplay este firme.
+5. Hacer V2.6 para mejorar identidad.
+6. Hacer V2.7 y V2.8 como preparacion directa para Fase 2.
+7. Hacer V2.9 como candidate build.
+
+## No Hacer Antes De Fase 2
+
+- Crear cinco niveles.
+- Agregar base de datos.
+- Agregar ranking online.
+- Agregar personajes complejos.
+- Agregar editor de niveles.
+- Meter arte final si el gameplay todavia cambia.
+- Optimizar prematuramente cosas que no son problema en mobile.

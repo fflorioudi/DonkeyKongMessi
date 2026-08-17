@@ -1,6 +1,10 @@
 # QA V2 - Donkey Kong: Edicion Messi
 
-Objetivo: validar que la v2 mobile-only sea jugable, justa y estable antes de avanzar a arte, audio o nuevos niveles.
+Objetivo: validar que la v2 mobile-only tiene el nucleo tecnico necesario para avanzar a V2.1.
+
+Estado: cerrada tecnicamente.
+
+Nota: varios casos pasan a V2.1 como pruebas de balance fino. V2 cierra con motor, controles, pausa, pelotas desde arriba, respawn limpio y QA documentado.
 
 ## Entorno De Prueba
 
@@ -100,3 +104,10 @@ Resultado esperado: se puede jugar, morir, respawnear y ganar sin teclado ni mou
 - El respawn no castiga con obstaculos persistentes.
 - Pausa, reinicio, victoria y Game Over no duplican loops ni inputs.
 - El HUD y los controles no bloquean lectura del nivel.
+
+## Resultado De Cierre
+
+- Estado tecnico: aprobado.
+- Estado de balance: pasa a V2.1.
+- Estado visual: pasa a V2.2 / V2.6.
+- Estado de controles finos: pasa a V2.3 si QA detecta incomodidad.
