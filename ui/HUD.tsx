@@ -13,11 +13,13 @@ export function HUD({ snapshot }: HUDProps) {
       </div>
       <div>
         <span className="hudLabel">Vidas</span>
-        <strong>{"♥".repeat(snapshot.lives)}</strong>
+        <strong>x{snapshot.lives}</strong>
       </div>
       <div>
-        <span className="hudLabel">Puntos</span>
-        <strong>{snapshot.score}</strong>
+        <span className="hudLabel">Pts / Max</span>
+        <strong>
+          {snapshot.score}/{snapshot.highScore}
+        </strong>
       </div>
     </div>
   );

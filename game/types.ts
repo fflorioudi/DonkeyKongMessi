@@ -66,6 +66,7 @@ export type HudSnapshot = {
   status: GameStatus;
   lives: number;
   score: number;
+  highScore: number;
   level: number;
   levelName: string;
 };

@@ -5,6 +5,7 @@ import { InputManager } from "./Input";
 import type { GameSnapshot, GameStatus, HudSnapshot, LevelDefinition } from "./types";
 
 const INITIAL_LIVES = 3;
+const HIGH_SCORE_KEY = "donkey-messi-high-score";
 
 export class Game {
   readonly input = new InputManager();
@@ -16,6 +17,8 @@ export class Game {
   private status: GameStatus = "menu";
   private lives = INITIAL_LIVES;
   private score = 0;
+  private highScore = 0;
+  private bestY: number;
   private lastSnapshotKey = "";
   private onSnapshot: (snapshot: GameSnapshot) => void;
   private animationFrame = 0;
@@ -38,8 +41,10 @@ export class Game {
     this.ctx = ctx;
     this.level = level;
     this.player = new Player(level.playerSpawn);
+    this.bestY = level.playerSpawn.y;
     this.balls = [];
     this.onSnapshot = onSnapshot;
+    this.highScore = this.loadHighScore();
     this.resize();
     this.emitSnapshot(true);
   }
@@ -77,6 +82,7 @@ export class Game {
     this.status = "playing";
     this.lives = INITIAL_LIVES;
     this.score = 0;
+    this.bestY = this.level.playerSpawn.y;
     this.hitCooldown = 0;
     this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
     this.player.reset(this.level.playerSpawn);
@@ -99,6 +105,7 @@ export class Game {
     const input = this.input.snapshot();
 
     this.player.update(dt, input, this.level.platforms, this.level.ladders);
+    this.updateScore(dt);
     this.spawnBallIfReady();
     this.balls.forEach((ball) => ball.update(dt, this.level.platforms, this.level.worldWidth, this.level.worldHeight));
     this.balls = this.balls.filter((ball) => ball.alive);
@@ -120,10 +127,9 @@ export class Game {
     if (rectsOverlap(this.player.rect, this.level.goal)) {
       this.status = "levelComplete";
       this.score += 1000;
+      this.recordHighScore();
       this.input.reset();
     }
-
-    this.score += Math.floor(dt * 18);
   }
 
   private damagePlayer() {
@@ -132,12 +138,48 @@ export class Game {
 
     if (this.lives <= 0) {
       this.status = "gameOver";
+      this.recordHighScore();
       this.input.reset();
       return;
     }
 
     this.player.reset(this.level.playerSpawn);
+    this.balls = [];
+    this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
     this.input.reset();
+  }
+
+  private updateScore(dt: number) {
+    this.score += dt * 8;
+
+    if (this.player.y < this.bestY) {
+      this.score += (this.bestY - this.player.y) * 2;
+      this.bestY = this.player.y;
+    }
+  }
+
+  private loadHighScore() {
+    try {
+      return Number(window.localStorage.getItem(HIGH_SCORE_KEY) || 0);
+    } catch {
+      return 0;
+    }
+  }
+
+  private recordHighScore() {
+    const roundedScore = Math.floor(this.score);
+
+    if (roundedScore <= this.highScore) {
+      return;
+    }
+
+    this.highScore = roundedScore;
+
+    try {
+      window.localStorage.setItem(HIGH_SCORE_KEY, String(this.highScore));
+    } catch {
+      // Storage can fail in private contexts; gameplay should continue.
+    }
   }
 
   private spawnBallIfReady() {
@@ -256,7 +298,8 @@ export class Game {
     const hud: HudSnapshot = {
       status: this.status,
       lives: this.lives,
-      score: this.score,
+      score: Math.floor(this.score),
+      highScore: this.highScore,
       level: this.level.id,
       levelName: this.level.name,
     };

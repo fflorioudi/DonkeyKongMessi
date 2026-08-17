@@ -10,3 +10,9 @@
 Creating turbopack project { dir: 'C:\\Users\\ffeli\\Desktop\\Donkey Kong Messi', testMode: true }
 
 ✓ Generated AGENTS.md and CLAUDE.md for AI agents. Set `agentRules: false` in next.config to disable.
+ GET / 307 in 1117ms (next.js: 606ms, application-code: 510ms)
+ GET /donkey-messi 200 in 203ms (next.js: 93ms, application-code: 110ms)
+ GET / 307 in 102ms (next.js: 14ms, application-code: 88ms)
+ GET /donkey-messi 200 in 88ms (next.js: 25ms, application-code: 64ms)
+ GET / 307 in 147ms (next.js: 41ms, application-code: 106ms)
+ GET /donkey-messi 200 in 126ms (next.js: 43ms, application-code: 83ms)

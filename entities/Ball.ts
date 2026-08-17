@@ -22,6 +22,7 @@ export class Ball {
   update(dt: number, platforms: Platform[], worldWidth: number, worldHeight: number) {
     const previousBottom = this.y + this.radius;
     const wasFalling = this.vy > 0;
+    const bottomPlatformY = Math.max(...platforms.map((platform) => platform.y));
 
     this.x += this.direction * this.speed * dt;
 
@@ -51,6 +52,11 @@ export class Ball {
         this.y + this.radius <= platformTop + 34;
 
       if (landsOnPlatform) {
+        if (platform.y === bottomPlatformY) {
+          this.alive = false;
+          return;
+        }
+
         this.y = platformTop - this.radius;
         this.vy = 0;
 
