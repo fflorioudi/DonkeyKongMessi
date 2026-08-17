@@ -95,8 +95,29 @@ export class Game {
     this.play();
   }
 
+  pause() {
+    if (this.status !== "playing") {
+      return;
+    }
+
+    this.status = "paused";
+    this.input.reset();
+    this.emitSnapshot(true);
+  }
+
+  resume() {
+    if (this.status !== "paused") {
+      return;
+    }
+
+    this.status = "playing";
+    this.input.reset();
+    this.emitSnapshot(true);
+  }
+
   private update(dt: number) {
     if (this.status !== "playing") {
+      this.input.snapshot();
       return;
     }
 

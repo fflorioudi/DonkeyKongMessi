@@ -313,4 +313,25 @@ No usar canciones con derechos.
 
 ## Siguiente Paso
 
-Fase uno: crear el proyecto Next.js y construir el primer prototipo mobile-only con canvas, controles tactiles, plataformas, escaleras, pelota enemiga, vidas, meta y reinicio.
+## Estado Actual
+
+### V1
+
+- Proyecto Next.js + TypeScript creado.
+- Canvas mobile portrait.
+- Nivel 1 jugable con plataformas, escaleras, salto, vidas, meta y pelota enemiga.
+- Controles tactiles iniciales.
+
+### V2
+
+- Salto ajustado para que no reemplace a las escaleras.
+- Pelotas generadas desde Cristiano en la parte superior.
+- Pelotas con gravedad, caida por bordes y limpieza al tocar el fondo.
+- Respawn limpio sin pelotas activas encima del jugador.
+- HUD con puntaje y maximo local.
+- Pausa mobile con continuar y reiniciar.
+- QA documentado en `docs/QA_V2.md`.
+
+## Siguiente Paso
+
+Cerrar v2 probando el checklist mobile y luego avanzar a v3: mejorar arte placeholder hacia pixel-art propio, agregar feedback visual de impacto/victoria y pulir sonido basico.

@@ -1,4 +1,4 @@
-export type GameStatus = "menu" | "playing" | "levelComplete" | "gameOver";
+export type GameStatus = "menu" | "playing" | "paused" | "levelComplete" | "gameOver";
 
 export type PlayerState = "idle" | "run" | "jump" | "climb" | "hit" | "dead" | "victory";
 

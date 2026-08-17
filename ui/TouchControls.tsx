@@ -1,5 +1,5 @@
-import type { Direction } from "@/game/types";
 import type { InputManager } from "@/game/Input";
+import type { Direction } from "@/game/types";
 
 type TouchControlsProps = {
   input: InputManager | null;
@@ -11,13 +11,17 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
   const startMove = (direction: Direction) => {
     if (!disabled) input?.setMove(direction);
   };
+
   const stopMove = () => {
     if (!disabled) input?.setMove(0);
   };
+
   const setClimb = (direction: Direction) => {
     if (!disabled) input?.setClimb(direction);
   };
+
   const stopClimb = () => input?.setClimb(0);
+
   const jump = () => {
     if (!disabled) input?.pressJump();
   };
@@ -25,16 +29,16 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
   return (
     <div className="touchControls" aria-hidden={disabled}>
       <div className="moveCluster">
-        <TouchButton label="Izquierda" text="‹" onDown={() => startMove(-1)} onUp={stopMove} />
-        <TouchButton label="Derecha" text="›" onDown={() => startMove(1)} onUp={stopMove} />
+        <TouchButton label="Izquierda" text="<" onDown={() => startMove(-1)} onUp={stopMove} />
+        <TouchButton label="Derecha" text=">" onDown={() => startMove(1)} onUp={stopMove} />
       </div>
 
       <div className="actionCluster">
         <div className={`climbCluster ${canClimb ? "isActive" : ""}`}>
-          <TouchButton label="Subir" text="↑" onDown={() => setClimb(-1)} onUp={stopClimb} />
-          <TouchButton label="Bajar" text="↓" onDown={() => setClimb(1)} onUp={stopClimb} />
+          <TouchButton label="Subir" text="^" onDown={() => setClimb(-1)} onUp={stopClimb} />
+          <TouchButton label="Bajar" text="v" onDown={() => setClimb(1)} onUp={stopClimb} />
         </div>
-        <TouchButton label="Saltar" text="●" size="large" onDown={jump} onUp={() => input?.releaseJump()} />
+        <TouchButton label="Saltar" text="J" size="large" onDown={jump} onUp={() => input?.releaseJump()} />
       </div>
     </div>
   );

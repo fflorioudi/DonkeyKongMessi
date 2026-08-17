@@ -7,6 +7,7 @@ import type { InputManager } from "@/game/Input";
 import type { GameSnapshot } from "@/game/types";
 import { GameOver } from "@/ui/GameOver";
 import { HUD } from "@/ui/HUD";
+import { Pause } from "@/ui/Pause";
 import { TouchControls } from "@/ui/TouchControls";
 import { Victory } from "@/ui/Victory";
 import "./styles.css";
@@ -54,6 +55,8 @@ export default function DonkeyMessiPage() {
 
   const startGame = () => gameRef.current?.play();
   const restartGame = () => gameRef.current?.restart();
+  const pauseGame = () => gameRef.current?.pause();
+  const resumeGame = () => gameRef.current?.resume();
   const isPlaying = snapshot.status === "playing";
 
   return (
@@ -61,10 +64,15 @@ export default function DonkeyMessiPage() {
       <section className="phoneStage" aria-label="Donkey Kong Edicion Messi">
         <canvas ref={canvasRef} className="gameCanvas" width={390} height={720} />
         <HUD snapshot={snapshot} />
+        {(snapshot.status === "playing" || snapshot.status === "paused") && (
+          <button className="pauseButton" type="button" aria-label="Pausa" onClick={pauseGame}>
+            II
+          </button>
+        )}
 
         {snapshot.status === "menu" && (
           <div className="overlayPanel">
-            <p className="eyebrow">Mobile v1</p>
+            <p className="eyebrow">Mobile v2</p>
             <h1>Donkey Kong: Edicion Messi</h1>
             <p>{snapshot.levelName}</p>
             <button type="button" onClick={startGame}>
@@ -74,6 +82,7 @@ export default function DonkeyMessiPage() {
         )}
 
         {snapshot.status === "gameOver" && <GameOver onRestart={restartGame} />}
+        {snapshot.status === "paused" && <Pause onResume={resumeGame} onRestart={restartGame} />}
         {snapshot.status === "levelComplete" && <Victory score={snapshot.score} onRestart={restartGame} />}
 
         <TouchControls input={inputManager} canClimb={snapshot.canClimb} disabled={!isPlaying} />
