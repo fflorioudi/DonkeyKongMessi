@@ -250,8 +250,8 @@ export class Game {
     }
 
     ctx.fillStyle = "rgba(255, 228, 92, 0.24)";
-    ctx.fillRect(0, 616, this.level.worldWidth, 8);
-    ctx.fillRect(0, 638, this.level.worldWidth, 5);
+    ctx.fillRect(0, 636, this.level.worldWidth, 8);
+    ctx.fillRect(0, 658, this.level.worldWidth, 5);
   }
 
   private drawGoal(ctx: CanvasRenderingContext2D) {
@@ -299,7 +299,7 @@ export class Game {
       status: this.status,
       lives: this.lives,
       score: Math.floor(this.score),
-      highScore: this.highScore,
+      highScore: Math.max(this.highScore, Math.floor(this.score)),
       level: this.level.id,
       levelName: this.level.name,
     };
