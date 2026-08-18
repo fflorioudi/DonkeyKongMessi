@@ -24,7 +24,7 @@ export class Ball {
   update(dt: number, platforms: Platform[], worldWidth: number, worldHeight: number) {
     const previousBottom = this.y + this.radius;
     const wasFalling = this.vy > 0;
-    const bottomPlatformY = Math.max(...platforms.map((platform) => platform.y));
+    const bottomPlatform = platforms.reduce((lowest, platform) => (platform.y > lowest.y ? platform : lowest), platforms[0]);
 
     this.x += this.direction * this.speed * dt;
     this.rotation += this.direction * this.speed * dt * 0.05;
@@ -37,6 +37,11 @@ export class Ball {
     if (this.x + this.radius >= worldWidth) {
       this.x = worldWidth - this.radius;
       this.direction = -1;
+    }
+
+    if (bottomPlatform && this.isSupportedBy(bottomPlatform)) {
+      this.alive = false;
+      return;
     }
 
     if (!this.hasSupport(platforms)) {
@@ -55,7 +60,7 @@ export class Ball {
         this.y + this.radius <= platformTop + 34;
 
       if (landsOnPlatform) {
-        if (platform.y === bottomPlatformY) {
+        if (platform === bottomPlatform) {
           this.alive = false;
           return;
         }
@@ -105,11 +110,14 @@ export class Ball {
   }
 
   private hasSupport(platforms: Platform[]) {
-    return platforms.some(
-      (platform) =>
-        Math.abs(this.y + this.radius - platform.y) <= 1.5 &&
-        this.x + this.radius > platform.x &&
-        this.x - this.radius < platform.x + platform.width,
+    return platforms.some((platform) => this.isSupportedBy(platform));
+  }
+
+  private isSupportedBy(platform: Platform) {
+    return (
+      Math.abs(this.y + this.radius - platform.y) <= 1.5 &&
+      this.x + this.radius > platform.x &&
+      this.x - this.radius < platform.x + platform.width
     );
   }
 }

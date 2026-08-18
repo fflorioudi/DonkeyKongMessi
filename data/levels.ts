@@ -77,6 +77,22 @@ export const levels: LevelDefinition[] = [
           direction: -1,
         },
       },
+      {
+        id: "tutorial-red-card",
+        x: 342,
+        y: 268,
+        interval: 8.5,
+        firstDelay: 6.8,
+        maxActive: 1,
+        obstacle: {
+          kind: "red-card",
+          width: 42,
+          height: 34,
+          speed: 66,
+          direction: -1,
+          hitboxInset: 7,
+        },
+      },
     ],
     goal: {
       x: 148,

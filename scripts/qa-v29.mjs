@@ -27,7 +27,7 @@ for (const doc of ["QA_V2.md", "QA_V21.md", "QA_V22.md", "QA_V23.md", "QA_V24.md
   pass(`${doc} exists`, existsSync(join(root, "docs", doc)));
 }
 
-pass("menu declares candidate or newer build", pageSource.includes("Mobile v2.9 candidate") || pageSource.includes("Mobile v3.0"));
+pass("menu declares candidate or newer build", /Mobile v(?:2\.9 candidate|3\.\d+)/.test(pageSource));
 pass("single level selector stays compact", pageSource.includes("canSelectLevel") && pageSource.includes("isSingle"));
 pass("selector styles avoid oversized arrows", stylesSource.includes(".levelPicker.isSingle") && stylesSource.includes(".menuPanel .levelPicker button"));
 pass("build artifacts are ignored", gitignoreSource.includes("*.tsbuildinfo") && gitignoreSource.includes(".next-dev.*.log"));

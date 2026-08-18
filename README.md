@@ -110,6 +110,8 @@ El mundo reemplaza el lenguaje industrial clasico por simbolos futboleros:
 
 Evitar copiar logos, escudos, canciones, sprites o marcas protegidas. Crear arte propio.
 
+Regla visual desde V3.1: ningun elemento jugable visible debe quedar como rectangulo o primitiva de canvas. Obstaculos, power-ups, pickups, metas y personajes deben tener sprite pixel art propio, aunque sea placeholder.
+
 ## Core Loop
 
 1. Empezar en la parte inferior del nivel.
@@ -459,7 +461,7 @@ Estado: iniciada.
 
 ### V3.0
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 - Sistema generico de obstaculos iniciado.
 - `ObstacleDefinition` y `ObstacleSpawnerDefinition` agregados.
@@ -469,9 +471,21 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.0`.
 - QA documentado en `docs/QA_V30.md`.
 
+### V3.1
+
+Estado: en cierre tecnico.
+
+- Primer obstaculo nuevo agregado: tarjeta roja.
+- Spawner `tutorial-red-card` de baja frecuencia para no endurecer de mas el tutorial.
+- Movimiento horizontal desde datos.
+- Hitbox rectangular reducida.
+- Dibujo propio en canvas.
+- QA automatico con `npm run qa:v3.1`.
+- QA documentado en `docs/QA_V31.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.0 en telefono real. Si pasa, avanzar a V3.1: obstaculo Tarjeta Roja.
+Playtest manual de V3.1 en telefono real. Si pasa, avanzar a V3.2: power-up basico.
 
 ## Roadmap
 

@@ -40,6 +40,7 @@ Fase 2 arranca desde V2.9 candidate:
 - Primero sistemas, despues contenido masivo.
 - Cada mecanica nueva debe tener QA propio.
 - Cada obstaculo debe ser legible en pantalla chica.
+- Cada elemento jugable visible debe tener sprite pixel art propio; no usar rectangulos de canvas como arte final ni placeholder visible.
 - Cada nivel debe poder balancearse desde datos.
 - No agregar arte final si la mecanica todavia esta cambiando.
 - No agregar ranking online, base de datos ni autenticacion en esta fase.
@@ -50,7 +51,7 @@ Fase 2 arranca desde V2.9 candidate:
 
 Objetivo: reemplazar la pelota unica por una arquitectura de obstaculos extensible.
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 Alcance:
 
@@ -77,6 +78,8 @@ Criterio de cierre:
 ## V3.1 - Obstaculo Tarjeta Roja
 
 Objetivo: sumar el primer obstaculo nuevo sin crear un nivel nuevo todavia.
+
+Estado: en cierre tecnico.
 
 Alcance:
 

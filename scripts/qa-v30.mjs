@@ -34,7 +34,7 @@ pass("game uses obstacle spawn timers", gameSource.includes("obstacleSpawnTimers
 pass("game spawns obstacles from data", gameSource.includes("spawnObstaclesIfReady") && gameSource.includes("level.obstacleSpawners"));
 pass("game no longer stores balls directly", !gameSource.includes("private balls"));
 pass("game collision uses obstacle api", gameSource.includes("obstacle.collidesWith(this.player.rect)"));
-pass("menu declares v3.0", pageSource.includes("Mobile v3.0"));
+pass("menu declares v3.0 or newer", /Mobile v3\.\d+/.test(pageSource));
 pass("roadmap points to v3.0", roadmapSource.includes("V3.0 - Sistema Generico De Obstaculos"));
 
 console.log("V3.0 generic obstacle system checks passed.");

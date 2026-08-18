@@ -530,12 +530,6 @@ export class Game {
     ctx.save();
     const frame = this.sprites.animationFrame("worldcup", "glow", this.lastTime / 1000, 7);
     if (this.sprites.drawTrimmedFrame(ctx, "worldcup", frame, goal.x + 20, goal.y + 2, 32, 46)) {
-      if (this.status === "playing") {
-        const pulse = 1 + Math.sin(performance.now() / 170) * 0.08;
-        ctx.strokeStyle = "#ffe45c";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(goal.x + 18 - 3 * pulse, goal.y - 1 - 3 * pulse, 36 + 6 * pulse, 52 + 6 * pulse);
-      }
       ctx.restore();
       return;
     }
@@ -551,12 +545,6 @@ export class Game {
     ctx.font = "bold 18px Arial";
     ctx.textAlign = "center";
     ctx.fillText(goal.label, goal.x + goal.width / 2, goal.y + 34);
-    if (this.status === "playing") {
-      const pulse = 1 + Math.sin(performance.now() / 170) * 0.08;
-      ctx.strokeStyle = "#ffe45c";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(goal.x - 4 * pulse, goal.y - 4 * pulse, goal.width + 8 * pulse, goal.height + 8 * pulse);
-    }
     ctx.restore();
   }
 

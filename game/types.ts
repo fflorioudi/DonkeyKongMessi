@@ -50,15 +50,24 @@ export type BallObstacleDefinition = Omit<BallDefinition, "x" | "y"> & {
   kind: "ball";
 };
 
+export type RedCardObstacleDefinition = {
+  kind: "red-card";
+  width: number;
+  height: number;
+  speed: number;
+  direction: -1 | 1;
+  hitboxInset?: number;
+};
+
 export type FutureObstacleDefinition = {
-  kind: Exclude<ObstacleKind, "ball">;
+  kind: Exclude<ObstacleKind, "ball" | "red-card">;
   width: number;
   height: number;
   speed?: number;
   direction?: -1 | 1;
 };
 
-export type ObstacleDefinition = BallObstacleDefinition | FutureObstacleDefinition;
+export type ObstacleDefinition = BallObstacleDefinition | RedCardObstacleDefinition | FutureObstacleDefinition;
 
 export type ObstacleSpawnerDefinition = {
   id: string;
