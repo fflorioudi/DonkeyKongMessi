@@ -412,7 +412,7 @@ Estado: cerrada tecnicamente, con pase HD estilo Super Milo J aplicado.
 
 ### V2.7
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 - Tiempo de partida visible en HUD.
 - Mejor tiempo local persistido en `localStorage`.
@@ -423,9 +423,24 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v2.7`.
 - QA de persistencia documentado en `docs/QA_V27.md`.
 
+### V2.8
+
+Estado: en cierre tecnico.
+
+- `Game` recibe un catalogo completo de niveles y puede seleccionar por indice desde el menu.
+- `LevelDefinition` separa dificultad, fondo, rival, plataformas, escaleras, spawner y meta.
+- Records locales separados por nivel, con fallback a marcas previas del Nivel 1.
+- Bonus de puntaje movidos a `level.difficulty`.
+- Posicion, tamano y direccion de Cristiano movidos a `level.rival`.
+- Fondo y bandas inferiores movidos a `level.background`.
+- Plataformas declaran `spriteFrame` desde datos.
+- Selector interno de nivel en portada, listo para habilitar mas escenarios.
+- QA automatico con `npm run qa:v2.8`.
+- QA de arquitectura multi-nivel documentado en `docs/QA_V28.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.7 en telefono real y luego avanzar a V2.8: preparacion para multiples niveles.
+Playtest manual de V2.8 en telefono real y luego avanzar a V2.9: candidate build pre-Fase 2.
 
 ## Roadmap
 

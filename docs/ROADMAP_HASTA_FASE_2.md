@@ -233,7 +233,7 @@ Criterio de cierre:
 
 Objetivo: darle motivo para repetir el nivel antes de crear nuevos escenarios.
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 Alcance:
 
@@ -264,18 +264,31 @@ Criterio de cierre:
 
 Objetivo: dejar el motor preparado para Fase 2 sin duplicar codigo.
 
+Estado: en cierre tecnico.
+
 Alcance:
 
 - Revisar `LevelDefinition`.
 - Separar configuracion de dificultad.
 - Permitir cargar otro nivel por indice.
 - Preparar selector interno simple, aunque solo haya un nivel visible.
-- Asegurar que spawners, plataformas, escaleras y metas sean 100% data-driven.
+- Asegurar que spawners, plataformas, escaleras, rival, fondo y metas sean data-driven.
+
+Entregables:
+
+- Catalogo de niveles recibido por `Game`.
+- Metodo `selectLevel(index)` disponible desde menu.
+- `difficulty`, `background` y `rival` dentro de cada nivel.
+- Records locales separados por nivel.
+- Selector compacto de nivel en portada.
+- QA automatico en `npm run qa:v2.8`.
+- QA documentado en `docs/QA_V28.md`.
 
 Criterio de cierre:
 
 - Crear un segundo nivel requiere tocar principalmente `data/levels.ts`.
 - El motor no tiene valores hardcodeados del Nivel 1 salvo dimensiones globales.
+- El selector puede cambiar de nivel sin reiniciar listeners ni loops.
 
 ## V2.9 - Candidate Build
 

@@ -18,6 +18,7 @@ export type Rect = {
 
 export type Platform = Rect & {
   color?: string;
+  spriteFrame?: number;
 };
 
 export type Ladder = Rect;
@@ -50,11 +51,44 @@ export type LevelDefinition = {
   worldWidth: number;
   worldHeight: number;
   controlSafeZoneTop: number;
+  difficulty: LevelDifficultyDefinition;
+  background: LevelBackgroundDefinition;
+  rival: RivalDefinition;
   playerSpawn: Vec2;
   platforms: Platform[];
   ladders: Ladder[];
   ballSpawner: BallSpawnerDefinition;
   goal: Goal;
+};
+
+export type LevelDifficultyDefinition = {
+  initialLives: number;
+  completionBonus: number;
+  lifeBonus: number;
+  timeParSeconds: number;
+  timeBonusPerSecond: number;
+};
+
+export type LevelBackgroundDefinition = {
+  gradient: {
+    top: string;
+    middle: string;
+    bottom: string;
+  };
+  skylineY: number;
+  groundBands: Array<{
+    y: number;
+    height: number;
+    color: string;
+  }>;
+};
+
+export type RivalDefinition = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  facingLeft: boolean;
 };
 
 export type InputSnapshot = {
@@ -76,7 +110,10 @@ export type HudSnapshot = {
   message: string;
   audioEnabled: boolean;
   level: number;
+  levelIndex: number;
+  levelCount: number;
   levelName: string;
+  levelTheme: string;
 };
 
 export type GameSnapshot = HudSnapshot & {

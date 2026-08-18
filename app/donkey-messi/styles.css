@@ -169,6 +169,54 @@
   font-size: 15px;
 }
 
+.levelPicker {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  width: min(100%, 332px);
+  gap: 8px;
+  align-items: center;
+}
+
+.levelPicker button {
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(16, 24, 32, 0.68);
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.levelPicker button:disabled {
+  opacity: 0.38;
+}
+
+.levelPicker div {
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(16, 24, 32, 0.58);
+  color: #ffffff;
+}
+
+.levelPicker span,
+.levelPicker strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.levelPicker span {
+  color: rgba(248, 251, 255, 0.68);
+  font-size: 11px;
+}
+
+.levelPicker strong {
+  font-size: 14px;
+}
+
 .menuPanel .eyebrow {
   color: #ffe45c;
   font-size: 12px;

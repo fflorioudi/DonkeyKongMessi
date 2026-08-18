@@ -3,6 +3,7 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const gameSource = readFileSync(join(root, "game", "Game.ts"), "utf8");
+const levelsSource = readFileSync(join(root, "data", "levels.ts"), "utf8");
 const typesSource = readFileSync(join(root, "game", "types.ts"), "utf8");
 const hudSource = readFileSync(join(root, "ui", "HUD.tsx"), "utf8");
 const victorySource = readFileSync(join(root, "ui", "Victory.tsx"), "utf8");
@@ -22,10 +23,10 @@ pass("qa script is registered", packageJson.scripts["qa:v2.7"] === "node scripts
 pass("types expose elapsed time", typesSource.includes("elapsedTime: number"));
 pass("types expose best time", typesSource.includes("bestTime: number"));
 pass("types expose score breakdown", typesSource.includes("ScoreBreakdown"));
-pass("game persists best time", gameSource.includes("BEST_TIME_KEY") && gameSource.includes("recordBestTime"));
-pass("game keeps high score persistence", gameSource.includes("HIGH_SCORE_KEY") && gameSource.includes("recordHighScore"));
-pass("game computes life bonus", gameSource.includes("LIFE_BONUS") && gameSource.includes("lifeBonus"));
-pass("game computes time bonus", gameSource.includes("TIME_BONUS_PER_SECOND") && gameSource.includes("timeBonus"));
+pass("game persists best time", gameSource.includes("bestTimeKey(this.level)") && gameSource.includes("recordBestTime"));
+pass("game keeps high score persistence", gameSource.includes("highScoreKey(this.level)") && gameSource.includes("recordHighScore"));
+pass("game computes life bonus", gameSource.includes("lifeBonusValue") && levelsSource.includes("lifeBonus"));
+pass("game computes time bonus", gameSource.includes("timeBonusPerSecond") && levelsSource.includes("timeBonusPerSecond"));
 pass("completion uses score summary", gameSource.includes("scoreBreakdown") && gameSource.includes("completeLevel"));
 pass("hud shows timer", hudSource.includes("formatTime(snapshot.elapsedTime)"));
 pass("victory renders score summary", victorySource.includes("scoreSummary") && victorySource.includes("Nuevo tiempo"));

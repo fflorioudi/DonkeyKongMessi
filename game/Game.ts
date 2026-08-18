@@ -6,13 +6,8 @@ import { InputManager } from "./Input";
 import { SpriteManager } from "./Sprites";
 import type { GameSnapshot, GameStatus, HudSnapshot, Ladder, LevelDefinition, Rect } from "./types";
 
-const INITIAL_LIVES = 3;
-const HIGH_SCORE_KEY = "donkey-messi-high-score";
-const BEST_TIME_KEY = "donkey-messi-best-time";
-const COMPLETION_BONUS = 1000;
-const LIFE_BONUS = 350;
-const TIME_PAR_SECONDS = 90;
-const TIME_BONUS_PER_SECOND = 22;
+const LEGACY_HIGH_SCORE_KEY = "donkey-messi-high-score";
+const LEGACY_BEST_TIME_KEY = "donkey-messi-best-time";
 
 type FloatText = {
   x: number;
@@ -28,11 +23,13 @@ export class Game {
   readonly sprites = new SpriteManager();
   private readonly ctx: CanvasRenderingContext2D;
   private readonly canvas: HTMLCanvasElement;
-  private readonly level: LevelDefinition;
+  private readonly levels: LevelDefinition[];
+  private levelIndex: number;
+  private level: LevelDefinition;
   private player: Player;
   private balls: Ball[];
   private status: GameStatus = "menu";
-  private lives = INITIAL_LIVES;
+  private lives = 0;
   private score = 0;
   private highScore = 0;
   private bestTime = 0;
@@ -57,8 +54,9 @@ export class Game {
 
   constructor(
     canvas: HTMLCanvasElement,
-    level: LevelDefinition,
+    levels: LevelDefinition[],
     onSnapshot: (snapshot: GameSnapshot) => void,
+    initialLevelIndex = 0,
   ) {
     const ctx = canvas.getContext("2d");
 
@@ -66,15 +64,43 @@ export class Game {
       throw new Error("Canvas 2D context is not available.");
     }
 
+    if (levels.length === 0) {
+      throw new Error("At least one level is required.");
+    }
+
     this.canvas = canvas;
     this.ctx = ctx;
-    this.level = level;
-    this.player = new Player(level.playerSpawn);
-    this.bestY = level.playerSpawn.y;
+    this.levels = levels;
+    this.levelIndex = clamp(initialLevelIndex, 0, levels.length - 1);
+    this.level = levels[this.levelIndex];
+    this.lives = this.level.difficulty.initialLives;
+    this.player = new Player(this.level.playerSpawn);
+    this.bestY = this.level.playerSpawn.y;
     this.balls = [];
     this.onSnapshot = onSnapshot;
     this.highScore = this.loadHighScore();
     this.bestTime = this.loadBestTime();
+    this.resize();
+    this.emitSnapshot(true);
+  }
+
+  selectLevel(index: number) {
+    if (this.status !== "menu") {
+      return;
+    }
+
+    const level = this.levels[index];
+    if (!level || index === this.levelIndex) {
+      return;
+    }
+
+    this.audio.playUi();
+    this.levelIndex = index;
+    this.level = level;
+    this.lives = this.level.difficulty.initialLives;
+    this.highScore = this.loadHighScore();
+    this.bestTime = this.loadBestTime();
+    this.resetRunState();
     this.resize();
     this.emitSnapshot(true);
   }
@@ -112,7 +138,14 @@ export class Game {
   play() {
     void this.audio.unlock().then(() => this.audio.playStart());
     this.status = "playing";
-    this.lives = INITIAL_LIVES;
+    this.resetRunState();
+    this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
+    this.setMessage("Subi por las escaleras", 1.8);
+    this.emitSnapshot(true);
+  }
+
+  private resetRunState() {
+    this.lives = this.level.difficulty.initialLives;
     this.score = 0;
     this.elapsedTime = 0;
     this.bestY = this.level.playerSpawn.y;
@@ -125,12 +158,12 @@ export class Game {
     this.hitFlash = 0;
     this.goalFlash = 0;
     this.throwCue = 0;
+    this.message = "";
+    this.messageTimer = 0;
     this.floatTexts = [];
-    this.setMessage("Subi por las escaleras", 1.8);
     this.player.reset(this.level.playerSpawn);
     this.balls = [];
     this.input.reset();
-    this.emitSnapshot(true);
   }
 
   restart() {
@@ -148,16 +181,7 @@ export class Game {
     this.throwCue = 0;
     this.message = "";
     this.messageTimer = 0;
-    this.elapsedTime = 0;
-    this.score = 0;
-    this.bestY = this.level.playerSpawn.y;
-    this.scoreBreakdown = createEmptyBreakdown();
-    this.isNewHighScore = false;
-    this.isNewBestTime = false;
-    this.floatTexts = [];
-    this.player.reset(this.level.playerSpawn);
-    this.balls = [];
-    this.input.reset();
+    this.resetRunState();
     this.emitSnapshot(true);
   }
 
@@ -269,15 +293,16 @@ export class Game {
   }
 
   private completeLevel() {
-    const lifeBonus = this.lives * LIFE_BONUS;
-    const timeBonus = Math.max(0, Math.round((TIME_PAR_SECONDS - this.elapsedTime) * TIME_BONUS_PER_SECOND));
-    const totalBonus = COMPLETION_BONUS + lifeBonus + timeBonus;
+    const { completionBonus, lifeBonus: lifeBonusValue, timeBonusPerSecond, timeParSeconds } = this.level.difficulty;
+    const lifeBonus = this.lives * lifeBonusValue;
+    const timeBonus = Math.max(0, Math.round((timeParSeconds - this.elapsedTime) * timeBonusPerSecond));
+    const totalBonus = completionBonus + lifeBonus + timeBonus;
 
     this.status = "levelComplete";
     this.score += totalBonus;
     this.scoreBreakdown = {
       progress: Math.floor(this.scoreBreakdown.progress),
-      completion: COMPLETION_BONUS,
+      completion: completionBonus,
       lives: lifeBonus,
       time: timeBonus,
       total: Math.floor(this.score),
@@ -293,7 +318,9 @@ export class Game {
 
   private loadHighScore() {
     try {
-      return Number(window.localStorage.getItem(HIGH_SCORE_KEY) || 0);
+      const stored = window.localStorage.getItem(highScoreKey(this.level));
+      const legacy = this.level.id === 1 ? window.localStorage.getItem(LEGACY_HIGH_SCORE_KEY) : null;
+      return Number(stored || legacy || 0);
     } catch {
       return 0;
     }
@@ -301,7 +328,9 @@ export class Game {
 
   private loadBestTime() {
     try {
-      return Number(window.localStorage.getItem(BEST_TIME_KEY) || 0);
+      const stored = window.localStorage.getItem(bestTimeKey(this.level));
+      const legacy = this.level.id === 1 ? window.localStorage.getItem(LEGACY_BEST_TIME_KEY) : null;
+      return Number(stored || legacy || 0);
     } catch {
       return 0;
     }
@@ -319,7 +348,7 @@ export class Game {
     this.isNewHighScore = true;
 
     try {
-      window.localStorage.setItem(HIGH_SCORE_KEY, String(this.highScore));
+      window.localStorage.setItem(highScoreKey(this.level), String(this.highScore));
     } catch {
       // Storage can fail in private contexts; gameplay should continue.
     }
@@ -337,7 +366,7 @@ export class Game {
     this.isNewBestTime = true;
 
     try {
-      window.localStorage.setItem(BEST_TIME_KEY, String(this.bestTime));
+      window.localStorage.setItem(bestTimeKey(this.level), String(this.bestTime));
     } catch {
       // Storage can fail in private contexts; gameplay should continue.
     }
@@ -419,7 +448,7 @@ export class Game {
 
     this.level.platforms.forEach((platform) => {
       ctx.save();
-      const frame = platformFrame(platform.color);
+      const frame = platform.spriteFrame ?? platformFrame(platform.color);
       if (!this.sprites.drawTrimmedFrame(ctx, "platforms", frame, platform.x - 5, platform.y, platform.width + 10, 30)) {
         ctx.fillStyle = platform.color || "#ffffff";
         ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
@@ -460,22 +489,24 @@ export class Game {
   }
 
   private drawBackground(ctx: CanvasRenderingContext2D) {
+    const { background } = this.level;
     const gradient = ctx.createLinearGradient(0, 0, 0, this.level.worldHeight);
-    gradient.addColorStop(0, "#182135");
-    gradient.addColorStop(0.45, "#22364a");
-    gradient.addColorStop(1, "#1f5b42");
+    gradient.addColorStop(0, background.gradient.top);
+    gradient.addColorStop(0.45, background.gradient.middle);
+    gradient.addColorStop(1, background.gradient.bottom);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, this.level.worldWidth, this.level.worldHeight);
 
     ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
     for (let x = 18; x < this.level.worldWidth; x += 42) {
-      ctx.fillRect(x, 132, 18, 28);
-      ctx.fillRect(x + 8, 160, 18, 28);
+      ctx.fillRect(x, background.skylineY, 18, 28);
+      ctx.fillRect(x + 8, background.skylineY + 28, 18, 28);
     }
 
-    ctx.fillStyle = "rgba(255, 228, 92, 0.24)";
-    ctx.fillRect(0, 636, this.level.worldWidth, 8);
-    ctx.fillRect(0, 658, this.level.worldWidth, 5);
+    background.groundBands.forEach((band) => {
+      ctx.fillStyle = band.color;
+      ctx.fillRect(0, band.y, this.level.worldWidth, band.height);
+    });
   }
 
   private drawGoal(ctx: CanvasRenderingContext2D) {
@@ -515,15 +546,16 @@ export class Game {
   }
 
   private drawCristiano(ctx: CanvasRenderingContext2D) {
+    const { rival } = this.level;
     ctx.save();
-    ctx.translate(300, 52);
+    ctx.translate(rival.x, rival.y);
     if (this.throwCue > 0) {
       ctx.fillStyle = `rgba(255, 228, 92, ${this.throwCue})`;
-      ctx.fillRect(-8, -6, 52, 62);
+      ctx.fillRect(-8, -6, rival.width + 2, rival.height + 4);
     }
     const animation = this.throwCue > 0 ? "throw" : "idle";
     const frame = this.sprites.animationFrame("cristiano", animation, this.lastTime / 1000, this.throwCue > 0 ? 4 : 2);
-    if (this.sprites.drawTrimmedFrame(ctx, "cristiano", frame, -10, 0, 50, 58, true)) {
+    if (this.sprites.drawTrimmedFrame(ctx, "cristiano", frame, -10, 0, rival.width, rival.height, rival.facingLeft)) {
       ctx.restore();
       return;
     }
@@ -598,7 +630,10 @@ export class Game {
       message: this.message,
       audioEnabled: this.audio.enabled,
       level: this.level.id,
+      levelIndex: this.levelIndex,
+      levelCount: this.levels.length,
       levelName: this.level.name,
+      levelTheme: this.level.theme,
     };
 
     return {
@@ -631,6 +666,18 @@ function platformFrame(color?: string) {
     default:
       return 0;
   }
+}
+
+function highScoreKey(level: LevelDefinition) {
+  return `donkey-messi-level-${level.id}-high-score`;
+}
+
+function bestTimeKey(level: LevelDefinition) {
+  return `donkey-messi-level-${level.id}-best-time`;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
 }
 
 function createEmptyBreakdown() {
