@@ -3,6 +3,7 @@ import { Player } from "@/entities/Player";
 import { AudioManager } from "./Audio";
 import { circleRectOverlap, rectsOverlap } from "./collision";
 import { InputManager } from "./Input";
+import { SpriteManager } from "./Sprites";
 import type { GameSnapshot, GameStatus, HudSnapshot, Ladder, LevelDefinition, Rect } from "./types";
 
 const INITIAL_LIVES = 3;
@@ -19,6 +20,7 @@ type FloatText = {
 export class Game {
   readonly input = new InputManager();
   readonly audio = new AudioManager();
+  readonly sprites = new SpriteManager();
   private readonly ctx: CanvasRenderingContext2D;
   private readonly canvas: HTMLCanvasElement;
   private readonly level: LevelDefinition;
@@ -93,6 +95,7 @@ export class Game {
     this.canvas.height = Math.max(1, Math.floor(rect.height * dpr));
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     this.ctx.scale(this.canvas.width / this.level.worldWidth, this.canvas.height / this.level.worldHeight);
+    this.ctx.imageSmoothingEnabled = false;
   }
 
   play() {
@@ -321,16 +324,20 @@ export class Game {
     this.level.ladders.forEach((ladder) => {
       ctx.save();
       const isActive = activeLadder === ladder;
-      ctx.fillStyle = isActive ? "#ffe45c" : "#bd7f32";
-      ctx.fillRect(ladder.x + 5, ladder.y, 6, ladder.height);
-      ctx.fillRect(ladder.x + ladder.width - 11, ladder.y, 6, ladder.height);
-      ctx.fillStyle = isActive ? "#ffffff" : "#f0be69";
+      const ladderFrame = isActive ? 1 : 0;
+      const ladderDrawn = this.sprites.drawFrame(ctx, "ladder", ladderFrame, ladder.x - 3, ladder.y, ladder.width + 6, ladder.height);
 
-      for (let y = ladder.y + 10; y < ladder.y + ladder.height; y += 18) {
-        ctx.fillRect(ladder.x + 5, y, ladder.width - 10, 5);
+      if (!ladderDrawn) {
+        ctx.fillStyle = isActive ? "#ffe45c" : "#bd7f32";
+        ctx.fillRect(ladder.x + 5, ladder.y, 6, ladder.height);
+        ctx.fillRect(ladder.x + ladder.width - 11, ladder.y, 6, ladder.height);
+        ctx.fillStyle = isActive ? "#ffffff" : "#f0be69";
+        for (let y = ladder.y + 10; y < ladder.y + ladder.height; y += 18) {
+          ctx.fillRect(ladder.x + 5, y, ladder.width - 10, 5);
+        }
       }
 
-      if (isActive) {
+      if (isActive && !ladderDrawn) {
         ctx.strokeStyle = "#ffe45c";
         ctx.lineWidth = 2;
         ctx.strokeRect(ladder.x + 5, ladder.y, 6, ladder.height);
@@ -342,18 +349,21 @@ export class Game {
 
     this.level.platforms.forEach((platform) => {
       ctx.save();
-      ctx.fillStyle = platform.color || "#ffffff";
-      ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
-      ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
-      ctx.fillRect(platform.x, platform.y + platform.height - 5, platform.width, 5);
+      const frame = platformFrame(platform.color);
+      if (!this.sprites.drawFrame(ctx, "platforms", frame, platform.x - 8, platform.y - 18, platform.width + 16, 52)) {
+        ctx.fillStyle = platform.color || "#ffffff";
+        ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+        ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
+        ctx.fillRect(platform.x, platform.y + platform.height - 5, platform.width, 5);
+      }
       ctx.restore();
     });
 
     this.drawGoal(ctx);
-    this.balls.forEach((ball) => ball.draw(ctx));
+    this.balls.forEach((ball) => ball.draw(ctx, this.sprites));
     this.drawCristiano(ctx);
     this.drawFloatTexts(ctx);
-    this.player.draw(ctx, this.respawnGrace > 0);
+    this.player.draw(ctx, this.respawnGrace > 0, this.sprites, this.lastTime / 1000);
     this.drawGoalFlash(ctx);
   }
 
@@ -402,6 +412,18 @@ export class Game {
     const goal = this.level.goal;
 
     ctx.save();
+    const frame = this.sprites.animationFrame("worldcup", "glow", this.lastTime / 1000, 5);
+    if (this.sprites.drawFrame(ctx, "worldcup", frame, goal.x + 12, goal.y - 10, 48, 62)) {
+      if (this.status === "playing") {
+        const pulse = 1 + Math.sin(performance.now() / 170) * 0.08;
+        ctx.strokeStyle = "#ffe45c";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(goal.x + 16 - 4 * pulse, goal.y - 4 * pulse, 40 + 8 * pulse, 56 + 8 * pulse);
+      }
+      ctx.restore();
+      return;
+    }
+
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(goal.x, goal.y + 10, goal.width, goal.height - 10);
     ctx.fillStyle = "#75aadb";
@@ -427,8 +449,15 @@ export class Game {
     ctx.translate(292, 58);
     if (this.throwCue > 0) {
       ctx.fillStyle = `rgba(255, 228, 92, ${this.throwCue})`;
-      ctx.fillRect(-8, -8, 52, 60);
+      ctx.fillRect(-10, -14, 62, 76);
     }
+    const animation = this.throwCue > 0 ? "throw" : "idle";
+    const frame = this.sprites.animationFrame("cristiano", animation, this.lastTime / 1000, 10);
+    if (this.sprites.drawFrame(ctx, "cristiano", frame, -8, -16, 56, 70)) {
+      ctx.restore();
+      return;
+    }
+
     ctx.fillStyle = "#ff5c7a";
     ctx.fillRect(7, 16, 24, 26);
     ctx.fillStyle = "#f0b38d";
@@ -505,5 +534,20 @@ export class Game {
       this.lastSnapshotKey = key;
       this.onSnapshot(snapshot);
     }
+  }
+}
+
+function platformFrame(color?: string) {
+  switch (color) {
+    case "#ffe45c":
+      return 1;
+    case "#39a9ff":
+      return 2;
+    case "#ff5c7a":
+      return 3;
+    case "#f7f8ff":
+      return 4;
+    default:
+      return 0;
   }
 }

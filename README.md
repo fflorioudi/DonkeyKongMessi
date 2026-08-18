@@ -386,15 +386,32 @@ Estado: cerrada tecnicamente.
 Estado: cerrada tecnicamente.
 
 - Audio basico generado con Web Audio.
+- Fallback real con archivos `.wav` en `public/audio`.
 - Sonidos de inicio, salto, golpe, lanzamiento, Game Over, victoria y UI.
 - Boton de sonido/mute.
 - Preferencia de sonido persistida en `localStorage`.
 - QA automatico con `npm run qa:v2.5`.
 - QA de audio documentado en `docs/QA_V25.md`.
 
+### V2.6
+
+Estado: en cierre tecnico, con pase HD estilo Super Milo J aplicado.
+
+- Spritesheets PNG separados para Messi, Cristiano, pelota, Copa, plataformas, escalera y hazards.
+- Messi en 280x360 con 8 frames HD: idle, run, jump, climb, hit y victory.
+- Cristiano en 280x360 con 8 frames HD: idle, taunt y throw.
+- Pelota con 8 frames de giro, Copa con brillo y tiles de plataformas 320x150.
+- Referencias HD guardadas en `public/sprites/source/`.
+- Preview visual en `public/sprites/preview-v26-hd.png`.
+- Pipeline de extraccion HD en `scripts/extract-hd-sprite-assets.py`.
+- Metadata de grillas, pivotes y animaciones en `public/sprites/sprites.json`.
+- Render con `SpriteManager` y smoothing desactivado.
+- QA automatico con `npm run qa:v2.6`.
+- QA de arte documentado en `docs/QA_V26.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.5 en telefono real y luego avanzar a V2.6: arte placeholder mejorado.
+Playtest manual de V2.6 en telefono real y luego avanzar a V2.7: persistencia y rejugabilidad minima.
 
 ## Roadmap
 

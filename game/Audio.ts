@@ -192,7 +192,7 @@ export class AudioManager {
 
       const element = new Audio(source);
       element.preload = "auto";
-      element.volume = 1;
+      element.volume = 0.68;
       this.elements[key] = element;
     }
   }
@@ -295,7 +295,7 @@ export class AudioManager {
 
     this.context = new AudioContextClass();
     this.master = this.context.createGain();
-    this.master.gain.value = 0.95;
+    this.master.gain.value = 0.72;
     this.master.connect(this.context.destination);
 
     return this.context;

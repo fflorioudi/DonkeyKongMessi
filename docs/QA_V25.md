@@ -58,3 +58,9 @@ Valida:
 - El juego puede mutearse.
 - No se usan canciones ni assets con derechos.
 - El rendimiento se mantiene fluido.
+
+## Resultado De Cierre
+
+- Estado tecnico: cerrado.
+- Confirmacion mobile: los sonidos se reproducen en telefono usando fallback `.wav`.
+- Ajuste final: volumen reducido despues de confirmar reproduccion.

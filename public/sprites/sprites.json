@@ -1,0 +1,419 @@
+{
+  "generatedBy": "scripts/extract-hd-sprite-assets.py",
+  "version": "v2.6-hd-milo-style",
+  "pixelArt": true,
+  "smoothing": false,
+  "notes": [
+    "Sprites PNG HD inspirados en el nivel de produccion de Super Milo J.",
+    "Contact sheets fuente conservadas en public/sprites/source.",
+    "Frames normalizados por celda para animacion estable en canvas mobile."
+  ],
+  "sheets": {
+    "messi": {
+      "src": "/sprites/messi.png",
+      "frameWidth": 280,
+      "frameHeight": 360,
+      "frames": 8,
+      "animations": {
+        "idle": [
+          0
+        ],
+        "run": [
+          1,
+          2,
+          3,
+          2
+        ],
+        "jump": [
+          4
+        ],
+        "climb": [
+          5
+        ],
+        "hit": [
+          6
+        ],
+        "victory": [
+          7
+        ]
+      },
+      "pivot": {
+        "x": 140,
+        "y": 354
+      },
+      "trims": [
+        {
+          "x": 70,
+          "y": 24,
+          "w": 141,
+          "h": 330
+        },
+        {
+          "x": 50,
+          "y": 24,
+          "w": 181,
+          "h": 330
+        },
+        {
+          "x": 51,
+          "y": 24,
+          "w": 178,
+          "h": 330
+        },
+        {
+          "x": 18,
+          "y": 24,
+          "w": 243,
+          "h": 330
+        },
+        {
+          "x": 54,
+          "y": 24,
+          "w": 172,
+          "h": 330
+        },
+        {
+          "x": 78,
+          "y": 24,
+          "w": 123,
+          "h": 330
+        },
+        {
+          "x": 31,
+          "y": 24,
+          "w": 218,
+          "h": 330
+        },
+        {
+          "x": 53,
+          "y": 24,
+          "w": 174,
+          "h": 330
+        }
+      ]
+    },
+    "cristiano": {
+      "src": "/sprites/cristiano.png",
+      "frameWidth": 280,
+      "frameHeight": 360,
+      "frames": 8,
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "taunt": [
+          1
+        ],
+        "throw": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "hit": [
+          7
+        ]
+      },
+      "pivot": {
+        "x": 140,
+        "y": 354
+      },
+      "trims": [
+        {
+          "x": 72,
+          "y": 22,
+          "w": 137,
+          "h": 332
+        },
+        {
+          "x": 64,
+          "y": 22,
+          "w": 151,
+          "h": 332
+        },
+        {
+          "x": 78,
+          "y": 22,
+          "w": 123,
+          "h": 332
+        },
+        {
+          "x": 27,
+          "y": 22,
+          "w": 226,
+          "h": 332
+        },
+        {
+          "x": 40,
+          "y": 22,
+          "w": 199,
+          "h": 332
+        },
+        {
+          "x": 55,
+          "y": 22,
+          "w": 170,
+          "h": 332
+        },
+        {
+          "x": 12,
+          "y": 36,
+          "w": 256,
+          "h": 318
+        },
+        {
+          "x": 64,
+          "y": 22,
+          "w": 153,
+          "h": 332
+        }
+      ]
+    },
+    "ball": {
+      "src": "/sprites/ball.png",
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "frames": 8,
+      "animations": {
+        "roll": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "pivot": {
+        "x": 64,
+        "y": 64
+      },
+      "trims": [
+        {
+          "x": 13,
+          "y": 12,
+          "w": 102,
+          "h": 110
+        },
+        {
+          "x": 19,
+          "y": 12,
+          "w": 90,
+          "h": 110
+        },
+        {
+          "x": 20,
+          "y": 12,
+          "w": 89,
+          "h": 110
+        },
+        {
+          "x": 14,
+          "y": 12,
+          "w": 101,
+          "h": 110
+        },
+        {
+          "x": 10,
+          "y": 12,
+          "w": 108,
+          "h": 110
+        },
+        {
+          "x": 10,
+          "y": 12,
+          "w": 109,
+          "h": 110
+        },
+        {
+          "x": 9,
+          "y": 20,
+          "w": 110,
+          "h": 102
+        },
+        {
+          "x": 9,
+          "y": 23,
+          "w": 110,
+          "h": 99
+        }
+      ]
+    },
+    "worldcup": {
+      "src": "/sprites/worldcup.png",
+      "frameWidth": 180,
+      "frameHeight": 240,
+      "frames": 6,
+      "animations": {
+        "glow": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "pivot": {
+        "x": 90,
+        "y": 234
+      },
+      "trims": [
+        {
+          "x": 37,
+          "y": 24,
+          "w": 106,
+          "h": 210
+        },
+        {
+          "x": 20,
+          "y": 24,
+          "w": 140,
+          "h": 210
+        },
+        {
+          "x": 16,
+          "y": 24,
+          "w": 149,
+          "h": 210
+        },
+        {
+          "x": 15,
+          "y": 44,
+          "w": 150,
+          "h": 190
+        },
+        {
+          "x": 15,
+          "y": 39,
+          "w": 150,
+          "h": 195
+        },
+        {
+          "x": 15,
+          "y": 81,
+          "w": 150,
+          "h": 153
+        }
+      ]
+    },
+    "platforms": {
+      "src": "/sprites/platforms.png",
+      "frameWidth": 320,
+      "frameHeight": 150,
+      "frames": 5,
+      "animations": {
+        "grass": [
+          0
+        ],
+        "yellow": [
+          1
+        ],
+        "blue": [
+          2
+        ],
+        "red": [
+          3
+        ],
+        "white": [
+          4
+        ]
+      },
+      "pivot": {
+        "x": 160,
+        "y": 142
+      },
+      "trims": [
+        {
+          "x": 48,
+          "y": 16,
+          "w": 224,
+          "h": 128
+        },
+        {
+          "x": 72,
+          "y": 16,
+          "w": 175,
+          "h": 128
+        },
+        {
+          "x": 68,
+          "y": 16,
+          "w": 184,
+          "h": 128
+        },
+        {
+          "x": 48,
+          "y": 16,
+          "w": 225,
+          "h": 128
+        },
+        {
+          "x": 46,
+          "y": 16,
+          "w": 229,
+          "h": 128
+        }
+      ]
+    },
+    "ladder": {
+      "src": "/sprites/ladder.png",
+      "frameWidth": 140,
+      "frameHeight": 240,
+      "frames": 2,
+      "animations": {
+        "normal": [
+          0
+        ],
+        "active": [
+          1
+        ]
+      },
+      "pivot": {
+        "x": 70,
+        "y": 238
+      },
+      "trims": [
+        {
+          "x": 14,
+          "y": 14,
+          "w": 112,
+          "h": 220
+        },
+        {
+          "x": 14,
+          "y": 43,
+          "w": 112,
+          "h": 191
+        }
+      ]
+    },
+    "hazards": {
+      "src": "/sprites/hazards.png",
+      "frameWidth": 300,
+      "frameHeight": 160,
+      "frames": 1,
+      "animations": {
+        "spikes": [
+          0
+        ]
+      },
+      "pivot": {
+        "x": 150,
+        "y": 156
+      },
+      "trims": [
+        {
+          "x": 45,
+          "y": 22,
+          "w": 210,
+          "h": 132
+        }
+      ]
+    }
+  }
+}

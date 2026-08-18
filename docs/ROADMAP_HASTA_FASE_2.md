@@ -187,6 +187,7 @@ Alcance:
 Entregables:
 
 - Audio sintetico con Web Audio.
+- Fallback con archivos `.wav` propios para mobile.
 - Sonidos de inicio, salto, golpe, lanzamiento, Game Over, victoria y UI.
 - Toggle de sonido con persistencia local.
 - QA automatico en `npm run qa:v2.5`.
@@ -202,6 +203,8 @@ Criterio de cierre:
 
 Objetivo: pasar de rectangulos funcionales a una identidad visual propia, sin hacer aun arte final.
 
+Estado: cerrada tecnicamente.
+
 Alcance:
 
 - Messi placeholder mas reconocible.
@@ -210,6 +213,15 @@ Alcance:
 - Plataformas con estilo futbolero simple.
 - Fondo de Rosario mas claro.
 - Meta superior mas identificable como camiseta o trofeo.
+
+Entregables:
+
+- Spritesheets PNG separados para Messi, Cristiano, pelota, Copa, plataformas, escalera y hazards.
+- Metadata en `public/sprites/sprites.json`.
+- Pipeline deterministica en `scripts/generate-sprite-assets.mjs`.
+- Render con `SpriteManager`.
+- QA automatico en `npm run qa:v2.6`.
+- QA documentado en `docs/QA_V26.md`.
 
 Criterio de cierre:
 

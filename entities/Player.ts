@@ -1,5 +1,6 @@
 import { rectsOverlap } from "@/game/collision";
 import { CLIMB_SPEED, GRAVITY, JUMP_SPEED, MOVE_SPEED } from "@/game/physics";
+import type { SpriteManager } from "@/game/Sprites";
 import type { InputSnapshot, Ladder, Platform, PlayerState, Rect, Vec2 } from "@/game/types";
 
 const PLAYER_WIDTH = 28;
@@ -117,12 +118,26 @@ export class Player {
     return Boolean(findUsableLadder(this.rect, ladders));
   }
 
-  draw(ctx: CanvasRenderingContext2D, isProtected = false) {
+  draw(ctx: CanvasRenderingContext2D, isProtected = false, sprites?: SpriteManager, time = 0) {
     const body = this.drawRect;
+    const animation = this.state === "run" ? "run" : this.state === "climb" ? "climb" : this.state === "jump" ? "jump" : "idle";
+    const frame = sprites?.animationFrame("messi", isProtected ? "hit" : animation, time, animation === "run" ? 10 : 6) ?? 0;
 
     ctx.save();
-    ctx.translate(body.x, body.y);
     ctx.globalAlpha = isProtected ? 0.58 : 1;
+
+    if (sprites?.drawFrame(ctx, "messi", frame, body.x - 14, body.y - 26, 56, 70, this.facing === -1)) {
+      if (isProtected) {
+        ctx.strokeStyle = "#ffe45c";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(body.x, body.y, body.width, body.height);
+      }
+
+      ctx.restore();
+      return;
+    }
+
+    ctx.translate(body.x, body.y);
 
     if (isProtected) {
       ctx.strokeStyle = "#ffe45c";

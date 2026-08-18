@@ -1,6 +1,7 @@
 import type { BallDefinition } from "@/game/types";
 import type { Platform } from "@/game/types";
 import { GRAVITY } from "@/game/physics";
+import type { SpriteManager } from "@/game/Sprites";
 
 export class Ball {
   x: number;
@@ -75,7 +76,12 @@ export class Ball {
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
+  draw(ctx: CanvasRenderingContext2D, sprites?: SpriteManager) {
+    const frame = Math.abs(Math.floor(this.rotation * 5)) % 8;
+    if (sprites?.drawFrame(ctx, "ball", frame, this.x - 17, this.y - 17, 34, 34)) {
+      return;
+    }
+
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.rotate(this.rotation);
