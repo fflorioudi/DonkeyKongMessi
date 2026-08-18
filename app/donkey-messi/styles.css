@@ -347,6 +347,33 @@
   line-height: 1.35;
 }
 
+.scoreSummary {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr auto;
+  gap: 6px 14px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(248, 251, 255, 0.08);
+  color: rgba(248, 251, 255, 0.74);
+  font-size: 13px;
+}
+
+.scoreSummary strong {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.recordBadge {
+  display: inline-block;
+  margin-left: 6px;
+  color: #ffe45c;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
 .overlayPanel .eyebrow {
   color: #ffe45c;
   font-size: 12px;

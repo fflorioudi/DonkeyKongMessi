@@ -68,6 +68,11 @@ export type HudSnapshot = {
   lives: number;
   score: number;
   highScore: number;
+  elapsedTime: number;
+  bestTime: number;
+  scoreBreakdown: ScoreBreakdown;
+  isNewHighScore: boolean;
+  isNewBestTime: boolean;
   message: string;
   audioEnabled: boolean;
   level: number;
@@ -76,4 +81,12 @@ export type HudSnapshot = {
 
 export type GameSnapshot = HudSnapshot & {
   canClimb: boolean;
+};
+
+export type ScoreBreakdown = {
+  progress: number;
+  completion: number;
+  lives: number;
+  time: number;
+  total: number;
 };

@@ -218,7 +218,7 @@ Entregables:
 
 - Spritesheets PNG separados para Messi, Cristiano, pelota, Copa, plataformas, escalera y hazards.
 - Metadata en `public/sprites/sprites.json`.
-- Pipeline deterministica en `scripts/generate-sprite-assets.mjs`.
+- Pipeline HD en `scripts/extract-hd-sprite-assets.py`.
 - Render con `SpriteManager`.
 - QA automatico en `npm run qa:v2.6`.
 - QA documentado en `docs/QA_V26.md`.
@@ -233,19 +233,32 @@ Criterio de cierre:
 
 Objetivo: darle motivo para repetir el nivel antes de crear nuevos escenarios.
 
+Estado: en cierre tecnico.
+
 Alcance:
 
-- High score persistente ya iniciado.
-- Mejorar calculo de puntos.
+- High score persistente.
+- Mejor calculo de puntos.
 - Bonus por terminar con vidas restantes.
 - Bonus por tiempo.
-- Guardar mejor tiempo local.
-- Mostrar resumen al completar nivel.
+- Mejor tiempo local persistente.
+- Resumen al completar nivel.
+
+Entregables:
+
+- Cronometro en HUD.
+- Desglose de puntos: progreso, meta, vidas y tiempo.
+- Badges de nuevo maximo y nuevo mejor tiempo.
+- Records persistidos en `localStorage`.
+- Resumen de victoria y marcas en Game Over.
+- QA automatico en `npm run qa:v2.7`.
+- QA documentado en `docs/QA_V27.md`.
 
 Criterio de cierre:
 
 - Completar mas rapido o con mas vidas mejora el resultado.
 - El jugador puede intentar superar su marca.
+- El resumen explica el puntaje sin agregar friccion.
 
 ## V2.8 - Preparacion Para Multiples Niveles
 

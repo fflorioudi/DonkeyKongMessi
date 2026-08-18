@@ -18,6 +18,17 @@ const initialSnapshot: GameSnapshot = {
   lives: 3,
   score: 0,
   highScore: 0,
+  elapsedTime: 0,
+  bestTime: 0,
+  scoreBreakdown: {
+    progress: 0,
+    completion: 0,
+    lives: 0,
+    time: 0,
+    total: 0,
+  },
+  isNewHighScore: false,
+  isNewBestTime: false,
   message: "",
   audioEnabled: true,
   level: 1,
@@ -152,10 +163,10 @@ export default function DonkeyMessiPage() {
           </>
         )}
 
-        {snapshot.status === "gameOver" && <GameOver score={snapshot.score} onRestart={restartGame} onMenu={showMenu} />}
+        {snapshot.status === "gameOver" && <GameOver snapshot={snapshot} onRestart={restartGame} onMenu={showMenu} />}
         {snapshot.status === "paused" && <Pause onResume={resumeGame} onRestart={restartGame} onMenu={showMenu} />}
         {snapshot.status === "levelComplete" && (
-          <Victory score={snapshot.score} onRestart={restartGame} onMenu={showMenu} />
+          <Victory snapshot={snapshot} onRestart={restartGame} onMenu={showMenu} />
         )}
 
         <TouchControls input={inputManager} canClimb={snapshot.canClimb} disabled={!isPlaying} />

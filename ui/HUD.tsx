@@ -16,7 +16,7 @@ export function HUD({ snapshot }: HUDProps) {
         <strong>x{snapshot.lives}</strong>
       </div>
       <div>
-        <span className="hudLabel">Pts / Max</span>
+        <span className="hudLabel">T {formatTime(snapshot.elapsedTime)}</span>
         <strong>
           {snapshot.score}/{snapshot.highScore}
         </strong>
@@ -24,4 +24,8 @@ export function HUD({ snapshot }: HUDProps) {
       {snapshot.message && <div className="hudMessage">{snapshot.message}</div>}
     </div>
   );
+}
+
+function formatTime(seconds: number) {
+  return `${Math.max(0, seconds).toFixed(1)}s`;
 }

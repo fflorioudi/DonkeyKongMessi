@@ -395,7 +395,7 @@ Estado: cerrada tecnicamente.
 
 ### V2.6
 
-Estado: en cierre tecnico, con pase HD estilo Super Milo J aplicado.
+Estado: cerrada tecnicamente, con pase HD estilo Super Milo J aplicado.
 
 - Spritesheets PNG separados para Messi, Cristiano, pelota, Copa, plataformas, escalera y hazards.
 - Messi en 280x360 con 8 frames HD: idle, run, jump, climb, hit y victory.
@@ -410,9 +410,22 @@ Estado: en cierre tecnico, con pase HD estilo Super Milo J aplicado.
 - QA automatico con `npm run qa:v2.6`.
 - QA de arte documentado en `docs/QA_V26.md`.
 
+### V2.7
+
+Estado: en cierre tecnico.
+
+- Tiempo de partida visible en HUD.
+- Mejor tiempo local persistido en `localStorage`.
+- Puntaje dividido entre progreso, meta, vidas restantes y bonus por tiempo.
+- Bonus de cierre para premiar partidas mas limpias y rapidas.
+- Badges de nuevo maximo y nuevo mejor tiempo.
+- Resumen de puntos en victoria y registros visibles en Game Over.
+- QA automatico con `npm run qa:v2.7`.
+- QA de persistencia documentado en `docs/QA_V27.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.6 en telefono real y luego avanzar a V2.7: persistencia y rejugabilidad minima.
+Playtest manual de V2.7 en telefono real y luego avanzar a V2.8: preparacion para multiples niveles.
 
 ## Roadmap
 

@@ -8,6 +8,11 @@ import type { GameSnapshot, GameStatus, HudSnapshot, Ladder, LevelDefinition, Re
 
 const INITIAL_LIVES = 3;
 const HIGH_SCORE_KEY = "donkey-messi-high-score";
+const BEST_TIME_KEY = "donkey-messi-best-time";
+const COMPLETION_BONUS = 1000;
+const LIFE_BONUS = 350;
+const TIME_PAR_SECONDS = 90;
+const TIME_BONUS_PER_SECOND = 22;
 
 type FloatText = {
   x: number;
@@ -30,7 +35,12 @@ export class Game {
   private lives = INITIAL_LIVES;
   private score = 0;
   private highScore = 0;
+  private bestTime = 0;
+  private elapsedTime = 0;
   private bestY: number;
+  private scoreBreakdown = createEmptyBreakdown();
+  private isNewHighScore = false;
+  private isNewBestTime = false;
   private lastSnapshotKey = "";
   private onSnapshot: (snapshot: GameSnapshot) => void;
   private animationFrame = 0;
@@ -64,6 +74,7 @@ export class Game {
     this.balls = [];
     this.onSnapshot = onSnapshot;
     this.highScore = this.loadHighScore();
+    this.bestTime = this.loadBestTime();
     this.resize();
     this.emitSnapshot(true);
   }
@@ -103,7 +114,11 @@ export class Game {
     this.status = "playing";
     this.lives = INITIAL_LIVES;
     this.score = 0;
+    this.elapsedTime = 0;
     this.bestY = this.level.playerSpawn.y;
+    this.scoreBreakdown = createEmptyBreakdown();
+    this.isNewHighScore = false;
+    this.isNewBestTime = false;
     this.hitCooldown = 0;
     this.respawnGrace = 0;
     this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
@@ -133,6 +148,12 @@ export class Game {
     this.throwCue = 0;
     this.message = "";
     this.messageTimer = 0;
+    this.elapsedTime = 0;
+    this.score = 0;
+    this.bestY = this.level.playerSpawn.y;
+    this.scoreBreakdown = createEmptyBreakdown();
+    this.isNewHighScore = false;
+    this.isNewBestTime = false;
     this.floatTexts = [];
     this.player.reset(this.level.playerSpawn);
     this.balls = [];
@@ -174,6 +195,7 @@ export class Game {
     this.goalFlash = Math.max(0, this.goalFlash - dt);
     this.throwCue = Math.max(0, this.throwCue - dt);
     this.messageTimer = Math.max(0, this.messageTimer - dt);
+    this.elapsedTime += dt;
     if (this.messageTimer === 0) {
       this.message = "";
     }
@@ -206,14 +228,7 @@ export class Game {
     }
 
     if (rectsOverlap(this.player.rect, this.level.goal)) {
-      this.status = "levelComplete";
-      this.score += 1000;
-      this.goalFlash = 1.4;
-      this.addFloatText(this.level.goal.x + this.level.goal.width / 2, this.level.goal.y + 8, "+1000", "#ffe45c");
-      this.setMessage("Nivel completo", 2.4);
-      this.audio.playVictory();
-      this.recordHighScore();
-      this.input.reset();
+      this.completeLevel();
     }
   }
 
@@ -241,12 +256,39 @@ export class Game {
   }
 
   private updateScore(dt: number) {
-    this.score += dt * 8;
+    const survivalPoints = dt * 8;
+    this.score += survivalPoints;
+    this.scoreBreakdown.progress += survivalPoints;
 
     if (this.player.y < this.bestY) {
-      this.score += (this.bestY - this.player.y) * 2;
+      const climbPoints = (this.bestY - this.player.y) * 2;
+      this.score += climbPoints;
+      this.scoreBreakdown.progress += climbPoints;
       this.bestY = this.player.y;
     }
+  }
+
+  private completeLevel() {
+    const lifeBonus = this.lives * LIFE_BONUS;
+    const timeBonus = Math.max(0, Math.round((TIME_PAR_SECONDS - this.elapsedTime) * TIME_BONUS_PER_SECOND));
+    const totalBonus = COMPLETION_BONUS + lifeBonus + timeBonus;
+
+    this.status = "levelComplete";
+    this.score += totalBonus;
+    this.scoreBreakdown = {
+      progress: Math.floor(this.scoreBreakdown.progress),
+      completion: COMPLETION_BONUS,
+      lives: lifeBonus,
+      time: timeBonus,
+      total: Math.floor(this.score),
+    };
+    this.goalFlash = 1.4;
+    this.addFloatText(this.level.goal.x + this.level.goal.width / 2, this.level.goal.y + 8, `+${totalBonus}`, "#ffe45c");
+    this.setMessage("Nivel completo", 2.4);
+    this.audio.playVictory();
+    this.recordBestTime();
+    this.recordHighScore();
+    this.input.reset();
   }
 
   private loadHighScore() {
@@ -257,17 +299,45 @@ export class Game {
     }
   }
 
+  private loadBestTime() {
+    try {
+      return Number(window.localStorage.getItem(BEST_TIME_KEY) || 0);
+    } catch {
+      return 0;
+    }
+  }
+
   private recordHighScore() {
     const roundedScore = Math.floor(this.score);
 
     if (roundedScore <= this.highScore) {
+      this.isNewHighScore = false;
       return;
     }
 
     this.highScore = roundedScore;
+    this.isNewHighScore = true;
 
     try {
       window.localStorage.setItem(HIGH_SCORE_KEY, String(this.highScore));
+    } catch {
+      // Storage can fail in private contexts; gameplay should continue.
+    }
+  }
+
+  private recordBestTime() {
+    const roundedTime = Number(this.elapsedTime.toFixed(2));
+
+    if (this.bestTime > 0 && roundedTime >= this.bestTime) {
+      this.isNewBestTime = false;
+      return;
+    }
+
+    this.bestTime = roundedTime;
+    this.isNewBestTime = true;
+
+    try {
+      window.localStorage.setItem(BEST_TIME_KEY, String(this.bestTime));
     } catch {
       // Storage can fail in private contexts; gameplay should continue.
     }
@@ -514,6 +584,17 @@ export class Game {
       lives: this.lives,
       score: Math.floor(this.score),
       highScore: Math.max(this.highScore, Math.floor(this.score)),
+      elapsedTime: Number(this.elapsedTime.toFixed(1)),
+      bestTime: this.bestTime,
+      scoreBreakdown: {
+        progress: Math.floor(this.scoreBreakdown.progress),
+        completion: this.scoreBreakdown.completion,
+        lives: this.scoreBreakdown.lives,
+        time: this.scoreBreakdown.time,
+        total: Math.floor(this.score),
+      },
+      isNewHighScore: this.isNewHighScore,
+      isNewBestTime: this.isNewBestTime,
       message: this.message,
       audioEnabled: this.audio.enabled,
       level: this.level.id,
@@ -550,4 +631,14 @@ function platformFrame(color?: string) {
     default:
       return 0;
   }
+}
+
+function createEmptyBreakdown() {
+  return {
+    progress: 0,
+    completion: 0,
+    lives: 0,
+    time: 0,
+    total: 0,
+  };
 }
