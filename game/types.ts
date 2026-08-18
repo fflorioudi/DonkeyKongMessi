@@ -76,7 +76,14 @@ export type ObstacleSpawnerDefinition = {
   interval: number;
   firstDelay: number;
   maxActive: number;
+  spawnDelayMs?: SpawnDelayRangeDefinition;
   obstacle: ObstacleDefinition;
+};
+
+export type SpawnDelayRangeDefinition = {
+  initial: number;
+  min: number;
+  max: number;
 };
 
 export type LevelDefinition = {

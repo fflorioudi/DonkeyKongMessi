@@ -70,7 +70,7 @@ export const levels: LevelDefinition[] = [
       y: 97,
       interval: 3.6,
       firstDelay: 1.2,
-      maxActive: 3,
+      maxActive: 8,
       ball: {
         radius: 13,
         speed: 104,
@@ -84,7 +84,12 @@ export const levels: LevelDefinition[] = [
         y: 97,
         interval: 3.6,
         firstDelay: 1.2,
-        maxActive: 3,
+        maxActive: 8,
+        spawnDelayMs: {
+          initial: 1200,
+          min: 2200,
+          max: 4200,
+        },
         obstacle: {
           kind: "ball",
           radius: 13,

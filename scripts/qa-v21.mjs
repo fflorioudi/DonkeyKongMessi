@@ -81,7 +81,7 @@ pass(
 );
 pass("ball spawner starts after player can react", firstDelay >= 1, `firstDelay=${firstDelay}`);
 pass("ball interval is readable for v2.1", interval >= 3.4, `interval=${interval}`);
-pass("active balls capped for mobile readability", maxActive <= 3, `maxActive=${maxActive}`);
+pass("active balls keep a safety cap", maxActive <= 8, `maxActive=${maxActive}`);
 pass("movement remains arcade but controllable", moveSpeed >= 220 && moveSpeed <= 250, `moveSpeed=${moveSpeed}`);
 pass("climb speed is slower than run speed", climbSpeed < moveSpeed, `climbSpeed=${climbSpeed}, moveSpeed=${moveSpeed}`);
 

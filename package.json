@@ -18,6 +18,7 @@
     "qa:v3.0": "node scripts/qa-v30.mjs",
     "qa:v3.1": "node scripts/qa-v31.mjs",
     "qa:v3.2": "node scripts/qa-v32.mjs",
+    "qa:v3.2.1": "node scripts/qa-v321.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

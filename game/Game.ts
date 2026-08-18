@@ -380,14 +380,14 @@ export class Game {
 
   private updateObstacleSpawnTimers(dt: number) {
     this.level.obstacleSpawners.forEach((spawner) => {
-      const current = this.obstacleSpawnTimers.get(spawner.id) ?? spawner.firstDelay;
+      const current = this.obstacleSpawnTimers.get(spawner.id) ?? initialSpawnDelaySeconds(spawner);
       this.obstacleSpawnTimers.set(spawner.id, current - dt);
     });
   }
 
   private spawnObstaclesIfReady() {
     this.level.obstacleSpawners.forEach((spawner) => {
-      const timer = this.obstacleSpawnTimers.get(spawner.id) ?? spawner.firstDelay;
+      const timer = this.obstacleSpawnTimers.get(spawner.id) ?? initialSpawnDelaySeconds(spawner);
       const activeFromSpawner = this.obstacles.filter((obstacle) => obstacle.spawnerId === spawner.id).length;
 
       if (timer > 0 || activeFromSpawner >= spawner.maxActive) {
@@ -410,7 +410,7 @@ export class Game {
     this.throwCue = 0.45;
     this.addFloatText(spawner.x - 14, spawner.y - 16, "PELIGRO", "#ffe45c");
     this.audio.playThrow();
-    this.obstacleSpawnTimers.set(spawner.id, spawner.interval);
+    this.obstacleSpawnTimers.set(spawner.id, nextSpawnDelaySeconds(spawner));
   }
 
   private updateFloatTexts(dt: number) {
@@ -701,7 +701,23 @@ function bestTimeKey(level: LevelDefinition) {
 }
 
 function createObstacleSpawnTimers(level: LevelDefinition) {
-  return new Map(level.obstacleSpawners.map((spawner) => [spawner.id, spawner.firstDelay]));
+  return new Map(level.obstacleSpawners.map((spawner) => [spawner.id, initialSpawnDelaySeconds(spawner)]));
+}
+
+function initialSpawnDelaySeconds(spawner: ObstacleSpawnerDefinition) {
+  return (spawner.spawnDelayMs?.initial ?? spawner.firstDelay * 1000) / 1000;
+}
+
+function nextSpawnDelaySeconds(spawner: ObstacleSpawnerDefinition) {
+  const range = spawner.spawnDelayMs;
+
+  if (!range) {
+    return spawner.interval;
+  }
+
+  const min = Math.min(range.min, range.max);
+  const max = Math.max(range.min, range.max);
+  return (min + Math.random() * (max - min)) / 1000;
 }
 
 function clamp(value: number, min: number, max: number) {

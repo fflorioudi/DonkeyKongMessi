@@ -132,6 +132,26 @@ Criterio de cierre:
 - El respawn vuelve a una vista limpia.
 - El tutorial funciona como base para mundos verticales.
 
+### V3.2.1 - Frecuencia Variable De Pelotas
+
+Objetivo: cambiar el ritmo fijo de pelotas por un rango de aparicion mas organico.
+
+Estado: en cierre tecnico.
+
+Alcance:
+
+- Agregar `spawnDelayMs` opcional a `ObstacleSpawnerDefinition`.
+- Pelotas con delay inicial y rango aleatorio para los siguientes lanzamientos.
+- Mantener `maxActive` como seguro tecnico, no como ritmo principal.
+- Conservar fallback a `interval` para spawners simples.
+
+Criterio de cierre:
+
+- La primera pelota mantiene lectura clara.
+- Las siguientes salen entre `2200 ms` y `4200 ms`.
+- No se acumulan pelotas infinitas.
+- V3.2 de camara vertical sigue estable.
+
 ## V3.3 - Power-Up Basico
 
 Objetivo: agregar una ventaja simple que cambie decisiones sin complicar controles.

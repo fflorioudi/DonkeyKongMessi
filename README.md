@@ -496,9 +496,22 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.2`.
 - QA documentado en `docs/QA_V32.md`.
 
+### V3.2.1
+
+Estado: en cierre tecnico.
+
+- Frecuencia variable para las pelotas de Cristiano.
+- Primera pelota a `1200 ms`.
+- Siguientes pelotas en rango aleatorio `2200-4200 ms`.
+- `maxActive` de pelotas sube a `8`, usado solo como seguro tecnico.
+- `ObstacleSpawnerDefinition` acepta `spawnDelayMs`.
+- Los spawners sin rango conservan `interval` fijo.
+- QA automatico con `npm run qa:v3.2.1`.
+- QA documentado en `docs/QA_V321.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.2 en telefono real. Si la camara vertical se siente comoda, avanzar a V3.3: power-up basico.
+Playtest manual de V3.2.1 en telefono real. Si la frecuencia se siente justa, avanzar a V3.3: power-up basico.
 
 ## Roadmap
 
