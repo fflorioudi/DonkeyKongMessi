@@ -126,7 +126,7 @@ export class Player {
     ctx.save();
     ctx.globalAlpha = isProtected ? 0.58 : 1;
 
-    if (sprites?.drawFrame(ctx, "messi", frame, body.x - 14, body.y - 26, 56, 70, this.facing === -1)) {
+    if (sprites?.drawTrimmedFrame(ctx, "messi", frame, body.x - 9, body.y - 18, 46, 58, this.facing === -1)) {
       if (isProtected) {
         ctx.strokeStyle = "#ffe45c";
         ctx.lineWidth = 2;

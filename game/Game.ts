@@ -325,7 +325,7 @@ export class Game {
       ctx.save();
       const isActive = activeLadder === ladder;
       const ladderFrame = isActive ? 1 : 0;
-      const ladderDrawn = this.sprites.drawFrame(ctx, "ladder", ladderFrame, ladder.x - 3, ladder.y, ladder.width + 6, ladder.height);
+      const ladderDrawn = this.sprites.drawTrimmedFrame(ctx, "ladder", ladderFrame, ladder.x - 1, ladder.y, ladder.width + 2, ladder.height);
 
       if (!ladderDrawn) {
         ctx.fillStyle = isActive ? "#ffe45c" : "#bd7f32";
@@ -350,7 +350,7 @@ export class Game {
     this.level.platforms.forEach((platform) => {
       ctx.save();
       const frame = platformFrame(platform.color);
-      if (!this.sprites.drawFrame(ctx, "platforms", frame, platform.x - 8, platform.y - 18, platform.width + 16, 52)) {
+      if (!this.sprites.drawTrimmedFrame(ctx, "platforms", frame, platform.x - 5, platform.y, platform.width + 10, 30)) {
         ctx.fillStyle = platform.color || "#ffffff";
         ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
         ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
@@ -412,13 +412,13 @@ export class Game {
     const goal = this.level.goal;
 
     ctx.save();
-    const frame = this.sprites.animationFrame("worldcup", "glow", this.lastTime / 1000, 5);
-    if (this.sprites.drawFrame(ctx, "worldcup", frame, goal.x + 12, goal.y - 10, 48, 62)) {
+    const frame = this.sprites.animationFrame("worldcup", "glow", this.lastTime / 1000, 7);
+    if (this.sprites.drawTrimmedFrame(ctx, "worldcup", frame, goal.x + 20, goal.y + 2, 32, 46)) {
       if (this.status === "playing") {
         const pulse = 1 + Math.sin(performance.now() / 170) * 0.08;
         ctx.strokeStyle = "#ffe45c";
         ctx.lineWidth = 2;
-        ctx.strokeRect(goal.x + 16 - 4 * pulse, goal.y - 4 * pulse, 40 + 8 * pulse, 56 + 8 * pulse);
+        ctx.strokeRect(goal.x + 18 - 3 * pulse, goal.y - 1 - 3 * pulse, 36 + 6 * pulse, 52 + 6 * pulse);
       }
       ctx.restore();
       return;
@@ -446,14 +446,14 @@ export class Game {
 
   private drawCristiano(ctx: CanvasRenderingContext2D) {
     ctx.save();
-    ctx.translate(292, 58);
+    ctx.translate(300, 52);
     if (this.throwCue > 0) {
       ctx.fillStyle = `rgba(255, 228, 92, ${this.throwCue})`;
-      ctx.fillRect(-10, -14, 62, 76);
+      ctx.fillRect(-8, -6, 52, 62);
     }
     const animation = this.throwCue > 0 ? "throw" : "idle";
-    const frame = this.sprites.animationFrame("cristiano", animation, this.lastTime / 1000, 10);
-    if (this.sprites.drawFrame(ctx, "cristiano", frame, -8, -16, 56, 70)) {
+    const frame = this.sprites.animationFrame("cristiano", animation, this.lastTime / 1000, this.throwCue > 0 ? 4 : 2);
+    if (this.sprites.drawTrimmedFrame(ctx, "cristiano", frame, -10, 0, 50, 58, true)) {
       ctx.restore();
       return;
     }

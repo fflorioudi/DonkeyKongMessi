@@ -78,7 +78,7 @@ export class Ball {
 
   draw(ctx: CanvasRenderingContext2D, sprites?: SpriteManager) {
     const frame = Math.abs(Math.floor(this.rotation * 5)) % 8;
-    if (sprites?.drawFrame(ctx, "ball", frame, this.x - 17, this.y - 17, 34, 34)) {
+    if (sprites?.drawTrimmedFrame(ctx, "ball", frame, this.x - 16, this.y - 16, 32, 32)) {
       return;
     }
 

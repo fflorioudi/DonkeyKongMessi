@@ -57,11 +57,13 @@ pass("cristiano has HD frame count", metadata.sheets.cristiano.frames >= 8);
 pass("cristiano frame size upgraded to HD", metadata.sheets.cristiano.frameWidth >= 260 && metadata.sheets.cristiano.frameHeight >= 320);
 pass("cristiano has throw sequence", metadata.sheets.cristiano.animations.throw.length >= 4);
 pass("ball has 8 rolling frames", metadata.sheets.ball.frames >= 8);
+pass("worldcup has smoother frame count", metadata.sheets.worldcup.frames >= 12);
 pass("platform tiles are high resolution", metadata.sheets.platforms.frameWidth >= 300 && metadata.sheets.platforms.frameHeight >= 140);
 pass("sprite manager disables smoothing", spriteSource.includes("imageSmoothingEnabled = false"));
+pass("sprite manager supports trimmed drawing", spriteSource.includes("drawTrimmedFrame"));
 pass("game loads sprite manager", gameSource.includes("new SpriteManager"));
-pass("player uses messi spritesheet", playerSource.includes("\"messi\"") && playerSource.includes("drawFrame"));
-pass("ball uses ball spritesheet", ballSource.includes("\"ball\"") && ballSource.includes("drawFrame"));
+pass("player uses trimmed messi spritesheet", playerSource.includes("\"messi\"") && playerSource.includes("drawTrimmedFrame"));
+pass("ball uses trimmed ball spritesheet", ballSource.includes("\"ball\"") && ballSource.includes("drawTrimmedFrame"));
 pass("game uses world cup sprite", gameSource.includes("\"worldcup\""));
 pass("game uses platform and ladder sprites", gameSource.includes("\"platforms\"") && gameSource.includes("\"ladder\""));
 

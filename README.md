@@ -400,7 +400,8 @@ Estado: en cierre tecnico, con pase HD estilo Super Milo J aplicado.
 - Spritesheets PNG separados para Messi, Cristiano, pelota, Copa, plataformas, escalera y hazards.
 - Messi en 280x360 con 8 frames HD: idle, run, jump, climb, hit y victory.
 - Cristiano en 280x360 con 8 frames HD: idle, taunt y throw.
-- Pelota con 8 frames de giro, Copa con brillo y tiles de plataformas 320x150.
+- Pelota con 8 frames de giro, Copa con 12 frames de brillo y tiles de plataformas 320x150.
+- Render por trims para alinear pies, top visible de plataformas y hitboxes.
 - Referencias HD guardadas en `public/sprites/source/`.
 - Preview visual en `public/sprites/preview-v26-hd.png`.
 - Pipeline de extraccion HD en `scripts/extract-hd-sprite-assets.py`.

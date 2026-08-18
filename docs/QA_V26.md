@@ -9,7 +9,7 @@ Ubicacion: `public/sprites/`
 - `messi.png`: 8 frames HD, idle, run, jump, climb, hit y victory.
 - `cristiano.png`: 8 frames HD, idle, taunt y throw con pelota.
 - `ball.png`: 8 frames de pelota rodando.
-- `worldcup.png`: 6 frames de Copa con brillo.
+- `worldcup.png`: 12 frames de Copa con brillo ping-pong.
 - `platforms.png`: tiles de plataformas por color.
 - `ladder.png`: escalera normal y activa sin aura externa.
 - `hazards.png`: pinches.
@@ -25,7 +25,7 @@ Comando:
 node scripts/generate-sprite-assets.mjs
 ```
 
-Los PNGs finales se extrajeron desde referencias HD y se normalizaron con celdas fijas, transparencia real, pivotes declarados y `imageSmoothingEnabled = false` en render.
+Los PNGs finales se extrajeron desde referencias HD y se normalizaron con celdas fijas, transparencia real, pivotes declarados, trims por frame y `imageSmoothingEnabled = false` en render.
 
 ## QA Automatico
 
@@ -41,7 +41,8 @@ Valida:
 - Tamano de grilla correcto.
 - Metadata de animaciones.
 - Metadata de pivotes.
-- Minimos de calidad: Messi y Cristiano con frames HD de al menos 260x320, pelota con 8 frames y plataformas de al menos 300x140.
+- Metadata de trims para que el render use solo el contenido visible.
+- Minimos de calidad: Messi y Cristiano con frames HD de al menos 260x320, pelota con 8 frames, Copa con 12 frames y plataformas de al menos 300x140.
 - Existencia del preview sheet.
 - Uso de `SpriteManager`.
 - Uso de sprites en Messi, pelota, Copa, plataformas y escaleras.
@@ -56,8 +57,11 @@ Valida:
 5. Confirmar que Cristiano cambia al lanzar.
 6. Confirmar que la pelota usa spritesheet.
 7. Confirmar que plataformas y escaleras mantienen lectura clara.
-8. Confirmar que todo sigue fluido en mobile.
-9. Revisar `public/sprites/preview-v26-hd.png` antes de push.
+8. Confirmar que el top visible de cada plataforma coincide con la colision.
+9. Confirmar que Messi no queda flotando sobre plataformas.
+10. Confirmar que Cristiano mira hacia el lado del escenario y que el throw se aprecia lento.
+11. Confirmar que todo sigue fluido en mobile.
+12. Revisar `public/sprites/preview-v26-hd.png` antes de push.
 
 ## Criterio De Cierre V2.6
 
