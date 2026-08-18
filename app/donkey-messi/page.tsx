@@ -126,7 +126,7 @@ export default function DonkeyMessiPage() {
             <div className="coverShade" />
             {!showTraining ? (
               <div className="menuPanel">
-                <p className="eyebrow">Mobile v2.9 candidate</p>
+                <p className="eyebrow">Mobile v3.0</p>
                 <h1>Donkey Kong: Edicion Messi</h1>
                 <div className={`levelPicker ${canSelectLevel ? "" : "isSingle"}`} aria-label="Selector de nivel">
                   {canSelectLevel && (

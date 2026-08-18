@@ -44,6 +44,32 @@ export type BallSpawnerDefinition = {
   ball: Omit<BallDefinition, "x" | "y">;
 };
 
+export type ObstacleKind = "ball" | "red-card" | "boot" | "glove" | "fixed-hazard";
+
+export type BallObstacleDefinition = Omit<BallDefinition, "x" | "y"> & {
+  kind: "ball";
+};
+
+export type FutureObstacleDefinition = {
+  kind: Exclude<ObstacleKind, "ball">;
+  width: number;
+  height: number;
+  speed?: number;
+  direction?: -1 | 1;
+};
+
+export type ObstacleDefinition = BallObstacleDefinition | FutureObstacleDefinition;
+
+export type ObstacleSpawnerDefinition = {
+  id: string;
+  x: number;
+  y: number;
+  interval: number;
+  firstDelay: number;
+  maxActive: number;
+  obstacle: ObstacleDefinition;
+};
+
 export type LevelDefinition = {
   id: number;
   name: string;
@@ -58,6 +84,7 @@ export type LevelDefinition = {
   platforms: Platform[];
   ladders: Ladder[];
   ballSpawner: BallSpawnerDefinition;
+  obstacleSpawners: ObstacleSpawnerDefinition[];
   goal: Goal;
 };
 

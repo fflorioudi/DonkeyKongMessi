@@ -62,6 +62,22 @@ export const levels: LevelDefinition[] = [
         direction: -1,
       },
     },
+    obstacleSpawners: [
+      {
+        id: "ronaldo-opening-ball",
+        x: 316,
+        y: 97,
+        interval: 3.6,
+        firstDelay: 1.2,
+        maxActive: 3,
+        obstacle: {
+          kind: "ball",
+          radius: 13,
+          speed: 104,
+          direction: -1,
+        },
+      },
+    ],
     goal: {
       x: 148,
       y: 60,

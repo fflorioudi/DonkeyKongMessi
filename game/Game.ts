@@ -1,10 +1,10 @@
-import { Ball } from "@/entities/Ball";
+import { Obstacle } from "@/entities/Obstacle";
 import { Player } from "@/entities/Player";
 import { AudioManager } from "./Audio";
-import { circleRectOverlap, rectsOverlap } from "./collision";
+import { rectsOverlap } from "./collision";
 import { InputManager } from "./Input";
 import { SpriteManager } from "./Sprites";
-import type { GameSnapshot, GameStatus, HudSnapshot, Ladder, LevelDefinition, Rect } from "./types";
+import type { GameSnapshot, GameStatus, HudSnapshot, Ladder, LevelDefinition, ObstacleSpawnerDefinition, Rect } from "./types";
 
 const LEGACY_HIGH_SCORE_KEY = "donkey-messi-high-score";
 const LEGACY_BEST_TIME_KEY = "donkey-messi-best-time";
@@ -27,7 +27,7 @@ export class Game {
   private levelIndex: number;
   private level: LevelDefinition;
   private player: Player;
-  private balls: Ball[];
+  private obstacles: Obstacle[];
   private status: GameStatus = "menu";
   private lives = 0;
   private score = 0;
@@ -44,7 +44,7 @@ export class Game {
   private lastTime = 0;
   private hitCooldown = 0;
   private respawnGrace = 0;
-  private ballSpawnTimer = 0;
+  private obstacleSpawnTimers = new Map<string, number>();
   private hitFlash = 0;
   private goalFlash = 0;
   private throwCue = 0;
@@ -76,7 +76,7 @@ export class Game {
     this.lives = this.level.difficulty.initialLives;
     this.player = new Player(this.level.playerSpawn);
     this.bestY = this.level.playerSpawn.y;
-    this.balls = [];
+    this.obstacles = [];
     this.onSnapshot = onSnapshot;
     this.highScore = this.loadHighScore();
     this.bestTime = this.loadBestTime();
@@ -139,7 +139,7 @@ export class Game {
     void this.audio.unlock().then(() => this.audio.playStart());
     this.status = "playing";
     this.resetRunState();
-    this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
+    this.obstacleSpawnTimers = createObstacleSpawnTimers(this.level);
     this.setMessage("Subi por las escaleras", 1.8);
     this.emitSnapshot(true);
   }
@@ -154,7 +154,7 @@ export class Game {
     this.isNewBestTime = false;
     this.hitCooldown = 0;
     this.respawnGrace = 0;
-    this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
+    this.obstacleSpawnTimers = createObstacleSpawnTimers(this.level);
     this.hitFlash = 0;
     this.goalFlash = 0;
     this.throwCue = 0;
@@ -162,7 +162,7 @@ export class Game {
     this.messageTimer = 0;
     this.floatTexts = [];
     this.player.reset(this.level.playerSpawn);
-    this.balls = [];
+    this.obstacles = [];
     this.input.reset();
   }
 
@@ -175,7 +175,7 @@ export class Game {
     this.status = "menu";
     this.hitCooldown = 0;
     this.respawnGrace = 0;
-    this.ballSpawnTimer = 0;
+    this.obstacleSpawnTimers = new Map();
     this.hitFlash = 0;
     this.goalFlash = 0;
     this.throwCue = 0;
@@ -224,7 +224,7 @@ export class Game {
       this.message = "";
     }
     this.updateFloatTexts(dt);
-    this.ballSpawnTimer -= dt;
+    this.updateObstacleSpawnTimers(dt);
     const input = this.input.snapshot();
     const canJumpBeforeUpdate = input.jump && (this.player.grounded || this.player.state === "climb");
 
@@ -233,9 +233,11 @@ export class Game {
       this.audio.playJump();
     }
     this.updateScore(dt);
-    this.spawnBallIfReady();
-    this.balls.forEach((ball) => ball.update(dt, this.level.platforms, this.level.worldWidth, this.level.worldHeight));
-    this.balls = this.balls.filter((ball) => ball.alive);
+    this.spawnObstaclesIfReady();
+    this.obstacles.forEach((obstacle) =>
+      obstacle.update(dt, this.level.platforms, this.level.worldWidth, this.level.worldHeight),
+    );
+    this.obstacles = this.obstacles.filter((obstacle) => obstacle.alive);
 
     if (this.player.y > this.level.worldHeight + 80) {
       this.damagePlayer();
@@ -243,8 +245,8 @@ export class Game {
     }
 
     if (this.hitCooldown === 0 && this.respawnGrace === 0) {
-      for (const ball of this.balls) {
-        if (circleRectOverlap(ball, this.player.rect)) {
+      for (const obstacle of this.obstacles) {
+        if (obstacle.collidesWith(this.player.rect)) {
           this.damagePlayer();
           return;
         }
@@ -273,8 +275,8 @@ export class Game {
     }
 
     this.player.reset(this.level.playerSpawn);
-    this.balls = [];
-    this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
+    this.obstacles = [];
+    this.obstacleSpawnTimers = createObstacleSpawnTimers(this.level);
     this.respawnGrace = 1.1;
     this.input.reset();
   }
@@ -372,26 +374,39 @@ export class Game {
     }
   }
 
-  private spawnBallIfReady() {
-    if (
-      this.ballSpawnTimer > 0 ||
-      this.balls.length >= this.level.ballSpawner.maxActive
-    ) {
-      return;
-    }
+  private updateObstacleSpawnTimers(dt: number) {
+    this.level.obstacleSpawners.forEach((spawner) => {
+      const current = this.obstacleSpawnTimers.get(spawner.id) ?? spawner.firstDelay;
+      this.obstacleSpawnTimers.set(spawner.id, current - dt);
+    });
+  }
 
-    const spawner = this.level.ballSpawner;
-    this.balls.push(
-      new Ball({
+  private spawnObstaclesIfReady() {
+    this.level.obstacleSpawners.forEach((spawner) => {
+      const timer = this.obstacleSpawnTimers.get(spawner.id) ?? spawner.firstDelay;
+      const activeFromSpawner = this.obstacles.filter((obstacle) => obstacle.spawnerId === spawner.id).length;
+
+      if (timer > 0 || activeFromSpawner >= spawner.maxActive) {
+        return;
+      }
+
+      this.spawnObstacle(spawner);
+    });
+  }
+
+  private spawnObstacle(spawner: ObstacleSpawnerDefinition) {
+    this.obstacles.push(
+      new Obstacle({
+        spawnerId: spawner.id,
         x: spawner.x,
         y: spawner.y,
-        ...spawner.ball,
+        obstacle: spawner.obstacle,
       }),
     );
     this.throwCue = 0.45;
     this.addFloatText(spawner.x - 14, spawner.y - 16, "PELIGRO", "#ffe45c");
     this.audio.playThrow();
-    this.ballSpawnTimer = spawner.interval;
+    this.obstacleSpawnTimers.set(spawner.id, spawner.interval);
   }
 
   private updateFloatTexts(dt: number) {
@@ -459,7 +474,7 @@ export class Game {
     });
 
     this.drawGoal(ctx);
-    this.balls.forEach((ball) => ball.draw(ctx, this.sprites));
+    this.obstacles.forEach((obstacle) => obstacle.draw(ctx, this.sprites));
     this.drawCristiano(ctx);
     this.drawFloatTexts(ctx);
     this.player.draw(ctx, this.respawnGrace > 0, this.sprites, this.lastTime / 1000);
@@ -674,6 +689,10 @@ function highScoreKey(level: LevelDefinition) {
 
 function bestTimeKey(level: LevelDefinition) {
   return `donkey-messi-level-${level.id}-best-time`;
+}
+
+function createObstacleSpawnTimers(level: LevelDefinition) {
+  return new Map(level.obstacleSpawners.map((spawner) => [spawner.id, spawner.firstDelay]));
 }
 
 function clamp(value: number, min: number, max: number) {

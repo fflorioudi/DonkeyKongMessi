@@ -50,6 +50,8 @@ Fase 2 arranca desde V2.9 candidate:
 
 Objetivo: reemplazar la pelota unica por una arquitectura de obstaculos extensible.
 
+Estado: en cierre tecnico.
+
 Alcance:
 
 - Crear un modelo de obstaculo por datos.

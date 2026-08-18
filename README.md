@@ -457,9 +457,21 @@ Estado: iniciada.
 - V3 se enfoca en contenido expandible: obstaculos genericos, primer obstaculo nuevo, power-up, Nivel 2 y rescates opcionales.
 - Roadmap nuevo en `docs/ROADMAP_FASE_2_V3.md`.
 
+### V3.0
+
+Estado: en cierre tecnico.
+
+- Sistema generico de obstaculos iniciado.
+- `ObstacleDefinition` y `ObstacleSpawnerDefinition` agregados.
+- La pelota actual queda como obstaculo `kind: "ball"`.
+- `Game` trabaja con `obstacles` y timers por spawner.
+- Compatibilidad de Nivel 1 preservada.
+- QA automatico con `npm run qa:v3.0`.
+- QA documentado en `docs/QA_V30.md`.
+
 ## Siguiente Paso
 
-Empezar V3.0: sistema generico de obstaculos manteniendo intacto el comportamiento del Nivel 1.
+Playtest manual de V3.0 en telefono real. Si pasa, avanzar a V3.1: obstaculo Tarjeta Roja.
 
 ## Roadmap
 
