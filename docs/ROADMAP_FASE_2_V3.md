@@ -152,6 +152,25 @@ Criterio de cierre:
 - No se acumulan pelotas infinitas.
 - V3.2 de camara vertical sigue estable.
 
+### V3.2.2 - Fix Direccion Pegada
+
+Objetivo: corregir el caso donde el boton tactil de izquierda/derecha queda presionado logicamente despues de soltar.
+
+Estado: en cierre tecnico.
+
+Alcance:
+
+- Detectar `pointerup` y `pointercancel` globales.
+- Resetear input al perder foco o cambiar visibilidad.
+- Manejar perdida de captura del puntero en cada boton.
+- Mantener soporte multitouch para movimiento, escalera y salto.
+
+Criterio de cierre:
+
+- Messi se detiene al soltar izquierda o derecha.
+- Arrastrar el dedo fuera del boton no deja direccion activa.
+- Pausa, menu o cambio de app limpian input.
+
 ## V3.3 - Power-Up Basico
 
 Objetivo: agregar una ventaja simple que cambie decisiones sin complicar controles.

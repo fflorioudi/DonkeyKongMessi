@@ -26,7 +26,7 @@ pass("legacy ball config mirrors safety cap", levelsSource.includes("ballSpawner
 pass("game uses initial delay helper", gameSource.includes("initialSpawnDelaySeconds(spawner)"));
 pass("game uses randomized next delay helper", gameSource.includes("nextSpawnDelaySeconds(spawner)") && gameSource.includes("Math.random()"));
 pass("legacy interval fallback remains", gameSource.includes("return spawner.interval"));
-pass("menu declares v3.2.1", pageSource.includes("Mobile v3.2.1"));
+pass("menu declares v3.2.1 or newer", /Mobile v3\.2\.\d+/.test(pageSource));
 pass("readme documents v3.2.1", readmeSource.includes("### V3.2.1") && readmeSource.includes("2200-4200 ms"));
 
 console.log("V3.2.1 randomized spawn timing checks passed.");

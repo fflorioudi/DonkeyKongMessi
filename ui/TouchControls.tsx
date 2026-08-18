@@ -75,6 +75,34 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
     input?.releaseJump();
   }, [disabled, input]);
 
+  useEffect(() => {
+    const releasePointer = (event: PointerEvent) => {
+      activeMoves.current.delete(event.pointerId);
+      activeClimbs.current.delete(event.pointerId);
+      input?.setMove(Array.from(activeMoves.current.values()).at(-1) ?? 0);
+      input?.setClimb(Array.from(activeClimbs.current.values()).at(-1) ?? 0);
+      input?.releaseJump();
+    };
+
+    const resetAll = () => {
+      activeMoves.current.clear();
+      activeClimbs.current.clear();
+      input?.reset();
+    };
+
+    window.addEventListener("pointerup", releasePointer);
+    window.addEventListener("pointercancel", releasePointer);
+    window.addEventListener("blur", resetAll);
+    document.addEventListener("visibilitychange", resetAll);
+
+    return () => {
+      window.removeEventListener("pointerup", releasePointer);
+      window.removeEventListener("pointercancel", releasePointer);
+      window.removeEventListener("blur", resetAll);
+      document.removeEventListener("visibilitychange", resetAll);
+    };
+  }, [input]);
+
   return (
     <div className="touchControls" aria-hidden={disabled}>
       <div className="moveCluster">
@@ -104,6 +132,21 @@ type TouchButtonProps = {
 function TouchButton({ label, text, size = "normal", onDown, onUp }: TouchButtonProps) {
   const activePointer = useRef<number | null>(null);
 
+  const finishPointer = (target: HTMLButtonElement, pointerId: number) => {
+    if (activePointer.current !== pointerId) {
+      return;
+    }
+
+    target.dataset.pressed = "false";
+    activePointer.current = null;
+
+    if (target.hasPointerCapture(pointerId)) {
+      target.releasePointerCapture(pointerId);
+    }
+
+    onUp(pointerId);
+  };
+
   return (
     <button
       className={`touchButton ${size === "large" ? "touchButtonLarge" : ""}`}
@@ -117,15 +160,13 @@ function TouchButton({ label, text, size = "normal", onDown, onUp }: TouchButton
         onDown(event.pointerId);
       }}
       onPointerUp={(event) => {
-        event.currentTarget.releasePointerCapture(event.pointerId);
-        event.currentTarget.dataset.pressed = "false";
-        activePointer.current = null;
-        onUp(event.pointerId);
+        finishPointer(event.currentTarget, event.pointerId);
       }}
       onPointerCancel={(event) => {
-        event.currentTarget.dataset.pressed = "false";
-        activePointer.current = null;
-        onUp(event.pointerId);
+        finishPointer(event.currentTarget, event.pointerId);
+      }}
+      onLostPointerCapture={(event) => {
+        finishPointer(event.currentTarget, event.pointerId);
       }}
       onContextMenu={(event) => event.preventDefault()}
     >

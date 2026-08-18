@@ -509,9 +509,21 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.2.1`.
 - QA documentado en `docs/QA_V321.md`.
 
+### V3.2.2
+
+Estado: en cierre tecnico.
+
+- Fix de direccion pegada en controles tactiles.
+- `TouchControls` escucha `pointerup` y `pointercancel` a nivel `window`.
+- Reset total de input en `blur` y `visibilitychange`.
+- Cada boton maneja `onLostPointerCapture`.
+- La liberacion usa `hasPointerCapture` para evitar errores.
+- QA automatico con `npm run qa:v3.2.2`.
+- QA documentado en `docs/QA_V322.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.2.1 en telefono real. Si la frecuencia se siente justa, avanzar a V3.3: power-up basico.
+Playtest manual de V3.2.2 en telefono real. Si los controles quedan firmes, avanzar a V3.3: power-up basico.
 
 ## Roadmap
 
