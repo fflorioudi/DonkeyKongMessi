@@ -39,3 +39,5 @@ Creating turbopack project { dir: 'C:\\Users\\ffeli\\Desktop\\Donkey Kong Messi'
  GET /donkey-messi 200 in 110ms (next.js: 9ms, application-code: 101ms)
  GET / 307 in 134ms (next.js: 8ms, application-code: 126ms)
  GET /donkey-messi 200 in 165ms (next.js: 33ms, application-code: 132ms)
+ GET / 307 in 226ms (next.js: 102ms, application-code: 124ms)
+ GET /donkey-messi 200 in 123ms (next.js: 41ms, application-code: 83ms)

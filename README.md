@@ -440,7 +440,7 @@ Estado: cerrada tecnicamente.
 
 ### V2.9
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 - Candidate build pre-Fase 2.
 - Badge visual actualizado a `Mobile v2.9 candidate`.
@@ -449,10 +449,20 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v2.9`.
 - QA candidate documentado en `docs/QA_V29.md`.
 
+### Fase 2 / V3
+
+Estado: iniciada.
+
+- La base V2.9 queda aprobada como entrada a Fase 2.
+- V3 se enfoca en contenido expandible: obstaculos genericos, primer obstaculo nuevo, power-up, Nivel 2 y rescates opcionales.
+- Roadmap nuevo en `docs/ROADMAP_FASE_2_V3.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.9 en telefono real. Si pasa, la base queda lista para entrar a Fase 2.
+Empezar V3.0: sistema generico de obstaculos manteniendo intacto el comportamiento del Nivel 1.
 
 ## Roadmap
 
-El plan de versiones necesarias antes de entrar en Fase 2 esta documentado en `docs/ROADMAP_HASTA_FASE_2.md`.
+El plan historico hasta Fase 2 esta en `docs/ROADMAP_HASTA_FASE_2.md`.
+
+El roadmap activo de Fase 2 / V3 esta en `docs/ROADMAP_FASE_2_V3.md`.

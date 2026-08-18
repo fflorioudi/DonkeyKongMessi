@@ -294,7 +294,7 @@ Criterio de cierre:
 
 Objetivo: cerrar la etapa pre-Fase 2 con una version estable y presentable.
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 Alcance:
 
@@ -323,6 +323,10 @@ Criterio de cierre:
 ## Entrada A Fase 2
 
 Fase 2 empieza cuando el Nivel 1 ya funciona como juego completo de una pantalla.
+
+Estado: iniciada oficialmente como V3.
+
+Roadmap activo: `docs/ROADMAP_FASE_2_V3.md`.
 
 La Fase 2 deberia incluir:
 
