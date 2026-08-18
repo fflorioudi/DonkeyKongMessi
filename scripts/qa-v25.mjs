@@ -16,6 +16,8 @@ function pass(label, condition) {
 }
 
 pass("web audio manager exists", audioSource.includes("AudioContext") && audioSource.includes("OscillatorNode") === false);
+pass("wav fallback files are referenced", audioSource.includes("/audio/jump.wav") && audioSource.includes("/audio/victory.wav"));
+pass("html audio unlock exists", audioSource.includes("unlockHtmlAudio") && audioSource.includes("new Audio"));
 pass("audio unlock exists for mobile gesture", audioSource.includes("async unlock") && gameSource.includes("this.audio.unlock"));
 pass("sounds wait for running context", audioSource.includes("runWhenReady") && audioSource.includes("context?.state !== \"running\""));
 pass("test sound exists", audioSource.includes("playTest") && audioSource.includes("scheduleTone"));

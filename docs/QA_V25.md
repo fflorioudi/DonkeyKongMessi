@@ -5,7 +5,9 @@ Objetivo: sumar respuesta sonora original sin usar musica ni assets con derechos
 ## Cambios
 
 - Audio generado con Web Audio API.
-- No hay archivos de audio externos.
+- Archivos `.wav` propios generados localmente en `public/audio`.
+- HTMLAudio se intenta primero para mejorar compatibilidad mobile.
+- Web Audio queda como fallback.
 - Sonido de inicio.
 - Sonido de salto.
 - Sonido de golpe.
@@ -16,6 +18,7 @@ Objetivo: sumar respuesta sonora original sin usar musica ni assets con derechos
 - Boton de sonido/mute.
 - Preferencia de sonido persistida en `localStorage`.
 - Desbloqueo de audio en el primer gesto de `Jugar`, compatible con restricciones mobile.
+- Boton `Audio` para probar desbloqueo antes de jugar.
 
 ## QA Automatico
 
@@ -29,6 +32,8 @@ Valida:
 
 - Existencia del `AudioManager`.
 - Uso de Web Audio.
+- Existencia de fallback con archivos `.wav`.
+- Desbloqueo de HTMLAudio por gesto mobile.
 - Desbloqueo por gesto mobile.
 - Persistencia de mute.
 - Conexion de sonidos a eventos de juego.

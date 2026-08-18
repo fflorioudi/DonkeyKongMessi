@@ -57,7 +57,9 @@ export default function DonkeyMessiPage() {
     };
   }, []);
 
-  const startGame = () => gameRef.current?.play();
+  const startGame = () => {
+    void gameRef.current?.audio.unlock().then(() => gameRef.current?.play());
+  };
   const restartGame = () => gameRef.current?.restart();
   const showMenu = () => {
     gameRef.current?.menu();
@@ -74,7 +76,7 @@ export default function DonkeyMessiPage() {
   };
   const testAudio = () => {
     gameRef.current?.audio.setEnabled(true);
-    gameRef.current?.audio.playTest();
+    void gameRef.current?.audio.unlock().then(() => gameRef.current?.audio.playTest());
     setSnapshot((current) => ({
       ...current,
       audioEnabled: true,

@@ -1,4 +1,15 @@
 const AUDIO_ENABLED_KEY = "donkey-messi-audio-enabled";
+const AUDIO_FILES = {
+  gameOver: "/audio/gameover.wav",
+  hit: "/audio/hit.wav",
+  jump: "/audio/jump.wav",
+  start: "/audio/start.wav",
+  throw: "/audio/throw.wav",
+  ui: "/audio/ui.wav",
+  victory: "/audio/victory.wav",
+} as const;
+
+type AudioKey = keyof typeof AUDIO_FILES;
 
 type AudioWindow = Window & {
   webkitAudioContext?: typeof AudioContext;
@@ -17,6 +28,8 @@ export class AudioManager {
   enabled = true;
   private context: AudioContext | null = null;
   private master: GainNode | null = null;
+  private elements: Partial<Record<AudioKey, HTMLAudioElement>> = {};
+  private htmlUnlocked = false;
 
   constructor() {
     this.enabled = this.loadEnabled();
@@ -47,6 +60,9 @@ export class AudioManager {
       return;
     }
 
+    this.ensureElements();
+    await this.unlockHtmlAudio();
+
     const context = this.ensureContext();
 
     if (context?.state === "suspended") {
@@ -57,6 +73,10 @@ export class AudioManager {
   }
 
   playTest() {
+    if (this.playFile("victory")) {
+      return;
+    }
+
     void this.runWhenReady(() => {
       this.scheduleTone({ frequency: 523, duration: 0.08, type: "square", volume: 0.11 });
       this.scheduleTone({ frequency: 784, duration: 0.12, type: "square", volume: 0.11, delay: 0.09 });
@@ -64,10 +84,18 @@ export class AudioManager {
   }
 
   playUi() {
+    if (this.playFile("ui")) {
+      return;
+    }
+
     this.playTone({ frequency: 740, duration: 0.055, type: "square", volume: 0.08 });
   }
 
   playStart() {
+    if (this.playFile("start")) {
+      return;
+    }
+
     this.playSequence([
       { frequency: 392, duration: 0.08, type: "square", volume: 0.1 },
       { frequency: 523, duration: 0.09, type: "square", volume: 0.1, delay: 0.08 },
@@ -76,14 +104,26 @@ export class AudioManager {
   }
 
   playJump() {
+    if (this.playFile("jump")) {
+      return;
+    }
+
     this.playTone({ frequency: 420, slideTo: 760, duration: 0.13, type: "square", volume: 0.1 });
   }
 
   playThrow() {
+    if (this.playFile("throw")) {
+      return;
+    }
+
     this.playTone({ frequency: 180, slideTo: 110, duration: 0.18, type: "sawtooth", volume: 0.09 });
   }
 
   playHit() {
+    if (this.playFile("hit")) {
+      return;
+    }
+
     this.playSequence([
       { frequency: 140, duration: 0.13, type: "sawtooth", volume: 0.13 },
       { frequency: 82, duration: 0.17, type: "square", volume: 0.1, delay: 0.08 },
@@ -91,6 +131,10 @@ export class AudioManager {
   }
 
   playGameOver() {
+    if (this.playFile("gameOver")) {
+      return;
+    }
+
     this.playSequence([
       { frequency: 220, duration: 0.11, type: "square", volume: 0.1 },
       { frequency: 165, duration: 0.13, type: "square", volume: 0.1, delay: 0.12 },
@@ -99,6 +143,10 @@ export class AudioManager {
   }
 
   playVictory() {
+    if (this.playFile("victory")) {
+      return;
+    }
+
     this.playSequence([
       { frequency: 523, duration: 0.09, type: "square", volume: 0.1 },
       { frequency: 659, duration: 0.09, type: "square", volume: 0.1, delay: 0.1 },
@@ -109,6 +157,66 @@ export class AudioManager {
 
   private playSequence(tones: ToneOptions[]) {
     tones.forEach((tone) => this.playTone(tone));
+  }
+
+  private playFile(key: AudioKey) {
+    if (!this.enabled) {
+      return true;
+    }
+
+    this.ensureElements();
+    const element = this.elements[key];
+
+    if (!element) {
+      return false;
+    }
+
+    element.currentTime = 0;
+    element.volume = 1;
+    const playback = element.play();
+
+    if (playback) {
+      playback.catch(() => {
+        this.htmlUnlocked = false;
+      });
+    }
+
+    return true;
+  }
+
+  private ensureElements() {
+    for (const [key, source] of Object.entries(AUDIO_FILES) as Array<[AudioKey, string]>) {
+      if (this.elements[key]) {
+        continue;
+      }
+
+      const element = new Audio(source);
+      element.preload = "auto";
+      element.volume = 1;
+      this.elements[key] = element;
+    }
+  }
+
+  private async unlockHtmlAudio() {
+    if (this.htmlUnlocked) {
+      return;
+    }
+
+    this.ensureElements();
+    const unlockTargets = Object.values(this.elements);
+
+    await Promise.allSettled(
+      unlockTargets.map(async (element) => {
+        element.muted = true;
+        element.currentTime = 0;
+        await element.play();
+        element.pause();
+        element.currentTime = 0;
+        element.muted = false;
+      }),
+    );
+
+    this.htmlUnlocked = true;
   }
 
   private playTone({ frequency, duration, type = "sine", volume = 0.04, slideTo, delay = 0 }: ToneOptions) {
