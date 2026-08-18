@@ -79,7 +79,7 @@ Criterio de cierre:
 
 Objetivo: sumar el primer obstaculo nuevo sin crear un nivel nuevo todavia.
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 Alcance:
 
@@ -91,7 +91,7 @@ Alcance:
 
 Entregables:
 
-- Sprite o frame desde `hazards.png`.
+- Sprite pixel art propio desde PNG.
 - Tipo `red-card`.
 - QA automatico `npm run qa:v3.1`.
 - Ajuste de audio corto si aplica.
@@ -102,7 +102,37 @@ Criterio de cierre:
 - No genera muertes invisibles o injustas.
 - Puede activarse/desactivarse desde datos.
 
-## V3.2 - Power-Up Basico
+## V3.2 - Camara Vertical Y Mundo Alto
+
+Objetivo: convertir el tutorial en banco de pruebas para niveles mas largos sin achicar medidas.
+
+Estado: en cierre tecnico.
+
+Alcance:
+
+- Separar `worldHeight` de `viewportHeight`.
+- Mantener canvas mobile fijo de 390 x 720.
+- Agregar camara vertical suavizada siguiendo a Messi.
+- Extender el tutorial con mas plataformas y escaleras.
+- Mantener controles tactiles fijos fuera del render del mundo.
+- Preparar la misma logica para niveles futuros.
+
+Entregables:
+
+- `CameraDefinition`.
+- `viewportWidth` y `viewportHeight` en `LevelDefinition`.
+- Ruta tutorial extendida.
+- QA automatico `npm run qa:v3.2`.
+- Documento `docs/QA_V32.md`.
+
+Criterio de cierre:
+
+- Messi no cambia de escala.
+- La camara no muestra fuera del mapa.
+- El respawn vuelve a una vista limpia.
+- El tutorial funciona como base para mundos verticales.
+
+## V3.3 - Power-Up Basico
 
 Objetivo: agregar una ventaja simple que cambie decisiones sin complicar controles.
 
@@ -110,7 +140,7 @@ Power-up recomendado para empezar: `Botin de Oro`.
 
 Alcance:
 
-- Pickup rectangular.
+- Pickup con sprite pixel art propio.
 - Estado temporal de poder.
 - Messi puede destruir o ignorar obstaculos por pocos segundos.
 - Feedback visual y sonoro.
@@ -120,8 +150,8 @@ Entregables:
 
 - `PowerUpDefinition`.
 - Estado de power-up en snapshot/HUD si hace falta.
-- QA automatico `npm run qa:v3.2`.
-- Documento `docs/QA_V32.md`.
+- QA automatico `npm run qa:v3.3`.
+- Documento `docs/QA_V33.md`.
 
 Criterio de cierre:
 
@@ -129,7 +159,7 @@ Criterio de cierre:
 - No rompe el balance del Nivel 1.
 - El efecto termina claramente.
 
-## V3.3 - Nivel 2: Barcelona / Ascenso
+## V3.4 - Nivel 2: Barcelona / Ascenso
 
 Objetivo: crear el primer nivel nuevo usando la arquitectura de V2.8/V3.0.
 
@@ -146,8 +176,8 @@ Entregables:
 
 - Nivel 2 jugable de punta a punta.
 - Records separados por nivel.
-- QA automatico `npm run qa:v3.3`.
-- Documento `docs/QA_V33.md`.
+- QA automatico `npm run qa:v3.4`.
+- Documento `docs/QA_V34.md`.
 
 Criterio de cierre:
 
@@ -155,7 +185,7 @@ Criterio de cierre:
 - El Nivel 1 no cambia de comportamiento.
 - El selector permite navegar entre Nivel 1 y Nivel 2.
 
-## V3.4 - Rescate Opcional Simple
+## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.
 
@@ -172,9 +202,9 @@ Alcance:
 Entregables:
 
 - `RescueDefinition`.
-- Render simple del personaje o placeholder HD.
-- QA automatico `npm run qa:v3.4`.
-- Documento `docs/QA_V34.md`.
+- Sprite pixel art propio del personaje.
+- QA automatico `npm run qa:v3.5`.
+- Documento `docs/QA_V35.md`.
 
 Criterio de cierre:
 
@@ -182,7 +212,7 @@ Criterio de cierre:
 - Se entiende si fue logrado o no.
 - No tapa rutas ni controles.
 
-## V3.5 - Mejoras De Animacion Y Feedback
+## V3.6 - Mejoras De Animacion Y Feedback
 
 Objetivo: mejorar sensacion de juego despues de sumar nuevas mecanicas.
 
@@ -195,7 +225,7 @@ Alcance:
 
 Entregables:
 
-- QA visual `docs/QA_V35.md`.
+- QA visual `docs/QA_V36.md`.
 - Ajustes de metadata de sprites si corresponde.
 - Captura comparativa opcional.
 
@@ -204,7 +234,7 @@ Criterio de cierre:
 - El juego se siente mas claro, no mas cargado.
 - No baja performance mobile.
 
-## V3.6 - Candidate Fase 2
+## V3.7 - Candidate Fase 2
 
 Objetivo: cerrar Fase 2 con dos niveles, obstaculos extensibles y al menos una mecanica nueva.
 
@@ -218,8 +248,8 @@ Alcance:
 
 Entregables:
 
-- `npm run qa:v3.6`.
-- Documento `docs/QA_V36.md`.
+- `npm run qa:v3.7`.
+- Documento `docs/QA_V37.md`.
 - Candidate build Fase 2.
 
 Criterio de cierre:
@@ -233,11 +263,12 @@ Criterio de cierre:
 
 1. V3.0: sistema generico de obstaculos.
 2. V3.1: tarjeta roja.
-3. V3.2: power-up basico.
-4. V3.3: Nivel 2.
-5. V3.4: rescate opcional.
-6. V3.5: feedback y animaciones.
-7. V3.6: candidate Fase 2.
+3. V3.2: camara vertical y mundo alto.
+4. V3.3: power-up basico.
+5. V3.4: Nivel 2.
+6. V3.5: rescate opcional.
+7. V3.6: feedback y animaciones.
+8. V3.7: candidate Fase 2.
 
 ## No Hacer Todavia
 

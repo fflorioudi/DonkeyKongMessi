@@ -61,6 +61,12 @@ const jumpHeight = (jumpSpeed * jumpSpeed) / (2 * gravity);
 const platformGaps = platforms.slice(1).map((platform, index) => platform.y - platforms[index].y);
 const smallestGap = Math.min(...platformGaps);
 const bottomPlatform = platforms.at(-1);
+const worldHeight = readNumber("worldHeight");
+const viewportHeight = levelSource.includes("viewportHeight")
+  ? readNumber("viewportHeight")
+  : worldHeight;
+const cameraStartY = Math.max(0, worldHeight - viewportHeight);
+const bottomPlatformScreenY = bottomPlatform.y - cameraStartY;
 
 pass(
   "jump cannot replace ladders",
@@ -68,7 +74,11 @@ pass(
   `jumpHeight=${jumpHeight.toFixed(1)}, smallestGap=${smallestGap}`,
 );
 pass("jump can clear balls", jumpHeight > 52, `jumpHeight=${jumpHeight.toFixed(1)}`);
-pass("bottom platform leaves control safe zone", bottomPlatform.y + bottomPlatform.height <= controlSafeZoneTop, "");
+pass(
+  "bottom platform leaves control safe zone",
+  bottomPlatformScreenY + bottomPlatform.height <= controlSafeZoneTop,
+  `screenY=${bottomPlatformScreenY}, controlSafeZoneTop=${controlSafeZoneTop}`,
+);
 pass("ball spawner starts after player can react", firstDelay >= 1, `firstDelay=${firstDelay}`);
 pass("ball interval is readable for v2.1", interval >= 3.4, `interval=${interval}`);
 pass("active balls capped for mobile readability", maxActive <= 3, `maxActive=${maxActive}`);

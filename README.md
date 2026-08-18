@@ -473,19 +473,32 @@ Estado: cerrada tecnicamente.
 
 ### V3.1
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 - Primer obstaculo nuevo agregado: tarjeta roja.
 - Spawner `tutorial-red-card` de baja frecuencia para no endurecer de mas el tutorial.
 - Movimiento horizontal desde datos.
 - Hitbox rectangular reducida.
-- Dibujo propio en canvas.
+- Sprite pixel art propio desde `public/sprites/red-card.png`.
 - QA automatico con `npm run qa:v3.1`.
 - QA documentado en `docs/QA_V31.md`.
 
+### V3.2
+
+Estado: en cierre tecnico.
+
+- Primer sistema de camara vertical.
+- El tutorial pasa a mundo alto: `worldHeight` mayor que `viewportHeight`.
+- El canvas mantiene viewport mobile fijo para no achicar sprites ni plataformas.
+- `Game` renderiza el mundo con `cameraY` y traslacion vertical.
+- Ruta del tutorial extendida a diez plataformas y nueve escaleras.
+- Respawn reposiciona camara abajo para evitar estados raros.
+- QA automatico con `npm run qa:v3.2`.
+- QA documentado en `docs/QA_V32.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.1 en telefono real. Si pasa, avanzar a V3.2: power-up basico.
+Playtest manual de V3.2 en telefono real. Si la camara vertical se siente comoda, avanzar a V3.3: power-up basico.
 
 ## Roadmap
 

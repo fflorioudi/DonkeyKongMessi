@@ -45,6 +45,7 @@ export class Game {
   private hitCooldown = 0;
   private respawnGrace = 0;
   private obstacleSpawnTimers = new Map<string, number>();
+  private cameraY = 0;
   private hitFlash = 0;
   private goalFlash = 0;
   private throwCue = 0;
@@ -131,7 +132,7 @@ export class Game {
     this.canvas.width = Math.max(1, Math.floor(rect.width * dpr));
     this.canvas.height = Math.max(1, Math.floor(rect.height * dpr));
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    this.ctx.scale(this.canvas.width / this.level.worldWidth, this.canvas.height / this.level.worldHeight);
+    this.ctx.scale(this.canvas.width / this.level.viewportWidth, this.canvas.height / this.level.viewportHeight);
     this.ctx.imageSmoothingEnabled = false;
   }
 
@@ -163,6 +164,7 @@ export class Game {
     this.floatTexts = [];
     this.player.reset(this.level.playerSpawn);
     this.obstacles = [];
+    this.cameraY = this.targetCameraY();
     this.input.reset();
   }
 
@@ -238,6 +240,7 @@ export class Game {
       obstacle.update(dt, this.level.platforms, this.level.worldWidth, this.level.worldHeight),
     );
     this.obstacles = this.obstacles.filter((obstacle) => obstacle.alive);
+    this.updateCamera(dt);
 
     if (this.player.y > this.level.worldHeight + 80) {
       this.damagePlayer();
@@ -277,6 +280,7 @@ export class Game {
     this.player.reset(this.level.playerSpawn);
     this.obstacles = [];
     this.obstacleSpawnTimers = createObstacleSpawnTimers(this.level);
+    this.cameraY = this.targetCameraY();
     this.respawnGrace = 1.1;
     this.input.reset();
   }
@@ -419,6 +423,20 @@ export class Game {
       .filter((floatText) => floatText.ttl > 0);
   }
 
+  private updateCamera(dt: number) {
+    const target = this.targetCameraY();
+    const smoothing = Math.max(0.1, this.level.camera.smoothing);
+    const t = 1 - Math.exp(-smoothing * dt);
+    this.cameraY += (target - this.cameraY) * t;
+  }
+
+  private targetCameraY() {
+    const maxCameraY = Math.max(0, this.level.worldHeight - this.level.viewportHeight);
+    const topTarget = this.player.y - this.level.camera.followTopMargin;
+    const bottomTarget = this.player.y - this.level.camera.followBottomMargin;
+    return clamp(Math.max(topTarget, bottomTarget), 0, maxCameraY);
+  }
+
   private addFloatText(x: number, y: number, text: string, color: string) {
     this.floatTexts.push({ x, y, text, color, ttl: 0.9 });
   }
@@ -430,7 +448,9 @@ export class Game {
 
   private render() {
     const ctx = this.ctx;
-    ctx.clearRect(0, 0, this.level.worldWidth, this.level.worldHeight);
+    ctx.clearRect(0, 0, this.level.viewportWidth, this.level.viewportHeight);
+    ctx.save();
+    ctx.translate(0, -this.cameraY);
     this.drawBackground(ctx);
     this.drawScreenFlash(ctx);
     const activeLadder = this.findActiveLadder();
@@ -479,6 +499,7 @@ export class Game {
     this.drawFloatTexts(ctx);
     this.player.draw(ctx, this.respawnGrace > 0, this.sprites, this.lastTime / 1000);
     this.drawGoalFlash(ctx);
+    ctx.restore();
   }
 
   private findActiveLadder(): Ladder | undefined {
@@ -499,7 +520,7 @@ export class Game {
 
     ctx.save();
     ctx.fillStyle = `rgba(255, 92, 122, ${this.hitFlash * 0.42})`;
-    ctx.fillRect(0, 0, this.level.worldWidth, this.level.worldHeight);
+    ctx.fillRect(0, this.cameraY, this.level.viewportWidth, this.level.viewportHeight);
     ctx.restore();
   }
 

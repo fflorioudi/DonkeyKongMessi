@@ -85,7 +85,10 @@ export type LevelDefinition = {
   theme: string;
   worldWidth: number;
   worldHeight: number;
+  viewportWidth: number;
+  viewportHeight: number;
   controlSafeZoneTop: number;
+  camera: CameraDefinition;
   difficulty: LevelDifficultyDefinition;
   background: LevelBackgroundDefinition;
   rival: RivalDefinition;
@@ -95,6 +98,12 @@ export type LevelDefinition = {
   ballSpawner: BallSpawnerDefinition;
   obstacleSpawners: ObstacleSpawnerDefinition[];
   goal: Goal;
+};
+
+export type CameraDefinition = {
+  followTopMargin: number;
+  followBottomMargin: number;
+  smoothing: number;
 };
 
 export type LevelDifficultyDefinition = {

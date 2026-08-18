@@ -38,7 +38,7 @@ pass("red-card uses sprite drawing", obstacleSource.includes("\"redCard\"") && o
 pass("red-card has no canvas rectangle fallback", !obstacleSource.includes("drawRedCard"));
 pass("balls disappear on bottom support", ballSource.includes("bottomPlatform") && ballSource.includes("this.isSupportedBy(bottomPlatform)"));
 pass("game still uses generic obstacle loop", gameSource.includes("spawnObstaclesIfReady") && gameSource.includes("obstacle.collidesWith"));
-pass("menu declares v3.1", pageSource.includes("Mobile v3.1"));
+pass("menu declares v3.1 or newer", /Mobile v3\.\d+/.test(pageSource));
 pass("roadmap mentions v3.1", roadmapSource.includes("V3.1 - Obstaculo Tarjeta Roja"));
 
 console.log("V3.1 red-card obstacle checks passed.");

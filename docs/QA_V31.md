@@ -42,7 +42,7 @@ Validaciones cubiertas por `qa:v3.1`:
 - La hitbox es reducida.
 - La tarjeta usa `public/sprites/red-card.png`.
 - Las pelotas desaparecen tambien cuando quedan apoyadas en la plataforma inferior.
-- La portada declara `Mobile v3.1`.
+- La portada declara `Mobile v3.1` o superior.
 
 ## QA Manual Mobile
 
