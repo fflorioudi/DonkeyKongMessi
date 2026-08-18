@@ -19,6 +19,7 @@ const initialSnapshot: GameSnapshot = {
   score: 0,
   highScore: 0,
   message: "",
+  audioEnabled: true,
   level: 1,
   levelName: "Rosario / Origen",
   canClimb: false,
@@ -64,6 +65,13 @@ export default function DonkeyMessiPage() {
   };
   const pauseGame = () => gameRef.current?.pause();
   const resumeGame = () => gameRef.current?.resume();
+  const toggleAudio = () => {
+    gameRef.current?.audio.toggle();
+    setSnapshot((current) => ({
+      ...current,
+      audioEnabled: gameRef.current?.audio.enabled ?? current.audioEnabled,
+    }));
+  };
   const isPlaying = snapshot.status === "playing";
 
   return (
@@ -76,6 +84,14 @@ export default function DonkeyMessiPage() {
             II
           </button>
         )}
+        <button
+          className={`soundButton ${snapshot.audioEnabled ? "isOn" : ""}`}
+          type="button"
+          aria-label={snapshot.audioEnabled ? "Silenciar sonido" : "Activar sonido"}
+          onClick={toggleAudio}
+        >
+          {snapshot.audioEnabled ? "S" : "M"}
+        </button>
 
         {snapshot.status === "menu" && (
           <>

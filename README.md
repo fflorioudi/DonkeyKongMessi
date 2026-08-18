@@ -381,9 +381,20 @@ Estado: cerrada tecnicamente.
 - QA automatico con `npm run qa:v2.4`.
 - QA de flujo documentado en `docs/QA_V24.md`.
 
+### V2.5
+
+Estado: cerrada tecnicamente.
+
+- Audio basico generado con Web Audio.
+- Sonidos de inicio, salto, golpe, lanzamiento, Game Over, victoria y UI.
+- Boton de sonido/mute.
+- Preferencia de sonido persistida en `localStorage`.
+- QA automatico con `npm run qa:v2.5`.
+- QA de audio documentado en `docs/QA_V25.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.4 en telefono real y luego avanzar a V2.5: audio basico.
+Playtest manual de V2.5 en telefono real y luego avanzar a V2.6: arte placeholder mejorado.
 
 ## Roadmap
 

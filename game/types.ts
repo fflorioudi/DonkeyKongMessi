@@ -69,6 +69,7 @@ export type HudSnapshot = {
   score: number;
   highScore: number;
   message: string;
+  audioEnabled: boolean;
   level: number;
   levelName: string;
 };

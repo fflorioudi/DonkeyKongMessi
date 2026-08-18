@@ -1,5 +1,6 @@
 import { Ball } from "@/entities/Ball";
 import { Player } from "@/entities/Player";
+import { AudioManager } from "./Audio";
 import { circleRectOverlap, rectsOverlap } from "./collision";
 import { InputManager } from "./Input";
 import type { GameSnapshot, GameStatus, HudSnapshot, Ladder, LevelDefinition, Rect } from "./types";
@@ -17,6 +18,7 @@ type FloatText = {
 
 export class Game {
   readonly input = new InputManager();
+  readonly audio = new AudioManager();
   private readonly ctx: CanvasRenderingContext2D;
   private readonly canvas: HTMLCanvasElement;
   private readonly level: LevelDefinition;
@@ -94,6 +96,8 @@ export class Game {
   }
 
   play() {
+    void this.audio.unlock();
+    this.audio.playStart();
     this.status = "playing";
     this.lives = INITIAL_LIVES;
     this.score = 0;
@@ -117,6 +121,7 @@ export class Game {
   }
 
   menu() {
+    this.audio.playUi();
     this.status = "menu";
     this.hitCooldown = 0;
     this.respawnGrace = 0;
@@ -138,6 +143,7 @@ export class Game {
       return;
     }
 
+    this.audio.playUi();
     this.status = "paused";
     this.input.reset();
     this.emitSnapshot(true);
@@ -148,6 +154,7 @@ export class Game {
       return;
     }
 
+    this.audio.playUi();
     this.status = "playing";
     this.input.reset();
     this.emitSnapshot(true);
@@ -171,8 +178,12 @@ export class Game {
     this.updateFloatTexts(dt);
     this.ballSpawnTimer -= dt;
     const input = this.input.snapshot();
+    const canJumpBeforeUpdate = input.jump && (this.player.grounded || this.player.state === "climb");
 
     this.player.update(dt, input, this.level.platforms, this.level.ladders, this.level.worldWidth);
+    if (canJumpBeforeUpdate) {
+      this.audio.playJump();
+    }
     this.updateScore(dt);
     this.spawnBallIfReady();
     this.balls.forEach((ball) => ball.update(dt, this.level.platforms, this.level.worldWidth, this.level.worldHeight));
@@ -198,6 +209,7 @@ export class Game {
       this.goalFlash = 1.4;
       this.addFloatText(this.level.goal.x + this.level.goal.width / 2, this.level.goal.y + 8, "+1000", "#ffe45c");
       this.setMessage("Nivel completo", 2.4);
+      this.audio.playVictory();
       this.recordHighScore();
       this.input.reset();
     }
@@ -209,9 +221,11 @@ export class Game {
     this.hitFlash = 0.35;
     this.addFloatText(this.player.x + 14, this.player.y - 8, "-1 vida", "#ff5c7a");
     this.setMessage(this.lives <= 0 ? "Game Over" : "Respawn limpio", 1.5);
+    this.audio.playHit();
 
     if (this.lives <= 0) {
       this.status = "gameOver";
+      this.audio.playGameOver();
       this.recordHighScore();
       this.input.reset();
       return;
@@ -275,6 +289,7 @@ export class Game {
     );
     this.throwCue = 0.45;
     this.addFloatText(spawner.x - 14, spawner.y - 16, "PELIGRO", "#ffe45c");
+    this.audio.playThrow();
     this.ballSpawnTimer = spawner.interval;
   }
 
@@ -472,6 +487,7 @@ export class Game {
       score: Math.floor(this.score),
       highScore: Math.max(this.highScore, Math.floor(this.score)),
       message: this.message,
+      audioEnabled: this.audio.enabled,
       level: this.level.id,
       levelName: this.level.name,
     };

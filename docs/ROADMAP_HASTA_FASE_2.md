@@ -173,6 +173,8 @@ Criterio de cierre:
 
 Objetivo: sumar respuesta sensorial sin depender de assets externos con derechos.
 
+Estado: cerrada tecnicamente.
+
 Alcance:
 
 - Sonido de salto.
@@ -181,6 +183,14 @@ Alcance:
 - Sonido de victoria.
 - Toggle simple de sonido.
 - Audio generado por Web Audio o assets propios.
+
+Entregables:
+
+- Audio sintetico con Web Audio.
+- Sonidos de inicio, salto, golpe, lanzamiento, Game Over, victoria y UI.
+- Toggle de sonido con persistencia local.
+- QA automatico en `npm run qa:v2.5`.
+- QA documentado en `docs/QA_V25.md`.
 
 Criterio de cierre:
 
