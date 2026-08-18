@@ -357,9 +357,21 @@ Estado: cerrada tecnicamente.
 - QA automatico con `npm run qa:v2.2`.
 - QA visual documentado en `docs/QA_V22.md`.
 
+### V2.3
+
+Estado: cerrada tecnicamente.
+
+- Escalera activa sin aura rectangular.
+- Controles de subir/bajar contextuales.
+- Botones tactiles mas grandes y con estado presionado.
+- Franja inferior menos invasiva.
+- Vibracion corta en acciones tactiles si el navegador lo permite.
+- QA automatico con `npm run qa:v2.3`.
+- QA de controles documentado en `docs/QA_V23.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.2 en telefono real y luego avanzar a V2.3: control mobile pulido.
+Playtest manual de V2.3 en telefono real y luego avanzar a V2.4: pantallas y flujo.
 
 ## Roadmap
 

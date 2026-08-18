@@ -290,10 +290,6 @@ export class Game {
     this.level.ladders.forEach((ladder) => {
       ctx.save();
       const isActive = activeLadder === ladder;
-      if (isActive) {
-        ctx.fillStyle = "rgba(255, 228, 92, 0.22)";
-        ctx.fillRect(ladder.x - 9, ladder.y - 4, ladder.width + 18, ladder.height + 8);
-      }
       ctx.fillStyle = isActive ? "#ffe45c" : "#bd7f32";
       ctx.fillRect(ladder.x + 5, ladder.y, 6, ladder.height);
       ctx.fillRect(ladder.x + ladder.width - 11, ladder.y, 6, ladder.height);
@@ -301,6 +297,13 @@ export class Game {
 
       for (let y = ladder.y + 10; y < ladder.y + ladder.height; y += 18) {
         ctx.fillRect(ladder.x + 5, y, ladder.width - 10, 5);
+      }
+
+      if (isActive) {
+        ctx.strokeStyle = "#ffe45c";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(ladder.x + 5, ladder.y, 6, ladder.height);
+        ctx.strokeRect(ladder.x + ladder.width - 11, ladder.y, 6, ladder.height);
       }
 
       ctx.restore();

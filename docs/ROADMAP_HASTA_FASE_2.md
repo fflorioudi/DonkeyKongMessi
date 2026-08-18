@@ -112,6 +112,8 @@ Criterio de cierre:
 
 Objetivo: mejorar ergonomia tactil antes de sumar contenido.
 
+Estado: cerrada tecnicamente.
+
 Alcance:
 
 - Revisar tamano y ubicacion de botones.
@@ -119,6 +121,16 @@ Alcance:
 - Evaluar si subir/bajar debe aparecer solo cerca de escaleras.
 - Evitar que un dedo tape a Messi en zonas criticas.
 - Agregar zonas tactiles invisibles mas comodas si hace falta.
+
+Entregables:
+
+- Escalera activa sin aura rectangular.
+- Botones de subir/bajar contextuales.
+- Botones tactiles mas grandes y con estado presionado.
+- Franja inferior menos invasiva.
+- Vibracion tactil corta cuando el navegador lo permite.
+- QA automatico en `npm run qa:v2.3`.
+- QA documentado en `docs/QA_V23.md`.
 
 Criterio de cierre:
 

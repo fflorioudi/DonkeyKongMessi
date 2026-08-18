@@ -57,7 +57,10 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
   };
 
   const jump = () => {
-    if (!disabled) input?.pressJump();
+    if (!disabled) {
+      input?.pressJump();
+      vibrate();
+    }
   };
 
   useEffect(() => {
@@ -80,7 +83,7 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
       </div>
 
       <div className="actionCluster">
-        <div className={`climbCluster ${canClimb ? "isActive" : ""}`}>
+        <div className={`climbCluster ${canClimb ? "isActive" : ""}`} aria-hidden={!canClimb}>
           <TouchButton label="Subir" text="^" onDown={(pointerId) => setClimb(pointerId, -1)} onUp={stopClimb} />
           <TouchButton label="Bajar" text="v" onDown={(pointerId) => setClimb(pointerId, 1)} onUp={stopClimb} />
         </div>
@@ -99,23 +102,42 @@ type TouchButtonProps = {
 };
 
 function TouchButton({ label, text, size = "normal", onDown, onUp }: TouchButtonProps) {
+  const activePointer = useRef<number | null>(null);
+
   return (
     <button
       className={`touchButton ${size === "large" ? "touchButtonLarge" : ""}`}
       type="button"
       aria-label={label}
       onPointerDown={(event) => {
+        activePointer.current = event.pointerId;
         event.currentTarget.setPointerCapture(event.pointerId);
+        event.currentTarget.dataset.pressed = "true";
+        vibrate();
         onDown(event.pointerId);
       }}
       onPointerUp={(event) => {
         event.currentTarget.releasePointerCapture(event.pointerId);
+        event.currentTarget.dataset.pressed = "false";
+        activePointer.current = null;
         onUp(event.pointerId);
       }}
-      onPointerCancel={(event) => onUp(event.pointerId)}
+      onPointerCancel={(event) => {
+        event.currentTarget.dataset.pressed = "false";
+        activePointer.current = null;
+        onUp(event.pointerId);
+      }}
       onContextMenu={(event) => event.preventDefault()}
     >
       {text}
     </button>
   );
+}
+
+function vibrate() {
+  if (typeof navigator === "undefined" || !("vibrate" in navigator)) {
+    return;
+  }
+
+  navigator.vibrate(8);
 }
