@@ -99,6 +99,7 @@ export default function DonkeyMessiPage() {
     }));
   };
   const isPlaying = snapshot.status === "playing";
+  const canSelectLevel = snapshot.levelCount > 1;
 
   return (
     <main className="gameShell">
@@ -127,31 +128,35 @@ export default function DonkeyMessiPage() {
               <div className="menuPanel">
                 <p className="eyebrow">Mobile v2.8</p>
                 <h1>Donkey Kong: Edicion Messi</h1>
-                <div className="levelPicker" aria-label="Selector de nivel">
-                  <button
-                    type="button"
-                    aria-label="Nivel anterior"
-                    disabled={snapshot.levelIndex === 0}
-                    onClick={selectPreviousLevel}
-                  >
-                    &lt;
-                  </button>
+                <div className={`levelPicker ${canSelectLevel ? "" : "isSingle"}`} aria-label="Selector de nivel">
+                  {canSelectLevel && (
+                    <button
+                      type="button"
+                      aria-label="Nivel anterior"
+                      disabled={snapshot.levelIndex === 0}
+                      onClick={selectPreviousLevel}
+                    >
+                      &lt;
+                    </button>
+                  )}
                   <div>
                     <span>
                       Nivel {snapshot.level} / {snapshot.levelCount}
                     </span>
                     <strong>{snapshot.levelName}</strong>
                   </div>
-                  <button
-                    type="button"
-                    aria-label="Nivel siguiente"
-                    disabled={snapshot.levelIndex >= snapshot.levelCount - 1}
-                    onClick={selectNextLevel}
-                  >
-                    &gt;
-                  </button>
+                  {canSelectLevel && (
+                    <button
+                      type="button"
+                      aria-label="Nivel siguiente"
+                      disabled={snapshot.levelIndex >= snapshot.levelCount - 1}
+                      onClick={selectNextLevel}
+                    >
+                      &gt;
+                    </button>
+                  )}
                 </div>
-                <p>{snapshot.levelTheme}</p>
+                <p className="levelTheme">{snapshot.levelTheme}</p>
                 <div className="overlayActions">
                   <button type="button" onClick={startGame}>
                     Jugar
