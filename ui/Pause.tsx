@@ -1,9 +1,10 @@
 type PauseProps = {
   onResume: () => void;
   onRestart: () => void;
+  onMenu: () => void;
 };
 
-export function Pause({ onResume, onRestart }: PauseProps) {
+export function Pause({ onResume, onRestart, onMenu }: PauseProps) {
   return (
     <div className="overlayPanel">
       <p className="eyebrow">Pausa</p>
@@ -14,6 +15,9 @@ export function Pause({ onResume, onRestart }: PauseProps) {
         </button>
         <button type="button" className="secondaryButton" onClick={onRestart}>
           Reiniciar
+        </button>
+        <button type="button" className="secondaryButton" onClick={onMenu}>
+          Inicio
         </button>
       </div>
     </div>

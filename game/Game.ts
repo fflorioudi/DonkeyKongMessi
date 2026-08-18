@@ -116,6 +116,23 @@ export class Game {
     this.play();
   }
 
+  menu() {
+    this.status = "menu";
+    this.hitCooldown = 0;
+    this.respawnGrace = 0;
+    this.ballSpawnTimer = 0;
+    this.hitFlash = 0;
+    this.goalFlash = 0;
+    this.throwCue = 0;
+    this.message = "";
+    this.messageTimer = 0;
+    this.floatTexts = [];
+    this.player.reset(this.level.playerSpawn);
+    this.balls = [];
+    this.input.reset();
+    this.emitSnapshot(true);
+  }
+
   pause() {
     if (this.status !== "playing") {
       return;

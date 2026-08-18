@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { levels } from "@/data/levels";
 import { Game } from "@/game/Game";
@@ -28,6 +29,7 @@ export default function DonkeyMessiPage() {
   const gameRef = useRef<Game | null>(null);
   const [snapshot, setSnapshot] = useState<GameSnapshot>(initialSnapshot);
   const [inputManager, setInputManager] = useState<InputManager | null>(null);
+  const [showTraining, setShowTraining] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,6 +58,10 @@ export default function DonkeyMessiPage() {
 
   const startGame = () => gameRef.current?.play();
   const restartGame = () => gameRef.current?.restart();
+  const showMenu = () => {
+    gameRef.current?.menu();
+    setShowTraining(false);
+  };
   const pauseGame = () => gameRef.current?.pause();
   const resumeGame = () => gameRef.current?.resume();
   const isPlaying = snapshot.status === "playing";
@@ -72,19 +78,53 @@ export default function DonkeyMessiPage() {
         )}
 
         {snapshot.status === "menu" && (
-          <div className="overlayPanel">
-            <p className="eyebrow">Mobile v2</p>
-            <h1>Donkey Kong: Edicion Messi</h1>
-            <p>{snapshot.levelName}</p>
-            <button type="button" onClick={startGame}>
-              Jugar
-            </button>
-          </div>
+          <>
+            <Image className="coverArt" src="/assets/cover-v24-worldcup.png" alt="" fill sizes="430px" priority />
+            <div className="coverShade" />
+            {!showTraining ? (
+              <div className="menuPanel">
+                <p className="eyebrow">Mobile v2.4</p>
+                <h1>Donkey Kong: Edicion Messi</h1>
+                <p>{snapshot.levelName}</p>
+                <div className="overlayActions">
+                  <button type="button" onClick={startGame}>
+                    Jugar
+                  </button>
+                  <button type="button" className="secondaryButton" onClick={() => setShowTraining(true)}>
+                    Entrenar
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="menuPanel trainingPanel">
+                <p className="eyebrow">Entrenamiento</p>
+                <h1>Subi, esquiva, llega</h1>
+                <div className="trainingGrid" aria-label="Controles">
+                  <span>&lt; &gt;</span>
+                  <span>Mover</span>
+                  <span>J</span>
+                  <span>Saltar</span>
+                  <span>^ v</span>
+                  <span>Escaleras</span>
+                </div>
+                <div className="overlayActions">
+                  <button type="button" onClick={startGame}>
+                    Jugar
+                  </button>
+                  <button type="button" className="secondaryButton" onClick={() => setShowTraining(false)}>
+                    Volver
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
 
-        {snapshot.status === "gameOver" && <GameOver onRestart={restartGame} />}
-        {snapshot.status === "paused" && <Pause onResume={resumeGame} onRestart={restartGame} />}
-        {snapshot.status === "levelComplete" && <Victory score={snapshot.score} onRestart={restartGame} />}
+        {snapshot.status === "gameOver" && <GameOver score={snapshot.score} onRestart={restartGame} onMenu={showMenu} />}
+        {snapshot.status === "paused" && <Pause onResume={resumeGame} onRestart={restartGame} onMenu={showMenu} />}
+        {snapshot.status === "levelComplete" && (
+          <Victory score={snapshot.score} onRestart={restartGame} onMenu={showMenu} />
+        )}
 
         <TouchControls input={inputManager} canClimb={snapshot.canClimb} disabled={!isPlaying} />
       </section>

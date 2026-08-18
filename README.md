@@ -369,9 +369,21 @@ Estado: cerrada tecnicamente.
 - QA automatico con `npm run qa:v2.3`.
 - QA de controles documentado en `docs/QA_V23.md`.
 
+### V2.4
+
+Estado: cerrada tecnicamente.
+
+- Portada con asset PNG propio en `public/assets/cover-v24-worldcup.png`.
+- Menu principal visual.
+- Pantalla breve de entrenamiento.
+- Salida a inicio desde pausa, Game Over y Victory.
+- Pantallas finales con puntos.
+- QA automatico con `npm run qa:v2.4`.
+- QA de flujo documentado en `docs/QA_V24.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.3 en telefono real y luego avanzar a V2.4: pantallas y flujo.
+Playtest manual de V2.4 en telefono real y luego avanzar a V2.5: audio basico.
 
 ## Roadmap
 

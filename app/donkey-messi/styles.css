@@ -97,6 +97,112 @@
   backdrop-filter: blur(7px);
 }
 
+.coverArt {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coverShade {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background:
+    linear-gradient(180deg, rgba(16, 24, 32, 0.12), rgba(16, 24, 32, 0.26) 38%, rgba(16, 24, 32, 0.92)),
+    radial-gradient(circle at 50% 52%, rgba(16, 24, 32, 0.08), rgba(16, 24, 32, 0.74) 68%);
+}
+
+.menuPanel {
+  position: absolute;
+  z-index: 6;
+  left: 18px;
+  right: 18px;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  display: grid;
+  gap: 13px;
+  justify-items: start;
+  padding: 0;
+}
+
+.menuPanel h1,
+.menuPanel p {
+  margin: 0;
+}
+
+.menuPanel h1 {
+  max-width: 12ch;
+  color: #ffffff;
+  font-size: 36px;
+  line-height: 0.98;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.52);
+}
+
+.menuPanel p:not(.eyebrow) {
+  color: rgba(248, 251, 255, 0.82);
+  font-size: 15px;
+}
+
+.menuPanel .eyebrow {
+  color: #ffe45c;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.menuPanel button {
+  min-width: 128px;
+  min-height: 50px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #2ee58a;
+  color: #101820;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.menuPanel .secondaryButton {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(16, 24, 32, 0.68);
+  color: #ffffff;
+}
+
+.trainingPanel {
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(16, 24, 32, 0.84);
+  backdrop-filter: blur(8px);
+}
+
+.trainingPanel h1 {
+  font-size: 28px;
+}
+
+.trainingGrid {
+  display: grid;
+  grid-template-columns: minmax(54px, auto) 1fr;
+  gap: 8px 12px;
+  color: #ffffff;
+  font-size: 14px;
+  align-items: center;
+}
+
+.trainingGrid span:nth-child(odd) {
+  display: grid;
+  min-height: 34px;
+  place-items: center;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: rgba(248, 251, 255, 0.14);
+  color: #ffe45c;
+  font-weight: 900;
+}
+
 .touchControls {
   position: absolute;
   left: 0;
@@ -268,5 +374,9 @@
 
   .hud strong {
     font-size: 13px;
+  }
+
+  .menuPanel h1 {
+    font-size: 31px;
   }
 }

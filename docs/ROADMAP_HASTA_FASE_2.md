@@ -142,6 +142,8 @@ Criterio de cierre:
 
 Objetivo: hacer que el juego se sienta como una experiencia completa aunque tenga un solo nivel.
 
+Estado: cerrada tecnicamente.
+
 Alcance:
 
 - Mejorar portada.
@@ -150,6 +152,16 @@ Alcance:
 - Mostrar resumen de puntos.
 - Agregar boton para volver al inicio.
 - Agregar texto minimo de "Como jugar" en pantalla separada o modal.
+
+Entregables:
+
+- Asset `public/assets/cover-v24.png` generado con ImageGen built-in.
+- Menu principal con portada.
+- Pantalla `Entrenar`.
+- Salida a inicio desde pausa, Game Over y Victory.
+- Resumen de puntos en pantallas finales.
+- QA automatico en `npm run qa:v2.4`.
+- QA documentado en `docs/QA_V24.md`.
 
 Criterio de cierre:
 
