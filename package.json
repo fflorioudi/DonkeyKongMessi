@@ -7,6 +7,7 @@
     "build": "next build",
     "lint": "eslint .",
     "qa:v2.1": "node scripts/qa-v21.mjs",
+    "qa:v2.2": "node scripts/qa-v22.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

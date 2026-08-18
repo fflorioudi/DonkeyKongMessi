@@ -124,6 +124,12 @@ export class Player {
     ctx.translate(body.x, body.y);
     ctx.globalAlpha = isProtected ? 0.58 : 1;
 
+    if (isProtected) {
+      ctx.strokeStyle = "#ffe45c";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, body.width - 2, body.height - 2);
+    }
+
     ctx.fillStyle = "#77b7ff";
     ctx.fillRect(5, 13, 18, 20);
 

@@ -81,6 +81,8 @@ Nota: la parte tecnica queda cerrada. La confirmacion de "3 veces seguidas en mo
 
 Objetivo: que el jugador entienda mejor lo que pasa sin agregar mecanicas nuevas.
 
+Estado: cerrada tecnicamente.
+
 Alcance:
 
 - Parpadeo breve de Messi tras recibir impacto.
@@ -88,6 +90,17 @@ Alcance:
 - Indicador visual cuando Messi puede usar escalera.
 - Efecto simple al tocar la meta.
 - Mejor diferenciacion entre pelota, jugador, rival y objetivo.
+
+Entregables:
+
+- Flash de impacto y texto flotante de vida.
+- Proteccion de respawn visible.
+- Escalera activa resaltada.
+- Cue visual de lanzamiento de pelota.
+- Pelota con rotacion.
+- Pulso de meta y celebracion de victoria.
+- QA automatico en `npm run qa:v2.2`.
+- QA documentado en `docs/QA_V22.md`.
 
 Criterio de cierre:
 

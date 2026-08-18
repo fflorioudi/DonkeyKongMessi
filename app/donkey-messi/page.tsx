@@ -17,6 +17,7 @@ const initialSnapshot: GameSnapshot = {
   lives: 3,
   score: 0,
   highScore: 0,
+  message: "",
   level: 1,
   levelName: "Rosario / Origen",
   canClimb: false,

@@ -344,9 +344,22 @@ Estado: cerrada tecnicamente.
 - QA automatico con `npm run qa:v2.1`.
 - QA de balance documentado en `docs/QA_V21.md`.
 
+### V2.2
+
+Estado: cerrada tecnicamente.
+
+- Feedback visual de impacto.
+- Respawn protegido con contorno.
+- Escalera activa resaltada.
+- Cue visual de lanzamiento de pelota.
+- Pelotas con rotacion.
+- Meta con pulso y victoria con celebracion.
+- QA automatico con `npm run qa:v2.2`.
+- QA visual documentado en `docs/QA_V22.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.1 en telefono real y luego avanzar a V2.2: feedback visual de impacto, escalera activa y victoria.
+Playtest manual de V2.2 en telefono real y luego avanzar a V2.3: control mobile pulido.
 
 ## Roadmap
 

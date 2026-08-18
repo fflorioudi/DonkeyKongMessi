@@ -9,6 +9,7 @@ export class Ball {
   radius: number;
   direction: -1 | 1;
   alive = true;
+  private rotation = 0;
   private speed: number;
 
   constructor(definition: BallDefinition) {
@@ -25,6 +26,7 @@ export class Ball {
     const bottomPlatformY = Math.max(...platforms.map((platform) => platform.y));
 
     this.x += this.direction * this.speed * dt;
+    this.rotation += this.direction * this.speed * dt * 0.05;
 
     if (this.x - this.radius <= 0) {
       this.x = this.radius;
@@ -75,21 +77,23 @@ export class Ball {
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
     ctx.fillStyle = "#ffffff";
     ctx.strokeStyle = "#151515";
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
     ctx.strokeStyle = "#151515";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(this.x - this.radius * 0.55, this.y);
-    ctx.lineTo(this.x + this.radius * 0.55, this.y);
-    ctx.moveTo(this.x, this.y - this.radius * 0.55);
-    ctx.lineTo(this.x, this.y + this.radius * 0.55);
+    ctx.moveTo(-this.radius * 0.55, 0);
+    ctx.lineTo(this.radius * 0.55, 0);
+    ctx.moveTo(0, -this.radius * 0.55);
+    ctx.lineTo(0, this.radius * 0.55);
     ctx.stroke();
     ctx.restore();
   }

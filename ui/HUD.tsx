@@ -21,6 +21,7 @@ export function HUD({ snapshot }: HUDProps) {
           {snapshot.score}/{snapshot.highScore}
         </strong>
       </div>
+      {snapshot.message && <div className="hudMessage">{snapshot.message}</div>}
     </div>
   );
 }
