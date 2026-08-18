@@ -96,8 +96,7 @@ export class Game {
   }
 
   play() {
-    void this.audio.unlock();
-    this.audio.playStart();
+    void this.audio.unlock().then(() => this.audio.playStart());
     this.status = "playing";
     this.lives = INITIAL_LIVES;
     this.score = 0;

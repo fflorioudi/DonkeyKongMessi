@@ -25,14 +25,21 @@ export class AudioManager {
   setEnabled(enabled: boolean) {
     this.enabled = enabled;
     this.persistEnabled();
+
+    if (enabled) {
+      void this.unlock();
+    }
   }
 
   toggle() {
-    this.setEnabled(!this.enabled);
     if (this.enabled) {
-      void this.unlock();
       this.playUi();
+      this.setEnabled(false);
+      return;
     }
+
+    this.setEnabled(true);
+    this.playTest();
   }
 
   async unlock() {
@@ -45,49 +52,58 @@ export class AudioManager {
     if (context?.state === "suspended") {
       await context.resume();
     }
+
+    this.primeOutput();
+  }
+
+  playTest() {
+    void this.runWhenReady(() => {
+      this.scheduleTone({ frequency: 523, duration: 0.08, type: "square", volume: 0.11 });
+      this.scheduleTone({ frequency: 784, duration: 0.12, type: "square", volume: 0.11, delay: 0.09 });
+    });
   }
 
   playUi() {
-    this.playTone({ frequency: 740, duration: 0.045, type: "square", volume: 0.035 });
+    this.playTone({ frequency: 740, duration: 0.055, type: "square", volume: 0.08 });
   }
 
   playStart() {
     this.playSequence([
-      { frequency: 392, duration: 0.07, type: "square", volume: 0.04 },
-      { frequency: 523, duration: 0.08, type: "square", volume: 0.04, delay: 0.07 },
-      { frequency: 659, duration: 0.1, type: "square", volume: 0.04, delay: 0.15 },
+      { frequency: 392, duration: 0.08, type: "square", volume: 0.1 },
+      { frequency: 523, duration: 0.09, type: "square", volume: 0.1, delay: 0.08 },
+      { frequency: 659, duration: 0.12, type: "square", volume: 0.1, delay: 0.17 },
     ]);
   }
 
   playJump() {
-    this.playTone({ frequency: 420, slideTo: 760, duration: 0.12, type: "square", volume: 0.04 });
+    this.playTone({ frequency: 420, slideTo: 760, duration: 0.13, type: "square", volume: 0.1 });
   }
 
   playThrow() {
-    this.playTone({ frequency: 180, slideTo: 110, duration: 0.16, type: "sawtooth", volume: 0.035 });
+    this.playTone({ frequency: 180, slideTo: 110, duration: 0.18, type: "sawtooth", volume: 0.09 });
   }
 
   playHit() {
     this.playSequence([
-      { frequency: 140, duration: 0.12, type: "sawtooth", volume: 0.06 },
-      { frequency: 82, duration: 0.16, type: "square", volume: 0.04, delay: 0.08 },
+      { frequency: 140, duration: 0.13, type: "sawtooth", volume: 0.13 },
+      { frequency: 82, duration: 0.17, type: "square", volume: 0.1, delay: 0.08 },
     ]);
   }
 
   playGameOver() {
     this.playSequence([
-      { frequency: 220, duration: 0.1, type: "square", volume: 0.04 },
-      { frequency: 165, duration: 0.12, type: "square", volume: 0.04, delay: 0.11 },
-      { frequency: 110, duration: 0.18, type: "square", volume: 0.04, delay: 0.24 },
+      { frequency: 220, duration: 0.11, type: "square", volume: 0.1 },
+      { frequency: 165, duration: 0.13, type: "square", volume: 0.1, delay: 0.12 },
+      { frequency: 110, duration: 0.2, type: "square", volume: 0.1, delay: 0.26 },
     ]);
   }
 
   playVictory() {
     this.playSequence([
-      { frequency: 523, duration: 0.08, type: "square", volume: 0.04 },
-      { frequency: 659, duration: 0.08, type: "square", volume: 0.04, delay: 0.09 },
-      { frequency: 784, duration: 0.1, type: "square", volume: 0.04, delay: 0.18 },
-      { frequency: 1046, duration: 0.22, type: "square", volume: 0.04, delay: 0.3 },
+      { frequency: 523, duration: 0.09, type: "square", volume: 0.1 },
+      { frequency: 659, duration: 0.09, type: "square", volume: 0.1, delay: 0.1 },
+      { frequency: 784, duration: 0.11, type: "square", volume: 0.1, delay: 0.2 },
+      { frequency: 1046, duration: 0.24, type: "square", volume: 0.1, delay: 0.33 },
     ]);
   }
 
@@ -100,7 +116,27 @@ export class AudioManager {
       return;
     }
 
-    const context = this.ensureContext();
+    void this.runWhenReady(() => {
+      this.scheduleTone({ frequency, duration, type, volume, slideTo, delay });
+    });
+  }
+
+  private async runWhenReady(callback: () => void) {
+    if (!this.enabled) {
+      return;
+    }
+
+    await this.unlock();
+
+    if (this.context?.state !== "running" || !this.master) {
+      return;
+    }
+
+    callback();
+  }
+
+  private scheduleTone({ frequency, duration, type = "sine", volume = 0.08, slideTo, delay = 0 }: ToneOptions) {
+    const context = this.context;
 
     if (!context || !this.master) {
       return;
@@ -126,6 +162,18 @@ export class AudioManager {
     oscillator.stop(start + duration + 0.02);
   }
 
+  private primeOutput() {
+    if (!this.context || !this.master) {
+      return;
+    }
+
+    const buffer = this.context.createBuffer(1, 1, 22050);
+    const source = this.context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(this.master);
+    source.start(0);
+  }
+
   private ensureContext() {
     if (this.context) {
       return this.context;
@@ -139,7 +187,7 @@ export class AudioManager {
 
     this.context = new AudioContextClass();
     this.master = this.context.createGain();
-    this.master.gain.value = 0.6;
+    this.master.gain.value = 0.95;
     this.master.connect(this.context.destination);
 
     return this.context;

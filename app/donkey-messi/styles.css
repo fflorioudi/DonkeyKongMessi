@@ -195,6 +195,10 @@
   color: #ffffff;
 }
 
+.menuPanel .compactButton {
+  min-width: 82px;
+}
+
 .trainingPanel {
   padding: 16px;
   border: 1px solid rgba(255, 255, 255, 0.16);

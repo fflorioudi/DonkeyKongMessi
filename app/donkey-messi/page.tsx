@@ -72,6 +72,14 @@ export default function DonkeyMessiPage() {
       audioEnabled: gameRef.current?.audio.enabled ?? current.audioEnabled,
     }));
   };
+  const testAudio = () => {
+    gameRef.current?.audio.setEnabled(true);
+    gameRef.current?.audio.playTest();
+    setSnapshot((current) => ({
+      ...current,
+      audioEnabled: true,
+    }));
+  };
   const isPlaying = snapshot.status === "playing";
 
   return (
@@ -109,6 +117,9 @@ export default function DonkeyMessiPage() {
                   <button type="button" className="secondaryButton" onClick={() => setShowTraining(true)}>
                     Entrenar
                   </button>
+                  <button type="button" className="secondaryButton compactButton" onClick={testAudio}>
+                    Audio
+                  </button>
                 </div>
               </div>
             ) : (
@@ -129,6 +140,9 @@ export default function DonkeyMessiPage() {
                   </button>
                   <button type="button" className="secondaryButton" onClick={() => setShowTraining(false)}>
                     Volver
+                  </button>
+                  <button type="button" className="secondaryButton compactButton" onClick={testAudio}>
+                    Audio
                   </button>
                 </div>
               </div>
