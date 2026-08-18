@@ -36,7 +36,7 @@ Nota de cierre: V2 no significa que el juego ya este balanceado o presentable. S
 
 ### V2.1 - QA Y Balance Fino
 
-Estado: siguiente version activa.
+Estado: cerrada tecnicamente.
 
 Foco inmediato:
 
@@ -44,6 +44,14 @@ Foco inmediato:
 - Detectar donde se siente injusto, incomodo o lento.
 - Ajustar parametros sin agregar mecanicas nuevas.
 - Cerrar una version que ya se pueda jugar de punta a punta con confianza.
+
+Entregables:
+
+- Balance de salto, movimiento, escaleras y pelotas.
+- Respawn con breve gracia de seguridad.
+- Controles multitouch mas robustos.
+- QA automatico en `npm run qa:v2.1`.
+- QA de balance documentado en `docs/QA_V21.md`.
 
 ## Versiones Recomendadas Antes De Fase 2
 
@@ -66,6 +74,8 @@ Criterio de cierre:
 - El salto no permite subir de plataforma sin escalera.
 - Ningun respawn genera muerte inmediata.
 - Los controles no quedan pegados.
+
+Nota: la parte tecnica queda cerrada. La confirmacion de "3 veces seguidas en mobile" queda como playtest manual de telefono real.
 
 ## V2.2 - Feedback Visual
 

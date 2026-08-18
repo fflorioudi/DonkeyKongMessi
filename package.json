@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "lint": "eslint .",
+    "qa:v2.1": "node scripts/qa-v21.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

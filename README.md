@@ -332,9 +332,21 @@ Estado: cerrada tecnicamente.
 - Pausa mobile con continuar y reiniciar.
 - QA documentado en `docs/QA_V2.md`.
 
+### V2.1
+
+Estado: cerrada tecnicamente.
+
+- Balance de salto, movimiento, escaleras y pelotas.
+- Spawner menos agresivo y limite menor de pelotas activas.
+- Respawn con breve gracia visual.
+- Tolerancia de escaleras ampliada.
+- Controles multitouch mas robustos.
+- QA automatico con `npm run qa:v2.1`.
+- QA de balance documentado en `docs/QA_V21.md`.
+
 ## Siguiente Paso
 
-Avanzar a V2.1: QA y balance fino. La prioridad ahora es probar el nivel en mobile, ajustar velocidad, salto, frecuencia de pelotas, posiciones de plataformas/escaleras y comodidad de controles.
+Playtest manual de V2.1 en telefono real y luego avanzar a V2.2: feedback visual de impacto, escalera activa y victoria.
 
 ## Roadmap
 

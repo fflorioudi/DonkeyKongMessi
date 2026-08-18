@@ -46,7 +46,7 @@ export class Player {
     this.grounded = false;
   }
 
-  update(dt: number, input: InputSnapshot, platforms: Platform[], ladders: Ladder[]) {
+  update(dt: number, input: InputSnapshot, platforms: Platform[], ladders: Ladder[], worldWidth: number) {
     const ladder = findUsableLadder(this.rect, ladders);
     const wantsClimb = input.climb !== 0 && ladder;
 
@@ -81,7 +81,7 @@ export class Player {
     const previousBottom = this.y + PLAYER_HEIGHT;
 
     this.x += this.vx * dt;
-    this.x = Math.max(6, Math.min(390 - PLAYER_WIDTH - 6, this.x));
+    this.x = Math.max(6, Math.min(worldWidth - PLAYER_WIDTH - 6, this.x));
     this.y += this.vy * dt;
     this.grounded = false;
 
@@ -117,11 +117,12 @@ export class Player {
     return Boolean(findUsableLadder(this.rect, ladders));
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
+  draw(ctx: CanvasRenderingContext2D, isProtected = false) {
     const body = this.drawRect;
 
     ctx.save();
     ctx.translate(body.x, body.y);
+    ctx.globalAlpha = isProtected ? 0.58 : 1;
 
     ctx.fillStyle = "#77b7ff";
     ctx.fillRect(5, 13, 18, 20);
@@ -148,9 +149,9 @@ export class Player {
 
 function findUsableLadder(rect: Rect, ladders: Ladder[]) {
   const probe = {
-    x: rect.x + rect.width * 0.2,
-    y: rect.y,
-    width: rect.width * 0.6,
+    x: rect.x - 8,
+    y: rect.y + 2,
+    width: rect.width + 16,
     height: rect.height,
   };
 

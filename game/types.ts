@@ -49,6 +49,7 @@ export type LevelDefinition = {
   theme: string;
   worldWidth: number;
   worldHeight: number;
+  controlSafeZoneTop: number;
   playerSpawn: Vec2;
   platforms: Platform[];
   ladders: Ladder[];

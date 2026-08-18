@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import type { InputManager } from "@/game/Input";
 import type { Direction } from "@/game/types";
 
@@ -8,35 +11,78 @@ type TouchControlsProps = {
 };
 
 export function TouchControls({ input, canClimb, disabled }: TouchControlsProps) {
-  const startMove = (direction: Direction) => {
-    if (!disabled) input?.setMove(direction);
+  const activeMoves = useRef(new Map<number, Direction>());
+  const activeClimbs = useRef(new Map<number, Direction>());
+
+  const syncMove = () => {
+    const lastDirection = Array.from(activeMoves.current.values()).at(-1) ?? 0;
+    input?.setMove(lastDirection);
   };
 
-  const stopMove = () => {
-    if (!disabled) input?.setMove(0);
+  const syncClimb = () => {
+    const lastDirection = Array.from(activeClimbs.current.values()).at(-1) ?? 0;
+    input?.setClimb(lastDirection);
   };
 
-  const setClimb = (direction: Direction) => {
-    if (!disabled) input?.setClimb(direction);
+  const startMove = (pointerId: number, direction: Direction) => {
+    if (disabled) {
+      return;
+    }
+
+    activeMoves.current.set(pointerId, direction);
+    syncMove();
   };
 
-  const stopClimb = () => input?.setClimb(0);
+  const stopMove = (pointerId: number) => {
+    activeMoves.current.delete(pointerId);
+    if (!disabled) {
+      syncMove();
+    }
+  };
+
+  const setClimb = (pointerId: number, direction: Direction) => {
+    if (disabled) {
+      return;
+    }
+
+    activeClimbs.current.set(pointerId, direction);
+    syncClimb();
+  };
+
+  const stopClimb = (pointerId: number) => {
+    activeClimbs.current.delete(pointerId);
+    if (!disabled) {
+      syncClimb();
+    }
+  };
 
   const jump = () => {
     if (!disabled) input?.pressJump();
   };
 
+  useEffect(() => {
+    if (!disabled) {
+      return;
+    }
+
+    activeMoves.current.clear();
+    activeClimbs.current.clear();
+    input?.setMove(0);
+    input?.setClimb(0);
+    input?.releaseJump();
+  }, [disabled, input]);
+
   return (
     <div className="touchControls" aria-hidden={disabled}>
       <div className="moveCluster">
-        <TouchButton label="Izquierda" text="<" onDown={() => startMove(-1)} onUp={stopMove} />
-        <TouchButton label="Derecha" text=">" onDown={() => startMove(1)} onUp={stopMove} />
+        <TouchButton label="Izquierda" text="<" onDown={(pointerId) => startMove(pointerId, -1)} onUp={stopMove} />
+        <TouchButton label="Derecha" text=">" onDown={(pointerId) => startMove(pointerId, 1)} onUp={stopMove} />
       </div>
 
       <div className="actionCluster">
         <div className={`climbCluster ${canClimb ? "isActive" : ""}`}>
-          <TouchButton label="Subir" text="^" onDown={() => setClimb(-1)} onUp={stopClimb} />
-          <TouchButton label="Bajar" text="v" onDown={() => setClimb(1)} onUp={stopClimb} />
+          <TouchButton label="Subir" text="^" onDown={(pointerId) => setClimb(pointerId, -1)} onUp={stopClimb} />
+          <TouchButton label="Bajar" text="v" onDown={(pointerId) => setClimb(pointerId, 1)} onUp={stopClimb} />
         </div>
         <TouchButton label="Saltar" text="J" size="large" onDown={jump} onUp={() => input?.releaseJump()} />
       </div>
@@ -48,8 +94,8 @@ type TouchButtonProps = {
   label: string;
   text: string;
   size?: "normal" | "large";
-  onDown: () => void;
-  onUp: () => void;
+  onDown: (pointerId: number) => void;
+  onUp: (pointerId: number) => void;
 };
 
 function TouchButton({ label, text, size = "normal", onDown, onUp }: TouchButtonProps) {
@@ -60,13 +106,13 @@ function TouchButton({ label, text, size = "normal", onDown, onUp }: TouchButton
       aria-label={label}
       onPointerDown={(event) => {
         event.currentTarget.setPointerCapture(event.pointerId);
-        onDown();
+        onDown(event.pointerId);
       }}
       onPointerUp={(event) => {
         event.currentTarget.releasePointerCapture(event.pointerId);
-        onUp();
+        onUp(event.pointerId);
       }}
-      onPointerCancel={onUp}
+      onPointerCancel={(event) => onUp(event.pointerId)}
       onContextMenu={(event) => event.preventDefault()}
     >
       {text}

@@ -7,6 +7,7 @@ export const levels: LevelDefinition[] = [
     theme: "Atardecer de barrio, tribunas bajas y primeras pelotas lentas.",
     worldWidth: 390,
     worldHeight: 720,
+    controlSafeZoneTop: 632,
     playerSpawn: { x: 36, y: 568 },
     platforms: [
       { x: 18, y: 610, width: 354, height: 18, color: "#2ee58a" },
@@ -26,12 +27,12 @@ export const levels: LevelDefinition[] = [
     ballSpawner: {
       x: 316,
       y: 97,
-      interval: 3.2,
-      firstDelay: 0.6,
-      maxActive: 4,
+      interval: 3.6,
+      firstDelay: 1.2,
+      maxActive: 3,
       ball: {
         radius: 13,
-        speed: 112,
+        speed: 104,
         direction: -1,
       },
     },

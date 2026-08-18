@@ -24,6 +24,7 @@ export class Game {
   private animationFrame = 0;
   private lastTime = 0;
   private hitCooldown = 0;
+  private respawnGrace = 0;
   private ballSpawnTimer = 0;
 
   constructor(
@@ -84,6 +85,7 @@ export class Game {
     this.score = 0;
     this.bestY = this.level.playerSpawn.y;
     this.hitCooldown = 0;
+    this.respawnGrace = 0;
     this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
     this.player.reset(this.level.playerSpawn);
     this.balls = [];
@@ -122,10 +124,11 @@ export class Game {
     }
 
     this.hitCooldown = Math.max(0, this.hitCooldown - dt);
+    this.respawnGrace = Math.max(0, this.respawnGrace - dt);
     this.ballSpawnTimer -= dt;
     const input = this.input.snapshot();
 
-    this.player.update(dt, input, this.level.platforms, this.level.ladders);
+    this.player.update(dt, input, this.level.platforms, this.level.ladders, this.level.worldWidth);
     this.updateScore(dt);
     this.spawnBallIfReady();
     this.balls.forEach((ball) => ball.update(dt, this.level.platforms, this.level.worldWidth, this.level.worldHeight));
@@ -136,7 +139,7 @@ export class Game {
       return;
     }
 
-    if (this.hitCooldown === 0) {
+    if (this.hitCooldown === 0 && this.respawnGrace === 0) {
       for (const ball of this.balls) {
         if (circleRectOverlap(ball, this.player.rect)) {
           this.damagePlayer();
@@ -167,6 +170,7 @@ export class Game {
     this.player.reset(this.level.playerSpawn);
     this.balls = [];
     this.ballSpawnTimer = this.level.ballSpawner.firstDelay;
+    this.respawnGrace = 1.1;
     this.input.reset();
   }
 
@@ -253,7 +257,7 @@ export class Game {
     this.drawGoal(ctx);
     this.balls.forEach((ball) => ball.draw(ctx));
     this.drawCristiano(ctx);
-    this.player.draw(ctx);
+    this.player.draw(ctx, this.respawnGrace > 0);
   }
 
   private drawBackground(ctx: CanvasRenderingContext2D) {
