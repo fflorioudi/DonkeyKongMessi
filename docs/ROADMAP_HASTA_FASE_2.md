@@ -264,7 +264,7 @@ Criterio de cierre:
 
 Objetivo: dejar el motor preparado para Fase 2 sin duplicar codigo.
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 Alcance:
 
@@ -294,6 +294,8 @@ Criterio de cierre:
 
 Objetivo: cerrar la etapa pre-Fase 2 con una version estable y presentable.
 
+Estado: en cierre tecnico.
+
 Alcance:
 
 - Ejecutar QA completo.
@@ -302,6 +304,14 @@ Alcance:
 - Revisar legibilidad en pantallas chicas.
 - Limpiar archivos temporales.
 - Actualizar README y roadmap.
+
+Entregables:
+
+- Badge visual `Mobile v2.9 candidate`.
+- Selector de nivel compacto sin superposiciones.
+- `.gitignore` actualizado para artefactos locales.
+- QA automatico en `npm run qa:v2.9`.
+- QA documentado en `docs/QA_V29.md`.
 
 Criterio de cierre:
 

@@ -14,6 +14,7 @@
     "qa:v2.6": "node scripts/qa-v26.mjs",
     "qa:v2.7": "node scripts/qa-v27.mjs",
     "qa:v2.8": "node scripts/qa-v28.mjs",
+    "qa:v2.9": "node scripts/qa-v29.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -425,7 +425,7 @@ Estado: cerrada tecnicamente.
 
 ### V2.8
 
-Estado: en cierre tecnico.
+Estado: cerrada tecnicamente.
 
 - `Game` recibe un catalogo completo de niveles y puede seleccionar por indice desde el menu.
 - `LevelDefinition` separa dificultad, fondo, rival, plataformas, escaleras, spawner y meta.
@@ -438,9 +438,20 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v2.8`.
 - QA de arquitectura multi-nivel documentado en `docs/QA_V28.md`.
 
+### V2.9
+
+Estado: en cierre tecnico.
+
+- Candidate build pre-Fase 2.
+- Badge visual actualizado a `Mobile v2.9 candidate`.
+- Hotfix visual del selector de nivel para evitar superposiciones en portada.
+- `.gitignore` ampliado para artefactos locales de build y logs.
+- QA automatico con `npm run qa:v2.9`.
+- QA candidate documentado en `docs/QA_V29.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V2.8 en telefono real y luego avanzar a V2.9: candidate build pre-Fase 2.
+Playtest manual de V2.9 en telefono real. Si pasa, la base queda lista para entrar a Fase 2.
 
 ## Roadmap
 

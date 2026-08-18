@@ -16,3 +16,26 @@ Creating turbopack project { dir: 'C:\\Users\\ffeli\\Desktop\\Donkey Kong Messi'
  GET /donkey-messi 200 in 88ms (next.js: 25ms, application-code: 64ms)
  GET / 307 in 147ms (next.js: 41ms, application-code: 106ms)
  GET /donkey-messi 200 in 126ms (next.js: 43ms, application-code: 83ms)
+ GET /donkey-messi 200 in 62ms (next.js: 24ms, application-code: 37ms)
+ GET / 307 in 119ms (next.js: 12ms, application-code: 107ms)
+ GET /donkey-messi 200 in 65ms (next.js: 11ms, application-code: 55ms)
+✓ Compiled in 80ms
+ GET /donkey-messi 200 in 123ms (next.js: 46ms, application-code: 77ms)
+✓ Compiled in 35ms
+ GET /donkey-messi 200 in 30ms (next.js: 17ms, application-code: 13ms)
+ GET /donkey-messi 200 in 35ms (next.js: 13ms, application-code: 22ms)
+✓ Compiled in 26ms
+✓ Compiled in 27ms
+ GET /donkey-messi 200 in 23ms (next.js: 10ms, application-code: 13ms)
+ GET /donkey-messi 200 in 24ms (next.js: 4ms, application-code: 20ms)
+ GET /donkey-messi 200 in 95ms (next.js: 7ms, application-code: 88ms)
+✓ Compiled in 21ms
+ GET /donkey-messi 200 in 29ms (next.js: 16ms, application-code: 13ms)
+ GET /donkey-messi 200 in 22ms (next.js: 8ms, application-code: 14ms)
+✓ Compiled in 34ms
+✓ Compiled in 43ms
+ GET /donkey-messi 200 in 24ms (next.js: 8ms, application-code: 16ms)
+ GET /donkey-messi 200 in 24ms (next.js: 4ms, application-code: 19ms)
+ GET /donkey-messi 200 in 110ms (next.js: 9ms, application-code: 101ms)
+ GET / 307 in 134ms (next.js: 8ms, application-code: 126ms)
+ GET /donkey-messi 200 in 165ms (next.js: 33ms, application-code: 132ms)
