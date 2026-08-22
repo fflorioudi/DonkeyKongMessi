@@ -44,7 +44,7 @@ pass("level 2 uses level 1 Messi", levelsSource.includes('playerSpriteSheet: "le
 pass("level 2 uses shield and Neymar", levelsSource.includes('spriteSheet: "level2Shield"') && levelsSource.includes('spriteSheet: "level2Companion"'));
 pass("level 2 uses fixed hazards", levelsSource.includes('kind: "fixed-hazard"') && levelsSource.includes('spriteSheet: "level2Hazards"'));
 pass("level selector unlocks level 2", pageSource.includes('cover: "/assets/levels/level-2-cover.png"') && pageSource.includes("levelIndex: 2"));
-pass("menu declares v3.4.6", pageSource.includes("Mobile v3.4.6"));
+pass("menu declares v3.4.6 or newer", /Mobile v3\.(?:4\.[6-9]\d*|[5-9]\d*(?:\.\d+)?)/.test(pageSource));
 pass("readme documents v3.4.6", readmeSource.includes("### V3.4.6"));
 
 console.log("V3.4.6 level 2 assets, selector unlock, shield, Neymar, and fixed hazards checks passed.");

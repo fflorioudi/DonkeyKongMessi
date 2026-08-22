@@ -878,7 +878,7 @@ function platformSurfaceOffset(sheet: string, frame: number) {
     return 0;
   }
 
-  const offsets = [10, 8, 0, 9, 8, 0, 6, 0, 0];
+  const offsets = [18, 20, 3, 18, 16, 14, 19, 4, 4];
   return offsets[frame] ?? 0;
 }
 

@@ -27,8 +27,8 @@ pass("victory uses clean images", victorySource.includes("final-level-0-clean.pn
 pass("victory time omits duplicated suffix", victorySource.includes("formatTimeValue") && !victorySource.includes('toFixed(1)}s'));
 pass("victory score never displays negative", victorySource.includes("Math.max(0, Math.floor(score))"));
 pass("victory stats use stronger typography", stylesSource.includes("Impact") && stylesSource.includes("-webkit-text-stroke"));
-pass("ladder can only be grabbed from ground or climb", playerSource.includes("const canGrabLadder = this.grounded || this.state === \"climb\""));
-pass("climb controls hidden while airborne", playerSource.includes("return (this.grounded || this.state === \"climb\")"));
+pass("ladder grab supports airborne recovery", playerSource.includes("const startsJump = input.jump && canJump") && playerSource.includes("return Boolean(findUsableLadder(this.rect, ladders))"));
+pass("ladder grab does not steal jump launch", playerSource.includes("!startsJump"));
 pass("level 2 rival source exists", existsSync(join(root, "public", "sprites", "source", "level-2-rival-source.png")));
 pass("level 2 rival sheet exists", existsSync(join(root, "public", "sprites", "level-2-rival.png")));
 pass("level 2 rival metadata exists", Boolean(sprites.sheets.level2Rival));

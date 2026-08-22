@@ -10,7 +10,12 @@ type VictoryProps = {
 };
 
 export function Victory({ snapshot, onRestart, onMenu, onNextLevel, canNextLevel }: VictoryProps) {
-  const imageSrc = snapshot.levelIndex === 0 ? "/assets/ui/final-level-0-clean.png" : "/assets/ui/final-level-1-clean.png";
+  const victoryImages = [
+    "/assets/ui/final-level-0-clean.png",
+    "/assets/ui/final-level-1-clean.png",
+    "/assets/ui/final-level-2-clean.png",
+  ];
+  const imageSrc = victoryImages[snapshot.levelIndex] ?? "/assets/ui/final-level-1-clean.png";
   const bestScore = Math.max(snapshot.highScore, snapshot.score);
 
   return (

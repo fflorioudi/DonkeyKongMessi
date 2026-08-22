@@ -368,6 +368,24 @@ Criterio de cierre:
 - No hay cuadrados visibles para pinches, escudo o companion.
 - El nivel queda listo para playtest y balance de dificultad.
 
+### V3.4.7 - Recuperacion De Escalera Aerea
+
+Objetivo: corregir el retroceso de jugabilidad donde Messi ya no podia enganchar escaleras durante un salto.
+
+Alcance:
+
+- Permitir que los controles de escalera aparezcan al cruzar una escalera en el aire.
+- Permitir agarre intencional con arriba/abajo durante el salto.
+- Mantener prioridad del salto al despegar para que la escalera no lo corte.
+- Recalibrar offsets de plataformas del Tutorial.
+- Agregar cartel de victoria del Nivel 2.
+
+Criterio de cierre:
+
+- Saltar hacia una escalera y agarrarse vuelve a sentirse como al inicio.
+- La escalera no actua como pared ni como iman involuntario.
+- Messi pisa visualmente las plataformas del Tutorial.
+
 ## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.

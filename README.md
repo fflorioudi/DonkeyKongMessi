@@ -688,9 +688,25 @@ Estado: en desarrollo validado.
 - QA automatico con `npm run qa:v3.4.6`.
 - QA documentado en `docs/QA_V346.md`.
 
+### V3.4.7
+
+Estado: en desarrollo validado.
+
+- Recuperado el agarre de escalera en el aire:
+  - Messi puede saltar, cruzar una escalera y agarrarse con arriba/abajo.
+  - Los botones de subir/bajar vuelven a activarse al pasar por una escalera aunque Messi este airborne.
+  - El salto inicial sigue teniendo prioridad para que la escalera no robe el despegue.
+- Recalibradas las superficies visuales del Tutorial para alinear mejor los sprites decorativos con la hitbox.
+- Cartel de victoria del Nivel 2 agregado:
+  - Fuente: `public/assets/ui/final-level-2.png`.
+  - Runtime limpio: `public/assets/ui/final-level-2-clean.png`.
+- `Victory` elige cartel por indice de nivel y cae a Nivel 1 si falta un asset futuro.
+- QA automatico acotado con `npm run qa:v3.4.7`.
+- QA documentado en `docs/QA_V347.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.4.6 en telefono real. Confirmar especialmente pinches, power-ups de invencibilidad, ritmo de pelotas y ajuste visual del Tutorial con las pruebas nuevas.
+Playtest manual de V3.4.7 en telefono real. Confirmar especialmente salto hacia escalera, agarre en aire y alineacion de Messi sobre plataformas del Tutorial.
 
 ## Roadmap
 

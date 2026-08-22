@@ -13,12 +13,16 @@ const assets = [
     input: join(sourceDir, "final-level-1.png"),
     output: join(sourceDir, "final-level-1-clean.png"),
   },
+  {
+    input: join(sourceDir, "final-level-2.png"),
+    output: join(sourceDir, "final-level-2-clean.png"),
+  },
 ];
 
 const covers = [
-  { x: 258, y: 875, width: 235, height: 88, radius: 12 },
-  { x: 640, y: 875, width: 232, height: 88, radius: 12 },
-  { x: 333, y: 1028, width: 456, height: 108, radius: 14 },
+  { x: 250, y: 870, width: 252, height: 104, radius: 12 },
+  { x: 632, y: 870, width: 248, height: 104, radius: 12 },
+  { x: 326, y: 1020, width: 472, height: 124, radius: 14 },
 ];
 
 for (const asset of assets) {
