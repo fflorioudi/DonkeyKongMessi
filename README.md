@@ -230,25 +230,29 @@ El tutorial usa el Botin de Oro como banco de prueba antes de llevar power-ups a
 
 ## Niveles Planeados
 
-### Nivel 1 - Rosario / Origen
+### Tutorial - Rosario / Origen
 
 Tutorial jugable. Plataformas simples, pocas escaleras y pelotas lentas. Meta simbolica: camiseta o balon superior.
 
-### Nivel 2 - Barcelona / Ascenso
+### Nivel 1 - Barcelona / Nace El 10
 
-Plataformas mas inclinadas, rutas alternativas, tarjetas rojas y primer power-up.
+Camp Nou, ruta vertical mas larga, tarjetas rojas, pelotas mas frecuentes y Botin de Oro mas corto.
 
-### Nivel 3 - Maracana / Primera Gran Conquista
+### Nivel 2 - Europa / Noches Grandes
 
 Mayor densidad, guantes o botines, zona central de riesgo y Copa America como meta.
 
-### Nivel 4 - Wembley / Consolidacion
+### Nivel 3 - Seleccion / Peso De La Camiseta
 
 Nivel tecnico con escaleras cortadas, rutas de riesgo y obstaculos con direccion variable.
 
-### Nivel 5 - Qatar / Final
+### Nivel 4 - Semifinal / Todo O Nada
 
 Escenario dorado y nocturno. Cristiano custodia la Copa del Mundo.
+
+### Nivel 5 - Final / La Copa Vuelve
+
+Cierre de campana con mezcla de obstaculos, rescates y recuperacion de la Copa.
 
 ### Fase Final - Escape Con La Copa
 
@@ -563,9 +567,39 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.3`.
 - QA documentado en `docs/QA_V33.md`.
 
+### V3.4
+
+Estado: en cierre tecnico.
+
+- Selector de niveles agregado.
+- Boton `Jugar` abre selector de niveles.
+- Tutorial y Nivel 1 quedan jugables por separado.
+- Nivel 2 a Nivel 5 aparecen bloqueados hasta recibir covers/assets.
+- Nivel 1 real: `Barcelona / Nace el 10`.
+- Fondo Camp Nou activo desde `public/assets/levels/level-1-background.png`.
+- Plataformas Barcelona en `public/sprites/level-1-platforms.png`.
+- Rival Nivel 1 en `public/sprites/level-1-rival.png`.
+- Companion recortado y preparado en `public/sprites/level-1-companions.png`.
+- QA automatico con `npm run qa:v3.4`.
+- QA documentado en `docs/QA_V34.md`.
+
+### V3.4.1
+
+Estado: en cierre tecnico.
+
+- Messi Barcelona agregado para Nivel 1.
+- Cover propia de Nivel 1 agregada al selector.
+- Asset fuente: `public/sprites/source/level-1-messi-source.png`.
+- Spritesheet runtime: `public/sprites/level-1-messi.png`.
+- Cover: `public/assets/levels/level-1-cover.png`.
+- Tutorial mantiene el Messi original.
+- Obstaculos de Nivel 1 siguen iguales: pelota y tarjeta roja.
+- QA automatico con `npm run qa:v3.4.1`.
+- QA documentado en `docs/QA_V341.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.3 en telefono real. Si el Botin de Oro se siente claro y justo, avanzar a separar Tutorial y Nivel 1 real.
+Playtest manual de V3.4.1 en telefono real. Si Messi Barcelona, cover y selector funcionan comodos, ajustar balance fino de Barcelona.
 
 ## Roadmap
 

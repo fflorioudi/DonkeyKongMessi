@@ -23,7 +23,10 @@
     "qa:v3.2.3": "node scripts/qa-v323.mjs",
     "qa:v3.2.4": "node scripts/qa-v324.mjs",
     "qa:v3.3": "node scripts/qa-v33.mjs",
+    "qa:v3.4": "node scripts/qa-v34.mjs",
+    "qa:v3.4.1": "node scripts/qa-v341.mjs",
     "assets:powerup:botin": "node scripts/extract-powerup-botin.mjs",
+    "assets:level1": "node scripts/extract-level1-assets.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

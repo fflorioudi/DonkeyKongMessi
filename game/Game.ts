@@ -42,6 +42,7 @@ export class Game {
   private player: Player;
   private obstacles: Obstacle[];
   private powerUps: RuntimePowerUp[];
+  private backgroundImages = new Map<string, HTMLImageElement>();
   private status: GameStatus = "menu";
   private lives = 0;
   private score = 0;
@@ -99,6 +100,7 @@ export class Game {
     this.onSnapshot = onSnapshot;
     this.highScore = this.loadHighScore();
     this.bestTime = this.loadBestTime();
+    this.levels.forEach((level) => this.loadBackgroundImage(level.background.imageSrc));
     this.resize();
     this.emitSnapshot(true);
   }
@@ -548,7 +550,20 @@ export class Game {
     this.level.platforms.forEach((platform) => {
       ctx.save();
       const frame = platform.spriteFrame ?? platformFrame(platform.color);
-      if (!this.sprites.drawTrimmedFrame(ctx, "platforms", frame, platform.x - 5, platform.y, platform.width + 10, 30)) {
+      const sheet = platform.spriteSheet ?? "platforms";
+      const artHeight = sheet === "level1Platforms" ? 46 : 30;
+      const artWidthPadding = sheet === "level1Platforms" ? 16 : 10;
+      if (
+        !this.sprites.drawTrimmedFrame(
+          ctx,
+          sheet,
+          frame,
+          platform.x - artWidthPadding / 2,
+          platform.y,
+          platform.width + artWidthPadding,
+          artHeight,
+        )
+      ) {
         ctx.fillStyle = platform.color || "#ffffff";
         ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
         ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
@@ -563,7 +578,7 @@ export class Game {
     this.drawCristiano(ctx);
     this.drawFloatTexts(ctx);
     this.drawInvincibilityAura(ctx);
-    this.player.draw(ctx, this.respawnGrace > 0, this.sprites, this.lastTime / 1000);
+    this.player.draw(ctx, this.respawnGrace > 0, this.sprites, this.lastTime / 1000, this.level.playerSpriteSheet);
     this.drawGoalFlash(ctx);
     ctx.restore();
   }
@@ -592,6 +607,23 @@ export class Game {
 
   private drawBackground(ctx: CanvasRenderingContext2D) {
     const { background } = this.level;
+    const backgroundImage = background.imageSrc ? this.backgroundImages.get(background.imageSrc) : undefined;
+
+    if (backgroundImage?.complete && backgroundImage.naturalWidth > 0) {
+      const scale = Math.max(
+        this.level.worldWidth / backgroundImage.naturalWidth,
+        this.level.worldHeight / backgroundImage.naturalHeight,
+      );
+      const width = backgroundImage.naturalWidth * scale;
+      const height = backgroundImage.naturalHeight * scale;
+      ctx.drawImage(backgroundImage, (this.level.worldWidth - width) / 2, (this.level.worldHeight - height) / 2, width, height);
+      background.groundBands.forEach((band) => {
+        ctx.fillStyle = band.color;
+        ctx.fillRect(0, band.y, this.level.worldWidth, band.height);
+      });
+      return;
+    }
+
     const gradient = ctx.createLinearGradient(0, 0, 0, this.level.worldHeight);
     gradient.addColorStop(0, background.gradient.top);
     gradient.addColorStop(0.45, background.gradient.middle);
@@ -640,12 +672,16 @@ export class Game {
     ctx.save();
     ctx.translate(rival.x, rival.y);
     if (this.throwCue > 0) {
-      ctx.fillStyle = `rgba(255, 228, 92, ${this.throwCue})`;
-      ctx.fillRect(-8, -6, rival.width + 2, rival.height + 4);
+      ctx.strokeStyle = `rgba(255, 228, 92, ${this.throwCue})`;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.ellipse(rival.width / 2 - 4, rival.height / 2 + 2, rival.width * 0.58, rival.height * 0.56, 0, 0, Math.PI * 2);
+      ctx.stroke();
     }
     const animation = this.throwCue > 0 ? "throw" : "idle";
-    const frame = this.sprites.animationFrame("cristiano", animation, this.lastTime / 1000, this.throwCue > 0 ? 4 : 2);
-    if (this.sprites.drawTrimmedFrame(ctx, "cristiano", frame, -10, 0, rival.width, rival.height, rival.facingLeft)) {
+    const sheet = rival.spriteSheet ?? "cristiano";
+    const frame = this.sprites.animationFrame(sheet, animation, this.lastTime / 1000, this.throwCue > 0 ? 4 : 2);
+    if (this.sprites.drawTrimmedFrame(ctx, sheet, frame, -10, 0, rival.width, rival.height, rival.facingLeft)) {
       ctx.restore();
       return;
     }
@@ -790,6 +826,16 @@ export class Game {
       this.lastSnapshotKey = key;
       this.onSnapshot(snapshot);
     }
+  }
+
+  private loadBackgroundImage(src?: string) {
+    if (!src || this.backgroundImages.has(src)) {
+      return;
+    }
+
+    const image = new Image();
+    image.src = src;
+    this.backgroundImages.set(src, image);
   }
 }
 

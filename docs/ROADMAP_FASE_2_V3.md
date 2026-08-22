@@ -240,31 +240,42 @@ Criterio de cierre:
 - El efecto termina claramente.
 - Se puede mover o tunear desde `LevelDefinition`.
 
-## V3.4 - Nivel 2: Barcelona / Ascenso
+## V3.4 - Selector Y Nivel 1 Real
 
-Objetivo: crear el primer nivel nuevo usando la arquitectura de V2.8/V3.0.
+Objetivo: separar Tutorial y Nivel 1 real usando la arquitectura de V2.8/V3.0.
 
 Alcance:
 
-- Nuevo objeto en `data/levels.ts`.
-- Plataformas con rutas alternativas.
-- Dificultad un poco mayor.
-- Uso controlado de tarjeta roja o power-up si ya estan cerrados.
-- Fondo y paleta propios.
-- Selector de nivel con flechas activas.
+- Nuevo objeto en `data/levels.ts` para Barcelona / Nace el 10.
+- Selector de niveles desde el boton `Jugar`.
+- Tutorial y Nivel 1 desbloqueados; Nivel 2 a Nivel 5 bloqueados.
+- Plataformas con ruta mas larga.
+- Dificultad mayor que el tutorial.
+- Uso controlado de tarjeta roja y Botin de Oro mas corto.
+- Fondo, plataformas y rival propios.
 
 Entregables:
 
-- Nivel 2 jugable de punta a punta.
+- Nivel 1 real jugable de punta a punta.
 - Records separados por nivel.
 - QA automatico `npm run qa:v3.4`.
 - Documento `docs/QA_V34.md`.
 
 Criterio de cierre:
 
-- El Nivel 2 se crea principalmente desde datos.
-- El Nivel 1 no cambia de comportamiento.
-- El selector permite navegar entre Nivel 1 y Nivel 2.
+- El Nivel 1 real se crea principalmente desde datos.
+- El Tutorial no cambia de comportamiento.
+- El selector permite elegir Tutorial o Nivel 1.
+
+### V3.4.1 - Messi Y Cover Nivel 1
+
+Objetivo: completar la identidad visual de Barcelona sin cambiar obstaculos.
+
+Alcance:
+
+- Messi Barcelona por nivel.
+- Cover propia del Nivel 1 en selector.
+- Pelota y tarjeta roja se mantienen como obstaculos activos.
 
 ## V3.5 - Rescate Opcional Simple
 

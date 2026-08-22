@@ -118,15 +118,15 @@ export class Player {
     return Boolean(findUsableLadder(this.rect, ladders));
   }
 
-  draw(ctx: CanvasRenderingContext2D, isProtected = false, sprites?: SpriteManager, time = 0) {
+  draw(ctx: CanvasRenderingContext2D, isProtected = false, sprites?: SpriteManager, time = 0, spriteSheet = "messi") {
     const body = this.drawRect;
     const animation = this.state === "run" ? "run" : this.state === "climb" ? "climb" : this.state === "jump" ? "jump" : "idle";
-    const frame = sprites?.animationFrame("messi", isProtected ? "hit" : animation, time, animation === "run" ? 10 : 6) ?? 0;
+    const frame = sprites?.animationFrame(spriteSheet, isProtected ? "hit" : animation, time, animation === "run" ? 10 : 6) ?? 0;
 
     ctx.save();
     ctx.globalAlpha = isProtected ? 0.58 : 1;
 
-    if (sprites?.drawTrimmedFrame(ctx, "messi", frame, body.x - 9, body.y - 18, 46, 58, this.facing === -1)) {
+    if (sprites?.drawTrimmedFrame(ctx, spriteSheet, frame, body.x - 9, body.y - 18, 46, 58, this.facing === -1)) {
       if (isProtected) {
         ctx.strokeStyle = "#ffe45c";
         ctx.lineWidth = 2;

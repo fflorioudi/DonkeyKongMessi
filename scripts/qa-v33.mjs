@@ -44,7 +44,7 @@ pass("power-up draw has no rectangle fallback", !gameSource.includes("fillRect(p
 pass("obstacles can be destroyed", obstacleSource.includes("destroy()") && obstacleSource.includes("this.ball.alive = false"));
 pass("hud renders active power-up", hudSource.includes("snapshot.activePowerUp") && hudSource.includes("hudPower"));
 pass("audio exposes power-up sound", audioSource.includes("playPowerUp()"));
-pass("menu declares v3.3", pageSource.includes("Mobile v3.3"));
+pass("menu declares v3.3 or newer", /Mobile v3\.(?:3|[4-9]\d*)(?:\.\d+)?/.test(pageSource));
 pass("roadmap mentions v3.3", roadmapSource.includes("V3.3 - Power-Up Basico"));
 
 console.log("V3.3 golden boot power-up checks passed.");

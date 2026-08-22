@@ -33,7 +33,7 @@ const initialSnapshot: GameSnapshot = {
   audioEnabled: true,
   level: 1,
   levelIndex: 0,
-  levelCount: 1,
+  levelCount: levels.length,
   levelLabel: "Tutorial",
   levelName: "Rosario / Primer ascenso",
   levelTheme: "Prologo jugable: aprender a subir, esquivar y llegar a la Copa antes del Nivel 1.",
@@ -43,11 +43,36 @@ const initialSnapshot: GameSnapshot = {
 
 const campaignPath = [
   { step: "Tutorial", title: "Rosario / Primer ascenso", status: "Jugable" },
-  { step: "Nivel 1", title: "Barcelona / Nace el 10", status: "Proximo" },
+  { step: "Nivel 1", title: "Barcelona / Nace el 10", status: "Jugable" },
   { step: "Nivel 2", title: "Europa / Noches grandes", status: "Bloqueado" },
   { step: "Nivel 3", title: "Seleccion / Peso de la camiseta", status: "Bloqueado" },
   { step: "Nivel 4", title: "Semifinal / Todo o nada", status: "Bloqueado" },
   { step: "Nivel 5", title: "Final / La Copa vuelve", status: "Bloqueado" },
+];
+
+const levelSelectSlots = [
+  {
+    label: "Tutorial",
+    title: "Rosario / Primer ascenso",
+    detail: "Base para aprender saltos, escaleras y Botin.",
+    status: "Listo",
+    levelIndex: 0,
+    unlocked: true,
+    cover: "/assets/cover-chatgpt-escalada-del-10.png",
+  },
+  {
+    label: "Nivel 1",
+    title: "Barcelona / Nace el 10",
+    detail: "Camp Nou, mas recorrido y obstaculos mas seguidos.",
+    status: "Nuevo",
+    levelIndex: 1,
+    unlocked: true,
+    cover: "/assets/levels/level-1-cover.png",
+  },
+  { label: "Nivel 2", title: "Europa / Noches grandes", detail: "Cover pendiente.", status: "Bloqueado", unlocked: false },
+  { label: "Nivel 3", title: "Seleccion / Peso de la camiseta", detail: "Cover pendiente.", status: "Bloqueado", unlocked: false },
+  { label: "Nivel 4", title: "Semifinal / Todo o nada", detail: "Cover pendiente.", status: "Bloqueado", unlocked: false },
+  { label: "Nivel 5", title: "Final / La Copa vuelve", detail: "Cover pendiente.", status: "Bloqueado", unlocked: false },
 ];
 
 export default function DonkeyMessiPage() {
@@ -56,6 +81,7 @@ export default function DonkeyMessiPage() {
   const [snapshot, setSnapshot] = useState<GameSnapshot>(initialSnapshot);
   const [inputManager, setInputManager] = useState<InputManager | null>(null);
   const [showTraining, setShowTraining] = useState(false);
+  const [showLevelSelect, setShowLevelSelect] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -82,13 +108,23 @@ export default function DonkeyMessiPage() {
     };
   }, []);
 
-  const startGame = () => {
-    void gameRef.current?.audio.unlock().then(() => gameRef.current?.play());
+  const playLevel = (index: number) => {
+    const game = gameRef.current;
+
+    if (!game) {
+      return;
+    }
+
+    game.selectLevel(index);
+    setShowTraining(false);
+    setShowLevelSelect(false);
+    void game.audio.unlock().then(() => game.play());
   };
   const restartGame = () => gameRef.current?.restart();
   const showMenu = () => {
     gameRef.current?.menu();
     setShowTraining(false);
+    setShowLevelSelect(false);
   };
   const pauseGame = () => gameRef.current?.pause();
   const resumeGame = () => gameRef.current?.resume();
@@ -106,6 +142,10 @@ export default function DonkeyMessiPage() {
       ...current,
       audioEnabled: true,
     }));
+  };
+  const openLevelSelect = () => {
+    setShowTraining(false);
+    setShowLevelSelect(true);
   };
   const isPlaying = snapshot.status === "playing";
 
@@ -140,19 +180,58 @@ export default function DonkeyMessiPage() {
               sizes="430px"
               priority
             />
-            <div className={`coverShade ${showTraining ? "isTraining" : "isTitle"}`} />
-            {!showTraining ? (
+            <div className={`coverShade ${showTraining || showLevelSelect ? "isTraining" : "isTitle"}`} />
+            {!showTraining && !showLevelSelect ? (
               <div className="coverHotspots" aria-label="Menu principal">
-                <p className="buildStamp">Mobile v3.3</p>
-                <button className="coverHotspot coverHotspotPlay" type="button" onClick={startGame}>
-                  <span className="srOnly">Jugar tutorial</span>
+                <p className="buildStamp">Mobile v3.4.1</p>
+                <button className="coverHotspot coverHotspotPlay" type="button" onClick={openLevelSelect}>
+                  <span className="srOnly">Seleccionar nivel</span>
                 </button>
-                <button className="coverHotspot coverHotspotTraining" type="button" onClick={() => setShowTraining(true)}>
+                <button
+                  className="coverHotspot coverHotspotTraining"
+                  type="button"
+                  onClick={() => {
+                    setShowLevelSelect(false);
+                    setShowTraining(true);
+                  }}
+                >
                   <span className="srOnly">Entrenar y ver camino de historia</span>
                 </button>
                 <button className="coverHotspot coverHotspotAudio" type="button" onClick={testAudio}>
                   <span className="srOnly">Probar audio</span>
                 </button>
+              </div>
+            ) : showLevelSelect ? (
+              <div className="menuPanel trainingPanel levelSelectPanel">
+                <p className="eyebrow">Seleccion de niveles</p>
+                <h1>Elegir escalada</h1>
+                <div className="levelCardGrid" aria-label="Seleccion de nivel">
+                  {levelSelectSlots.map((slot) => (
+                    <button
+                      key={slot.label}
+                      className={`levelCard ${slot.unlocked ? "isUnlocked" : "isLocked"}`}
+                      type="button"
+                      disabled={!slot.unlocked}
+                      onClick={() => slot.levelIndex !== undefined && playLevel(slot.levelIndex)}
+                    >
+                      <span className="levelCardCover" style={slot.cover ? { backgroundImage: `url(${slot.cover})` } : undefined} />
+                      <span className="levelCardText">
+                        <span>{slot.label}</span>
+                        <strong>{slot.title}</strong>
+                        <em>{slot.detail}</em>
+                      </span>
+                      <span className="levelCardStatus">{slot.status}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="overlayActions">
+                  <button type="button" className="secondaryButton" onClick={() => setShowLevelSelect(false)}>
+                    Volver
+                  </button>
+                  <button type="button" className="secondaryButton compactButton" onClick={testAudio}>
+                    Audio
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="menuPanel trainingPanel storyPanel">
@@ -177,8 +256,11 @@ export default function DonkeyMessiPage() {
                   <span>Escaleras</span>
                 </div>
                 <div className="overlayActions">
-                  <button type="button" onClick={startGame}>
-                    Jugar
+                  <button type="button" onClick={() => playLevel(0)}>
+                    Tutorial
+                  </button>
+                  <button type="button" className="secondaryButton" onClick={openLevelSelect}>
+                    Niveles
                   </button>
                   <button type="button" className="secondaryButton" onClick={() => setShowTraining(false)}>
                     Volver

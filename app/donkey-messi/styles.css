@@ -374,6 +374,103 @@
   overflow: auto;
 }
 
+.levelSelectPanel {
+  top: max(14px, env(safe-area-inset-top));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  align-content: start;
+  overflow: auto;
+}
+
+.levelSelectPanel h1 {
+  max-width: none;
+  font-size: 27px;
+}
+
+.levelCardGrid {
+  display: grid;
+  width: 100%;
+  gap: 8px;
+}
+
+.menuPanel .levelCard {
+  display: grid;
+  width: 100%;
+  min-height: 74px;
+  grid-template-columns: 54px minmax(0, 1fr) 58px;
+  gap: 9px;
+  align-items: center;
+  padding: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(2, 8, 18, 0.5);
+  color: #ffffff;
+  text-align: left;
+}
+
+.menuPanel .levelCard.isUnlocked {
+  border-color: rgba(255, 228, 92, 0.38);
+}
+
+.menuPanel .levelCard.isLocked {
+  opacity: 0.58;
+}
+
+.levelCardCover {
+  display: block;
+  width: 54px;
+  height: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(52, 128, 246, 0.34), rgba(255, 92, 122, 0.24)),
+    rgba(16, 24, 32, 0.82);
+  background-position: center;
+  background-size: cover;
+}
+
+.levelCardText {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.levelCardText span,
+.levelCardStatus {
+  color: #ffe45c;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.levelCardText strong,
+.levelCardText em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.levelCardText strong {
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.15;
+}
+
+.levelCardText em {
+  color: rgba(248, 251, 255, 0.72);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.levelCardStatus {
+  justify-self: end;
+  color: rgba(248, 251, 255, 0.72);
+  text-align: right;
+}
+
+.levelCard.isUnlocked .levelCardStatus {
+  color: #2ee58a;
+}
+
 .trainingPanel h1 {
   max-width: 13ch;
   font-size: 27px;

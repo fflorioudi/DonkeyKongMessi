@@ -18,6 +18,7 @@ export type Rect = {
 
 export type Platform = Rect & {
   color?: string;
+  spriteSheet?: string;
   spriteFrame?: number;
 };
 
@@ -113,6 +114,7 @@ export type LevelDefinition = {
   difficulty: LevelDifficultyDefinition;
   background: LevelBackgroundDefinition;
   rival: RivalDefinition;
+  playerSpriteSheet?: string;
   playerSpawn: Vec2;
   platforms: Platform[];
   ladders: Ladder[];
@@ -137,6 +139,7 @@ export type LevelDifficultyDefinition = {
 };
 
 export type LevelBackgroundDefinition = {
+  imageSrc?: string;
   gradient: {
     top: string;
     middle: string;
@@ -156,6 +159,7 @@ export type RivalDefinition = {
   width: number;
   height: number;
   facingLeft: boolean;
+  spriteSheet?: string;
 };
 
 export type InputSnapshot = {
