@@ -34,10 +34,20 @@ const initialSnapshot: GameSnapshot = {
   level: 1,
   levelIndex: 0,
   levelCount: 1,
-  levelName: "Rosario / Origen",
-  levelTheme: "Atardecer de barrio, tribunas bajas y primeras pelotas lentas.",
+  levelLabel: "Tutorial",
+  levelName: "Rosario / Primer ascenso",
+  levelTheme: "Prologo jugable: aprender a subir, esquivar y llegar a la Copa antes del Nivel 1.",
   canClimb: false,
 };
+
+const campaignPath = [
+  { step: "Tutorial", title: "Rosario / Primer ascenso", status: "Jugable" },
+  { step: "Nivel 1", title: "Barcelona / Nace el 10", status: "Proximo" },
+  { step: "Nivel 2", title: "Europa / Noches grandes", status: "Bloqueado" },
+  { step: "Nivel 3", title: "Seleccion / Peso de la camiseta", status: "Bloqueado" },
+  { step: "Nivel 4", title: "Semifinal / Todo o nada", status: "Bloqueado" },
+  { step: "Nivel 5", title: "Final / La Copa vuelve", status: "Bloqueado" },
+];
 
 export default function DonkeyMessiPage() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -74,8 +84,6 @@ export default function DonkeyMessiPage() {
   const startGame = () => {
     void gameRef.current?.audio.unlock().then(() => gameRef.current?.play());
   };
-  const selectPreviousLevel = () => gameRef.current?.selectLevel(snapshot.levelIndex - 1);
-  const selectNextLevel = () => gameRef.current?.selectLevel(snapshot.levelIndex + 1);
   const restartGame = () => gameRef.current?.restart();
   const showMenu = () => {
     gameRef.current?.menu();
@@ -99,7 +107,6 @@ export default function DonkeyMessiPage() {
     }));
   };
   const isPlaying = snapshot.status === "playing";
-  const canSelectLevel = snapshot.levelCount > 1;
 
   return (
     <main className="gameShell">
@@ -111,68 +118,55 @@ export default function DonkeyMessiPage() {
             II
           </button>
         )}
-        <button
-          className={`soundButton ${snapshot.audioEnabled ? "isOn" : ""}`}
-          type="button"
-          aria-label={snapshot.audioEnabled ? "Silenciar sonido" : "Activar sonido"}
-          onClick={toggleAudio}
-        >
-          {snapshot.audioEnabled ? "S" : "M"}
-        </button>
+        {snapshot.status !== "menu" && (
+          <button
+            className={`soundButton ${snapshot.audioEnabled ? "isOn" : ""}`}
+            type="button"
+            aria-label={snapshot.audioEnabled ? "Silenciar sonido" : "Activar sonido"}
+            onClick={toggleAudio}
+          >
+            {snapshot.audioEnabled ? "S" : "M"}
+          </button>
+        )}
 
         {snapshot.status === "menu" && (
           <>
-            <Image className="coverArt" src="/assets/cover-v24-worldcup.png" alt="" fill sizes="430px" priority />
-            <div className="coverShade" />
+            <Image
+              className="coverArt coverArtTitleScreen"
+              src="/assets/cover-chatgpt-escalada-del-10.png"
+              alt=""
+              fill
+              sizes="430px"
+              priority
+            />
+            <div className={`coverShade ${showTraining ? "isTraining" : "isTitle"}`} />
             {!showTraining ? (
-              <div className="menuPanel">
-                <p className="eyebrow">Mobile v3.2.2</p>
-                <h1>Donkey Kong: Edicion Messi</h1>
-                <div className={`levelPicker ${canSelectLevel ? "" : "isSingle"}`} aria-label="Selector de nivel">
-                  {canSelectLevel && (
-                    <button
-                      type="button"
-                      aria-label="Nivel anterior"
-                      disabled={snapshot.levelIndex === 0}
-                      onClick={selectPreviousLevel}
-                    >
-                      &lt;
-                    </button>
-                  )}
-                  <div>
-                    <span>
-                      Nivel {snapshot.level} / {snapshot.levelCount}
-                    </span>
-                    <strong>{snapshot.levelName}</strong>
-                  </div>
-                  {canSelectLevel && (
-                    <button
-                      type="button"
-                      aria-label="Nivel siguiente"
-                      disabled={snapshot.levelIndex >= snapshot.levelCount - 1}
-                      onClick={selectNextLevel}
-                    >
-                      &gt;
-                    </button>
-                  )}
-                </div>
-                <p className="levelTheme">{snapshot.levelTheme}</p>
-                <div className="overlayActions">
-                  <button type="button" onClick={startGame}>
-                    Jugar
-                  </button>
-                  <button type="button" className="secondaryButton" onClick={() => setShowTraining(true)}>
-                    Entrenar
-                  </button>
-                  <button type="button" className="secondaryButton compactButton" onClick={testAudio}>
-                    Audio
-                  </button>
-                </div>
+              <div className="coverHotspots" aria-label="Menu principal">
+                <p className="buildStamp">Mobile v3.2.3</p>
+                <button className="coverHotspot coverHotspotPlay" type="button" onClick={startGame}>
+                  <span className="srOnly">Jugar tutorial</span>
+                </button>
+                <button className="coverHotspot coverHotspotTraining" type="button" onClick={() => setShowTraining(true)}>
+                  <span className="srOnly">Entrenar y ver camino de historia</span>
+                </button>
+                <button className="coverHotspot coverHotspotAudio" type="button" onClick={testAudio}>
+                  <span className="srOnly">Probar audio</span>
+                </button>
               </div>
             ) : (
-              <div className="menuPanel trainingPanel">
-                <p className="eyebrow">Entrenamiento</p>
-                <h1>Subi, esquiva, llega</h1>
+              <div className="menuPanel trainingPanel storyPanel">
+                <p className="eyebrow">Prologo tutorial</p>
+                <h1>Rosario antes del Nivel 1</h1>
+                <p className="levelTheme">{snapshot.levelTheme}</p>
+                <ol className="campaignPath" aria-label="Camino de historia">
+                  {campaignPath.map((chapter) => (
+                    <li key={chapter.step}>
+                      <span>{chapter.step}</span>
+                      <strong>{chapter.title}</strong>
+                      <em>{chapter.status}</em>
+                    </li>
+                  ))}
+                </ol>
                 <div className="trainingGrid" aria-label="Controles">
                   <span>&lt; &gt;</span>
                   <span>Mover</span>

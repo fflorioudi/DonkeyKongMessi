@@ -6,9 +6,10 @@ Objetivo: que el juego se sienta como una experiencia completa aunque todavia te
 
 - `public/assets/cover-v24-worldcup.png`
 - Generado con ImageGen built-in.
-- Uso: portada mobile del menu principal.
+- Uso historico: portada mobile del menu principal hasta V3.2.2.
 - Prompt base: pixel-art vertical de arcade futbolero, sin logos reales, sin texto embebido, sin marcas.
 - Ajuste narrativo: la parte superior muestra la Copa del Mundo, porque es el objeto que Cristiano roba/custodia.
+- `public/assets/cover-chatgpt-escalada-del-10.png`: portada externa candidata, activada en V3.2.3 con hotspots reales sobre los botones embebidos.
 
 Asset historico:
 

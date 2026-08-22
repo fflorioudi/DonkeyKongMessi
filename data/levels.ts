@@ -3,8 +3,9 @@ import type { LevelDefinition } from "@/game/types";
 export const levels: LevelDefinition[] = [
   {
     id: 1,
-    name: "Rosario / Origen",
-    theme: "Atardecer de barrio, tribunas bajas y primeras pelotas lentas.",
+    stageLabel: "Tutorial",
+    name: "Rosario / Primer ascenso",
+    theme: "Prologo jugable: aprender a subir, esquivar y llegar a la Copa antes del Nivel 1.",
     worldWidth: 390,
     worldHeight: 1160,
     viewportWidth: 390,

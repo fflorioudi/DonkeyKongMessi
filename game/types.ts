@@ -88,6 +88,7 @@ export type SpawnDelayRangeDefinition = {
 
 export type LevelDefinition = {
   id: number;
+  stageLabel?: string;
   name: string;
   theme: string;
   worldWidth: number;
@@ -164,6 +165,7 @@ export type HudSnapshot = {
   level: number;
   levelIndex: number;
   levelCount: number;
+  levelLabel: string;
   levelName: string;
   levelTheme: string;
 };

@@ -376,6 +376,7 @@ Estado: cerrada tecnicamente.
 Estado: cerrada tecnicamente.
 
 - Portada con asset PNG propio en `public/assets/cover-v24-worldcup.png`.
+- Portada externa candidata guardada en `public/assets/cover-chatgpt-escalada-del-10.png`, luego activada en V3.2.3.
 - Menu principal visual.
 - Pantalla breve de entrenamiento.
 - Salida a inicio desde pausa, Game Over y Victory.
@@ -521,9 +522,22 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.2.2`.
 - QA documentado en `docs/QA_V322.md`.
 
+### V3.2.3
+
+Estado: en cierre tecnico.
+
+- Portada nueva activa desde `public/assets/cover-chatgpt-escalada-del-10.png`.
+- Los botones dibujados en el arte funcionan mediante hotspots reales.
+- Se eliminan titulo y botones duplicados del menu principal.
+- El boton superior de sonido se oculta en menu para usar el `Audio` de la portada.
+- El nivel actual queda presentado como `Tutorial`.
+- Entrenar abre un prologo con camino narrativo: Tutorial + Nivel 1 a Nivel 5.
+- QA automatico con `npm run qa:v3.2.3`.
+- QA documentado en `docs/QA_V323.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.2.2 en telefono real. Si los controles quedan firmes, avanzar a V3.3: power-up basico.
+Playtest manual de V3.2.3 en telefono real. Si portada, hotspots y prologo funcionan comodos, avanzar a V3.3: power-up basico.
 
 ## Roadmap
 

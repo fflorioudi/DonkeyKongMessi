@@ -656,6 +656,7 @@ export class Game {
       level: this.level.id,
       levelIndex: this.levelIndex,
       levelCount: this.levels.length,
+      levelLabel: this.level.stageLabel ?? String(this.level.id),
       levelName: this.level.name,
       levelTheme: this.level.theme,
     };

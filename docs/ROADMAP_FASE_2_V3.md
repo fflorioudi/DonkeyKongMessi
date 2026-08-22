@@ -171,6 +171,26 @@ Criterio de cierre:
 - Arrastrar el dedo fuera del boton no deja direccion activa.
 - Pausa, menu o cambio de app limpian input.
 
+### V3.2.3 - Portada Y Prologo De Historia
+
+Objetivo: activar la portada nueva y separar narrativamente el tutorial de los cinco niveles futuros.
+
+Estado: en cierre tecnico.
+
+Alcance:
+
+- Usar la portada externa como menu principal.
+- Superponer hotspots reales sobre `Jugar`, `Entrenar` y `Audio`.
+- Evitar titulo y botones duplicados encima del arte.
+- Presentar el mapa actual como `Tutorial`.
+- Dejar planteado el camino: Tutorial + Nivel 1 a Nivel 5.
+
+Criterio de cierre:
+
+- Portada clickeable y limpia.
+- El tutorial queda entendido como prologo.
+- La historia tiene una direccion clara antes de crear Nivel 1 real.
+
 ## V3.3 - Power-Up Basico
 
 Objetivo: agregar una ventaja simple que cambie decisiones sin complicar controles.

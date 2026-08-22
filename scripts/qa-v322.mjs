@@ -24,7 +24,7 @@ pass("visibilitychange resets all input", controlsSource.includes('document.addE
 pass("lost pointer capture is handled", controlsSource.includes("onLostPointerCapture"));
 pass("button release checks active pointer", controlsSource.includes("activePointer.current !== pointerId"));
 pass("button release guards pointer capture", controlsSource.includes("hasPointerCapture(pointerId)"));
-pass("menu declares v3.2.2", pageSource.includes("Mobile v3.2.2"));
+pass("menu declares v3.2.2 or newer", /Mobile v3\.2\.\d+/.test(pageSource));
 pass("readme documents v3.2.2", readmeSource.includes("### V3.2.2") && readmeSource.includes("pointerup"));
 
 console.log("V3.2.2 sticky touch input checks passed.");

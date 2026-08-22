@@ -34,8 +34,8 @@ pass("scoring uses level difficulty", gameSource.includes("this.level.difficulty
 pass("background is data driven", gameSource.includes("const { background } = this.level") && gameSource.includes("background.groundBands"));
 pass("rival render is data driven", gameSource.includes("const { rival } = this.level") && gameSource.includes("rival.facingLeft"));
 pass("page passes all levels", pageSource.includes("new Game(canvas, levels, setSnapshot)"));
-pass("menu exposes level picker", pageSource.includes("levelPicker") && pageSource.includes("selectNextLevel"));
-pass("level picker has styles", stylesSource.includes(".levelPicker"));
+pass("menu plants campaign path", pageSource.includes("campaignPath") && pageSource.includes("Nivel 5"));
+pass("campaign path has styles", stylesSource.includes(".campaignPath"));
 pass("roadmap mentions v2.8", roadmapSource.includes("V2.8 - Preparacion Para Multiples Niveles"));
 
 console.log("V2.8 multi-level preparation checks passed.");
