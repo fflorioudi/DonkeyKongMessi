@@ -629,9 +629,25 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.4.3`.
 - QA documentado en `docs/QA_V343.md`.
 
+### V3.4.4
+
+Estado: en cierre tecnico.
+
+- Fix de escalera: el input de escalera ya no corta el salto ascendente.
+- El salto tiene prioridad sobre `climb`, para evitar que la escalera se sienta como pared solida.
+- Ajuste de alineacion visual en plataformas del Tutorial para que Messi camine sobre la superficie.
+- Assets base de Nivel 2 preparados:
+  - Fondo: `public/assets/levels/level-2-background.png`.
+  - Spritesheet: `public/sprites/level-2-platforms.png`.
+  - Fuente: `public/sprites/source/level-2-platforms-source.png`.
+  - Metadata: `level2Platforms`.
+- Nivel 2 queda preparado visualmente, pero no activado como jugable hasta tener cover/rival/sprites/balance.
+- QA automatico con `npm run qa:v3.4.4`.
+- QA documentado en `docs/QA_V344.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.4.3 en telefono real. Confirmar especialmente control aereo, alineacion de plataformas del Tutorial y botones de pausa/victoria.
+Playtest manual de V3.4.4 en telefono real. Confirmar especialmente salto cerca de escaleras y pies de Messi sobre plataformas del Tutorial.
 
 ## Roadmap
 

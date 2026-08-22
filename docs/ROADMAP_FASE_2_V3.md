@@ -315,6 +315,23 @@ Criterio de cierre:
 - Los carteles no son solo imagen: sus botones funcionan.
 - El flujo de victoria no puede navegar a un nivel inexistente.
 
+### V3.4.4 - Fix Escaleras Y Assets Nivel 2
+
+Objetivo: pulir jugabilidad critica antes de construir Nivel 2 y dejar cargada su base visual.
+
+Alcance:
+
+- Evitar que la escalera frene a Messi durante el salto ascendente.
+- Priorizar salto sobre input de escalera.
+- Ajustar alineacion visual de plataformas del Tutorial.
+- Preparar fondo y spritesheet de plataformas del Nivel 2.
+
+Criterio de cierre:
+
+- Saltar cerca de escaleras no se siente tosco ni interrumpido.
+- Tutorial y Nivel 1 mantienen su flujo.
+- `level2Platforms` queda disponible para armar el proximo nivel.
+
 ## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.

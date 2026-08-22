@@ -49,7 +49,8 @@ export class Player {
 
   update(dt: number, input: InputSnapshot, platforms: Platform[], ladders: Ladder[], worldWidth: number) {
     const ladder = findUsableLadder(this.rect, ladders);
-    const wantsClimb = input.climb !== 0 && ladder;
+    const isRisingJump = this.state === "jump" && this.vy < 0;
+    const wantsClimb = input.climb !== 0 && !input.jump && !isRisingJump && ladder;
 
     if (wantsClimb) {
       this.state = "climb";

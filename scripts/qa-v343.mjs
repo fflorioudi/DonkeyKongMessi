@@ -34,7 +34,7 @@ pass("touchend no longer kills multi-touch air movement", !controlsSource.includ
 pass("sticky protection still keeps pointer cancel and focus reset", controlsSource.includes('window.addEventListener("pointercancel", releasePointer)') && controlsSource.includes('window.addEventListener("touchcancel", resetAll)') && controlsSource.includes('window.addEventListener("blur", resetAll)'));
 pass("tutorial platform art aligns surface", gameSource.includes("platformSurfaceOffset") && gameSource.includes('sheet !== "level0Platforms"'));
 pass("image overlay styles exist", stylesSource.includes(".imageOverlay") && stylesSource.includes(".victoryNext") && stylesSource.includes(".pauseResume"));
-pass("menu declares v3.4.3", pageSource.includes("Mobile v3.4.3"));
+pass("menu declares v3.4.3 or newer", /Mobile v3\.(?:4\.[3-9]\d*|[5-9]\d*(?:\.\d+)?)/.test(pageSource));
 pass("readme documents v3.4.3", readmeSource.includes("### V3.4.3") && readmeSource.includes("control aereo"));
 
 console.log("V3.4.3 pause/victory overlays and aerial control checks passed.");
