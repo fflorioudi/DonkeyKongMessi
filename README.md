@@ -597,9 +597,24 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.4.1`.
 - QA documentado en `docs/QA_V341.md`.
 
+### V3.4.2
+
+Estado: en cierre tecnico.
+
+- Cover del Tutorial agregada al selector: `public/assets/levels/level-0-cover.png`.
+- Fondo nuevo del Tutorial: `public/assets/levels/level-0-background.png`.
+- Plataformas nuevas del Tutorial: `public/sprites/level-0-platforms.png`.
+- Asset fuente conservado: `public/sprites/source/level-0-platforms-source.png`.
+- Ronaldinho agregado en Nivel 1 como pickup de invencibilidad.
+- Ronaldinho usa `level1Companion`, se consume una vez y desaparece.
+- Botin de Oro y Ronaldinho comparten logica de invencibilidad, pero con label y sprite propios.
+- Refuerzo del fix de direccion pegada en mobile: limpieza por `pointer`, `touch`, `mouse`, foco y visibilidad.
+- QA automatico con `npm run qa:v3.4.2`.
+- QA documentado en `docs/QA_V342.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.4.1 en telefono real. Si Messi Barcelona, cover y selector funcionan comodos, ajustar balance fino de Barcelona.
+Playtest manual de V3.4.2 en telefono real. Confirmar especialmente que izquierda/derecha ya no quedan pegados y que Ronaldinho aparece lejos del Botin.
 
 ## Roadmap
 

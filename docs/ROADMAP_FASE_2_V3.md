@@ -277,6 +277,25 @@ Alcance:
 - Cover propia del Nivel 1 en selector.
 - Pelota y tarjeta roja se mantienen como obstaculos activos.
 
+### V3.4.2 - Tutorial Visual Y Ronaldinho Assist
+
+Objetivo: mejorar la identidad del Tutorial y probar un segundo pickup de invencibilidad sin sumar botones nuevos.
+
+Alcance:
+
+- Cover propia para Tutorial en selector.
+- Fondo y plataformas nuevas de Rosario.
+- Ronaldinho en Nivel 1 como pickup consumible una sola vez.
+- Misma logica de invencibilidad que el Botin de Oro, con sprite y label propios.
+- Refuerzo de controles tactiles para evitar direccion izquierda/derecha pegada.
+
+Criterio de cierre:
+
+- El Tutorial se distingue visualmente del Nivel 1.
+- Ronaldinho no queda cerca del Botin de Oro.
+- El pickup desaparece al tomarlo.
+- Soltar direccion detiene a Messi en mobile.
+
 ## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.

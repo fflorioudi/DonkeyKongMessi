@@ -933,6 +933,101 @@
           "h": 347
         }
       ]
+    },
+    "level0Platforms": {
+      "src": "/sprites/level-0-platforms.png",
+      "frameWidth": 320,
+      "frameHeight": 150,
+      "frames": 9,
+      "animations": {
+        "rosarioLong": [
+          0
+        ],
+        "ballMedium": [
+          1
+        ],
+        "woodFlag": [
+          2
+        ],
+        "championsLong": [
+          3
+        ],
+        "messiWood": [
+          4
+        ],
+        "tireBrick": [
+          5
+        ],
+        "fenceLong": [
+          6
+        ],
+        "flagWall": [
+          7
+        ],
+        "buntingWall": [
+          8
+        ]
+      },
+      "pivot": {
+        "x": 160,
+        "y": 144
+      },
+      "trims": [
+        {
+          "x": 6,
+          "y": 32,
+          "w": 308,
+          "h": 112
+        },
+        {
+          "x": 42,
+          "y": 6,
+          "w": 236,
+          "h": 138
+        },
+        {
+          "x": 32,
+          "y": 6,
+          "w": 256,
+          "h": 138
+        },
+        {
+          "x": 6,
+          "y": 38,
+          "w": 308,
+          "h": 106
+        },
+        {
+          "x": 25,
+          "y": 6,
+          "w": 270,
+          "h": 138
+        },
+        {
+          "x": 52,
+          "y": 6,
+          "w": 216,
+          "h": 138
+        },
+        {
+          "x": 6,
+          "y": 53,
+          "w": 308,
+          "h": 91
+        },
+        {
+          "x": 6,
+          "y": 13,
+          "w": 308,
+          "h": 131
+        },
+        {
+          "x": 53,
+          "y": 6,
+          "w": 214,
+          "h": 138
+        }
+      ]
     }
   }
 }

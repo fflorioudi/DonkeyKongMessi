@@ -23,7 +23,7 @@ export function HUD({ snapshot }: HUDProps) {
       </div>
       {snapshot.activePowerUp && (
         <div className="hudPower">
-          <span>Botin</span>
+          <span>{snapshot.activePowerUp.label}</span>
           <strong>{formatTime(snapshot.activePowerUp.remaining)}</strong>
         </div>
       )}

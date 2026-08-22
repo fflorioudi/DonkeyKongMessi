@@ -58,7 +58,7 @@ const levelSelectSlots = [
     status: "Listo",
     levelIndex: 0,
     unlocked: true,
-    cover: "/assets/cover-chatgpt-escalada-del-10.png",
+    cover: "/assets/levels/level-0-cover.png",
   },
   {
     label: "Nivel 1",
@@ -183,7 +183,7 @@ export default function DonkeyMessiPage() {
             <div className={`coverShade ${showTraining || showLevelSelect ? "isTraining" : "isTitle"}`} />
             {!showTraining && !showLevelSelect ? (
               <div className="coverHotspots" aria-label="Menu principal">
-                <p className="buildStamp">Mobile v3.4.1</p>
+                <p className="buildStamp">Mobile v3.4.2</p>
                 <button className="coverHotspot coverHotspotPlay" type="button" onClick={openLevelSelect}>
                   <span className="srOnly">Seleccionar nivel</span>
                 </button>

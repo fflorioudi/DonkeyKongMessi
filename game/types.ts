@@ -35,8 +35,10 @@ export type PowerUpEffectDefinition = {
 
 export type PowerUpDefinition = Rect & {
   id: string;
-  kind: "golden-boot";
+  kind: "golden-boot" | "ronaldinho";
   label: string;
+  spriteSheet?: string;
+  animation?: string;
   effect: PowerUpEffectDefinition;
   scoreBonus: number;
 };

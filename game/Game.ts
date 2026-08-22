@@ -61,6 +61,7 @@ export class Game {
   private respawnGrace = 0;
   private invincibilityTimer = 0;
   private invincibilityDuration = 0;
+  private activePowerUpLabel = "";
   private powerUpFlash = 0;
   private obstacleSpawnTimers = new Map<string, number>();
   private cameraY = 0;
@@ -177,6 +178,7 @@ export class Game {
     this.respawnGrace = 0;
     this.invincibilityTimer = 0;
     this.invincibilityDuration = 0;
+    this.activePowerUpLabel = "";
     this.powerUpFlash = 0;
     this.obstacleSpawnTimers = createObstacleSpawnTimers(this.level);
     this.hitFlash = 0;
@@ -203,6 +205,7 @@ export class Game {
     this.respawnGrace = 0;
     this.invincibilityTimer = 0;
     this.invincibilityDuration = 0;
+    this.activePowerUpLabel = "";
     this.powerUpFlash = 0;
     this.obstacleSpawnTimers = new Map();
     this.hitFlash = 0;
@@ -308,6 +311,7 @@ export class Game {
     this.audio.playHit();
     this.invincibilityTimer = 0;
     this.invincibilityDuration = 0;
+    this.activePowerUpLabel = "";
     this.powerUpFlash = 0;
 
     if (this.lives <= 0) {
@@ -469,13 +473,14 @@ export class Game {
     if (powerUp.effect.kind === "invincibility") {
       this.invincibilityTimer = Math.max(this.invincibilityTimer, powerUp.effect.duration);
       this.invincibilityDuration = powerUp.effect.duration;
+      this.activePowerUpLabel = powerUp.label;
       this.powerUpFlash = 0.6;
     }
 
     this.score += powerUp.scoreBonus;
     this.scoreBreakdown.progress += powerUp.scoreBonus;
     this.addFloatText(powerUp.x + powerUp.width / 2, powerUp.y - 4, `+${powerUp.scoreBonus}`, "#ffe45c");
-    this.setMessage("Botin dorado: invencible", 1.8);
+    this.setMessage(`${powerUp.label}: invencible`, 1.8);
     this.audio.playPowerUp();
   }
 
@@ -551,8 +556,9 @@ export class Game {
       ctx.save();
       const frame = platform.spriteFrame ?? platformFrame(platform.color);
       const sheet = platform.spriteSheet ?? "platforms";
-      const artHeight = sheet === "level1Platforms" ? 46 : 30;
-      const artWidthPadding = sheet === "level1Platforms" ? 16 : 10;
+      const isHdPlatform = sheet === "level1Platforms" || sheet === "level0Platforms";
+      const artHeight = isHdPlatform ? 46 : 30;
+      const artWidthPadding = isHdPlatform ? 16 : 10;
       if (
         !this.sprites.drawTrimmedFrame(
           ctx,
@@ -712,15 +718,21 @@ export class Game {
 
     const time = this.lastTime / 1000;
     const bob = Math.sin(time * 4.2) * 3;
-    const frame = this.sprites.animationFrame("goldenBoot", "pulse", time, 8);
+    const sheet = powerUp.spriteSheet ?? "goldenBoot";
+    const animation = powerUp.animation ?? "pulse";
+    const frame = this.sprites.animationFrame(sheet, animation, time, powerUp.kind === "ronaldinho" ? 2 : 8);
+    const drawWidth = powerUp.kind === "ronaldinho" ? powerUp.width + 8 : powerUp.width + 12;
+    const drawHeight = powerUp.kind === "ronaldinho" ? powerUp.height + 10 : powerUp.height + 16;
+    const drawX = powerUp.kind === "ronaldinho" ? powerUp.x - 4 : powerUp.x - 6;
+    const drawY = powerUp.kind === "ronaldinho" ? powerUp.y - 10 + bob : powerUp.y - 9 + bob;
     this.sprites.drawTrimmedFrame(
       ctx,
-      "goldenBoot",
+      sheet,
       frame,
-      powerUp.x - 6,
-      powerUp.y - 9 + bob,
-      powerUp.width + 12,
-      powerUp.height + 16,
+      drawX,
+      drawY,
+      drawWidth,
+      drawHeight,
     );
   }
 
@@ -806,7 +818,7 @@ export class Game {
       activePowerUp:
         this.invincibilityTimer > 0
           ? {
-              label: "Botin",
+              label: this.activePowerUpLabel || "Invencible",
               remaining: Number(this.invincibilityTimer.toFixed(1)),
             }
           : null,

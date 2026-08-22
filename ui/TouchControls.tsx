@@ -29,6 +29,7 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
       return;
     }
 
+    activeMoves.current.clear();
     activeMoves.current.set(pointerId, direction);
     syncMove();
   };
@@ -92,12 +93,19 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
 
     window.addEventListener("pointerup", releasePointer);
     window.addEventListener("pointercancel", releasePointer);
+    window.addEventListener("mouseup", resetAll);
+    window.addEventListener("touchend", resetAll);
+    window.addEventListener("touchcancel", resetAll);
     window.addEventListener("blur", resetAll);
     document.addEventListener("visibilitychange", resetAll);
 
     return () => {
+      resetAll();
       window.removeEventListener("pointerup", releasePointer);
       window.removeEventListener("pointercancel", releasePointer);
+      window.removeEventListener("mouseup", resetAll);
+      window.removeEventListener("touchend", resetAll);
+      window.removeEventListener("touchcancel", resetAll);
       window.removeEventListener("blur", resetAll);
       document.removeEventListener("visibilitychange", resetAll);
     };
@@ -163,6 +171,12 @@ function TouchButton({ label, text, size = "normal", onDown, onUp }: TouchButton
         finishPointer(event.currentTarget, event.pointerId);
       }}
       onPointerCancel={(event) => {
+        finishPointer(event.currentTarget, event.pointerId);
+      }}
+      onPointerLeave={(event) => {
+        finishPointer(event.currentTarget, event.pointerId);
+      }}
+      onPointerOut={(event) => {
         finishPointer(event.currentTarget, event.pointerId);
       }}
       onLostPointerCapture={(event) => {
