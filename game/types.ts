@@ -35,7 +35,7 @@ export type PowerUpEffectDefinition = {
 
 export type PowerUpDefinition = Rect & {
   id: string;
-  kind: "golden-boot" | "ronaldinho";
+  kind: "golden-boot" | "ronaldinho" | "shield" | "neymar";
   label: string;
   spriteSheet?: string;
   animation?: string;
@@ -81,6 +81,9 @@ export type FutureObstacleDefinition = {
   height: number;
   speed?: number;
   direction?: -1 | 1;
+  spriteSheet?: string;
+  spriteFrame?: number;
+  hitboxInset?: number;
 };
 
 export type ObstacleDefinition = BallObstacleDefinition | RedCardObstacleDefinition | FutureObstacleDefinition;

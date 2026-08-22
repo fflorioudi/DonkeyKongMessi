@@ -29,6 +29,7 @@
     "qa:v3.4.3": "node scripts/qa-v343.mjs",
     "qa:v3.4.4": "node scripts/qa-v344.mjs",
     "qa:v3.4.5": "node scripts/qa-v345.mjs",
+    "qa:v3.4.6": "node scripts/qa-v346.mjs",
     "assets:powerup:botin": "node scripts/extract-powerup-botin.mjs",
     "assets:level1": "node scripts/extract-level1-assets.mjs",
     "assets:level0": "node scripts/extract-level0-assets.mjs",

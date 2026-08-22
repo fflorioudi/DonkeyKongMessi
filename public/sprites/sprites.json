@@ -1231,6 +1231,162 @@
           "h": 342
         }
       ]
+    },
+    "level2Shield": {
+      "src": "/sprites/level-2-shield.png",
+      "frameWidth": 180,
+      "frameHeight": 180,
+      "frames": 1,
+      "animations": {
+        "pulse": [
+          0
+        ]
+      },
+      "pivot": {
+        "x": 160,
+        "y": 144
+      },
+      "trims": [
+        {
+          "x": 10,
+          "y": 23,
+          "w": 160,
+          "h": 151
+        }
+      ]
+    },
+    "level2Companion": {
+      "src": "/sprites/level-2-companions.png",
+      "frameWidth": 220,
+      "frameHeight": 300,
+      "frames": 4,
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "assist": [
+          1,
+          2
+        ],
+        "celebrate": [
+          2,
+          3
+        ]
+      },
+      "pivot": {
+        "x": 160,
+        "y": 144
+      },
+      "trims": [
+        {
+          "x": 53,
+          "y": 8,
+          "w": 114,
+          "h": 286
+        },
+        {
+          "x": 36,
+          "y": 8,
+          "w": 148,
+          "h": 286
+        },
+        {
+          "x": 44,
+          "y": 8,
+          "w": 132,
+          "h": 286
+        },
+        {
+          "x": 45,
+          "y": 8,
+          "w": 131,
+          "h": 286
+        }
+      ]
+    },
+    "level2Hazards": {
+      "src": "/sprites/level-2-hazard.png",
+      "frameWidth": 320,
+      "frameHeight": 150,
+      "frames": 8,
+      "animations": {
+        "spikesLong": [
+          0
+        ],
+        "spikesMedium": [
+          1
+        ],
+        "spikesMid": [
+          3
+        ],
+        "spikesSmall": [
+          4
+        ],
+        "spikesLow": [
+          5
+        ],
+        "mine": [
+          6
+        ],
+        "chainedMine": [
+          7
+        ]
+      },
+      "pivot": {
+        "x": 160,
+        "y": 144
+      },
+      "trims": [
+        {
+          "x": 7,
+          "y": 94,
+          "w": 306,
+          "h": 50
+        },
+        {
+          "x": 7,
+          "y": 17,
+          "w": 306,
+          "h": 127
+        },
+        {
+          "x": 7,
+          "y": 76,
+          "w": 306,
+          "h": 68
+        },
+        {
+          "x": 31,
+          "y": 6,
+          "w": 258,
+          "h": 138
+        },
+        {
+          "x": 57,
+          "y": 6,
+          "w": 207,
+          "h": 138
+        },
+        {
+          "x": 7,
+          "y": 97,
+          "w": 306,
+          "h": 47
+        },
+        {
+          "x": 96,
+          "y": 6,
+          "w": 128,
+          "h": 138
+        },
+        {
+          "x": 129,
+          "y": 6,
+          "w": 63,
+          "h": 138
+        }
+      ]
     }
   }
 }

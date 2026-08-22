@@ -349,6 +349,25 @@ Criterio de cierre:
 - La escalera no corta saltos.
 - `level2Rival` queda disponible sin frames rotos.
 
+### V3.4.6 - Nivel 2 Jugable Inicial
+
+Objetivo: convertir los assets recibidos del Nivel 2 en una primera version jugable y seleccionable.
+
+Alcance:
+
+- Activar Nivel 2 en el selector con su cover.
+- Integrar fondo, plataformas y rival ya preparados.
+- Agregar escudo como power-up de invencibilidad.
+- Agregar Neymar como companion/pickup de invencibilidad de un solo uso.
+- Agregar pinches como obstaculos fijos con sprite y hitbox propia.
+- Reutilizar Messi del Nivel 1 y las pelotas clasicas.
+
+Criterio de cierre:
+
+- Nivel 2 se puede seleccionar sin romper Tutorial ni Nivel 1.
+- No hay cuadrados visibles para pinches, escudo o companion.
+- El nivel queda listo para playtest y balance de dificultad.
+
 ## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.

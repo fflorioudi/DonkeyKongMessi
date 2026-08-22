@@ -44,7 +44,7 @@ const initialSnapshot: GameSnapshot = {
 const campaignPath = [
   { step: "Tutorial", title: "Rosario / Primer ascenso", status: "Jugable" },
   { step: "Nivel 1", title: "Barcelona / Nace el 10", status: "Jugable" },
-  { step: "Nivel 2", title: "Europa / Noches grandes", status: "Bloqueado" },
+  { step: "Nivel 2", title: "Europa / Noches grandes", status: "Jugable" },
   { step: "Nivel 3", title: "Seleccion / Peso de la camiseta", status: "Bloqueado" },
   { step: "Nivel 4", title: "Semifinal / Todo o nada", status: "Bloqueado" },
   { step: "Nivel 5", title: "Final / La Copa vuelve", status: "Bloqueado" },
@@ -69,7 +69,15 @@ const levelSelectSlots = [
     unlocked: true,
     cover: "/assets/levels/level-1-cover.png",
   },
-  { label: "Nivel 2", title: "Europa / Noches grandes", detail: "Cover pendiente.", status: "Bloqueado", unlocked: false },
+  {
+    label: "Nivel 2",
+    title: "Europa / Noches grandes",
+    detail: "Estadio europeo, pinches, escudo y Neymar.",
+    status: "Nuevo",
+    levelIndex: 2,
+    unlocked: true,
+    cover: "/assets/levels/level-2-cover.png",
+  },
   { label: "Nivel 3", title: "Seleccion / Peso de la camiseta", detail: "Cover pendiente.", status: "Bloqueado", unlocked: false },
   { label: "Nivel 4", title: "Semifinal / Todo o nada", detail: "Cover pendiente.", status: "Bloqueado", unlocked: false },
   { label: "Nivel 5", title: "Final / La Copa vuelve", detail: "Cover pendiente.", status: "Bloqueado", unlocked: false },
@@ -192,7 +200,7 @@ export default function DonkeyMessiPage() {
             <div className={`coverShade ${showTraining || showLevelSelect ? "isTraining" : "isTitle"}`} />
             {!showTraining && !showLevelSelect ? (
               <div className="coverHotspots" aria-label="Menu principal">
-                <p className="buildStamp">Mobile v3.4.5</p>
+                <p className="buildStamp">Mobile v3.4.6</p>
                 <button className="coverHotspot coverHotspotPlay" type="button" onClick={openLevelSelect}>
                   <span className="srOnly">Seleccionar nivel</span>
                 </button>

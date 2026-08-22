@@ -19,6 +19,8 @@ export class Obstacle {
   private speed = 0;
   private direction: -1 | 1 = -1;
   private hitboxInset = 0;
+  private spriteSheet = "";
+  private spriteFrame = 0;
 
   constructor(definition: ObstacleRuntimeDefinition) {
     this.spawnerId = definition.spawnerId;
@@ -45,6 +47,15 @@ export class Obstacle {
       this.speed = definition.obstacle.speed;
       this.direction = definition.obstacle.direction;
       this.hitboxInset = definition.obstacle.hitboxInset ?? 3;
+      return;
+    }
+
+    if (definition.obstacle.kind === "fixed-hazard") {
+      this.speed = definition.obstacle.speed ?? 0;
+      this.direction = definition.obstacle.direction ?? -1;
+      this.hitboxInset = definition.obstacle.hitboxInset ?? 8;
+      this.spriteSheet = definition.obstacle.spriteSheet ?? "level2Hazards";
+      this.spriteFrame = definition.obstacle.spriteFrame ?? 0;
       return;
     }
 
@@ -83,6 +94,10 @@ export class Obstacle {
       return;
     }
 
+    if (this.kind === "fixed-hazard") {
+      return;
+    }
+
     this.rect.x += this.direction * this.speed * dt;
 
     if (
@@ -103,6 +118,18 @@ export class Obstacle {
     if (this.kind === "red-card") {
       const frame = Math.abs(Math.floor(this.rect.x * 0.1)) % 8;
       sprites?.drawTrimmedFrame(ctx, "redCard", frame, this.rect.x - 6, this.rect.y - 7, this.rect.width + 12, this.rect.height + 14);
+    }
+
+    if (this.kind === "fixed-hazard") {
+      sprites?.drawTrimmedFrame(
+        ctx,
+        this.spriteSheet,
+        this.spriteFrame,
+        this.rect.x - 6,
+        this.rect.y - 18,
+        this.rect.width + 12,
+        this.rect.height + 24,
+      );
     }
   }
 

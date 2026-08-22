@@ -8,6 +8,10 @@ const paths = {
   background: join(sourceRoot, "level-2-background.png"),
   platforms: join(sourceRoot, "level-2-platforms.png"),
   rival: join(sourceRoot, "level-2-rival.png"),
+  powerUp: join(sourceRoot, "level-2-power-up.png"),
+  companions: join(sourceRoot, "level-2-companions.png"),
+  hazard: join(sourceRoot, "level-2-hazard.png"),
+  cover: join(sourceRoot, "level-2-cover.png"),
 };
 const metadataPath = join(root, "public", "sprites", "sprites.json");
 
@@ -19,10 +23,14 @@ for (const [label, path] of Object.entries(paths)) {
 
 copySource(paths.platforms, "level-2-platforms-source.png");
 copySource(paths.rival, "level-2-rival-source.png");
+copySource(paths.powerUp, "level-2-power-up-source.png");
+copySource(paths.companions, "level-2-companions-source.png");
+copySource(paths.hazard, "level-2-hazard-source.png");
 
 const levelsDir = join(root, "public", "assets", "levels");
 mkdirSync(levelsDir, { recursive: true });
 copyFileSync(paths.background, join(levelsDir, "level-2-background.png"));
+copyFileSync(paths.cover, join(levelsDir, "level-2-cover.png"));
 
 await normalizeSheet({
   input: paths.platforms,
@@ -88,6 +96,72 @@ await normalizeSheet({
     throw: [2],
     guard: [1],
     victory: [1],
+  },
+});
+
+await normalizeSheet({
+  input: paths.powerUp,
+  output: join(root, "public", "sprites", "level-2-shield.png"),
+  frameWidth: 180,
+  frameHeight: 180,
+  maxWidth: 160,
+  maxHeight: 160,
+  boxes: [
+    { x: 333, y: 69, width: 891, height: 841 },
+  ],
+  sheetKey: "level2Shield",
+  animations: {
+    pulse: [0],
+  },
+});
+
+await normalizeSheet({
+  input: paths.companions,
+  output: join(root, "public", "sprites", "level-2-companions.png"),
+  frameWidth: 220,
+  frameHeight: 300,
+  maxWidth: 206,
+  maxHeight: 286,
+  boxes: [
+    { x: 5, y: 249, width: 181, height: 455 },
+    { x: 205, y: 269, width: 225, height: 436 },
+    { x: 1087, y: 249, width: 211, height: 456 },
+    { x: 1323, y: 256, width: 207, height: 451 },
+  ],
+  sheetKey: "level2Companion",
+  animations: {
+    idle: [0, 1],
+    assist: [1, 2],
+    celebrate: [2, 3],
+  },
+});
+
+await normalizeSheet({
+  input: paths.hazard,
+  output: join(root, "public", "sprites", "level-2-hazard.png"),
+  frameWidth: 320,
+  frameHeight: 150,
+  maxWidth: 306,
+  maxHeight: 138,
+  boxes: [
+    { x: 15, y: 49, width: 1222, height: 199 },
+    { x: 1275, y: 68, width: 435, height: 180 },
+    { x: 15, y: 293, width: 842, height: 187 },
+    { x: 899, y: 292, width: 336, height: 180 },
+    { x: 1486, y: 291, width: 279, height: 186 },
+    { x: 16, y: 581, width: 820, height: 125 },
+    { x: 1803, y: 16, width: 258, height: 279 },
+    { x: 1957, y: 266, width: 193, height: 425 },
+  ],
+  sheetKey: "level2Hazards",
+  animations: {
+    spikesLong: [0],
+    spikesMedium: [1],
+    spikesMid: [3],
+    spikesSmall: [4],
+    spikesLow: [5],
+    mine: [6],
+    chainedMine: [7],
   },
 });
 

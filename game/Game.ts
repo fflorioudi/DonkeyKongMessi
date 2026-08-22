@@ -452,6 +452,11 @@ export class Game {
         obstacle: spawner.obstacle,
       }),
     );
+    if (spawner.obstacle.kind === "fixed-hazard") {
+      this.obstacleSpawnTimers.set(spawner.id, nextSpawnDelaySeconds(spawner));
+      return;
+    }
+
     this.throwCue = 0.45;
     this.addFloatText(spawner.x - 14, spawner.y - 16, "PELIGRO", "#ffe45c");
     this.audio.playThrow();
@@ -556,7 +561,7 @@ export class Game {
       ctx.save();
       const frame = platform.spriteFrame ?? platformFrame(platform.color);
       const sheet = platform.spriteSheet ?? "platforms";
-      const isHdPlatform = sheet === "level1Platforms" || sheet === "level0Platforms";
+      const isHdPlatform = sheet === "level1Platforms" || sheet === "level0Platforms" || sheet === "level2Platforms";
       const artHeight = isHdPlatform ? 46 : 30;
       const artWidthPadding = isHdPlatform ? 16 : 10;
       const surfaceOffset = platformSurfaceOffset(sheet, frame);
@@ -721,11 +726,12 @@ export class Game {
     const bob = Math.sin(time * 4.2) * 3;
     const sheet = powerUp.spriteSheet ?? "goldenBoot";
     const animation = powerUp.animation ?? "pulse";
-    const frame = this.sprites.animationFrame(sheet, animation, time, powerUp.kind === "ronaldinho" ? 2 : 8);
-    const drawWidth = powerUp.kind === "ronaldinho" ? powerUp.width + 8 : powerUp.width + 12;
-    const drawHeight = powerUp.kind === "ronaldinho" ? powerUp.height + 10 : powerUp.height + 16;
-    const drawX = powerUp.kind === "ronaldinho" ? powerUp.x - 4 : powerUp.x - 6;
-    const drawY = powerUp.kind === "ronaldinho" ? powerUp.y - 10 + bob : powerUp.y - 9 + bob;
+    const isCompanion = powerUp.kind === "ronaldinho" || powerUp.kind === "neymar";
+    const frame = this.sprites.animationFrame(sheet, animation, time, isCompanion ? 2 : 8);
+    const drawWidth = isCompanion ? powerUp.width + 8 : powerUp.width + 12;
+    const drawHeight = isCompanion ? powerUp.height + 10 : powerUp.height + 16;
+    const drawX = isCompanion ? powerUp.x - 4 : powerUp.x - 6;
+    const drawY = isCompanion ? powerUp.y - 10 + bob : powerUp.y - 9 + bob;
     this.sprites.drawTrimmedFrame(
       ctx,
       sheet,

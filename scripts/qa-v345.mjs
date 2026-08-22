@@ -33,7 +33,7 @@ pass("level 2 rival source exists", existsSync(join(root, "public", "sprites", "
 pass("level 2 rival sheet exists", existsSync(join(root, "public", "sprites", "level-2-rival.png")));
 pass("level 2 rival metadata exists", Boolean(sprites.sheets.level2Rival));
 pass("level 2 rival uses complete-frame pass", sprites.sheets.level2Rival?.frames === 3);
-pass("menu declares v3.4.5", pageSource.includes("Mobile v3.4.5"));
+pass("menu declares v3.4.5 or newer", /Mobile v3\.(?:4\.[5-9]\d*|[5-9]\d*(?:\.\d+)?)/.test(pageSource));
 pass("readme documents v3.4.5", readmeSource.includes("### V3.4.5") && readmeSource.toLowerCase().includes("tipografia"));
 
 console.log("V3.4.5 victory typography, ladder air lockout, and level 2 rival checks passed.");

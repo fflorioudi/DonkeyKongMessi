@@ -665,9 +665,32 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.4.5`.
 - QA documentado en `docs/QA_V345.md`.
 
+### V3.4.6
+
+Estado: en desarrollo validado.
+
+- Nivel 2 activado como jugable desde el selector.
+- Cover del Nivel 2 agregada: `public/assets/levels/level-2-cover.png`.
+- Escudo de invencibilidad del Nivel 2:
+  - Fuente: `public/sprites/source/level-2-power-up-source.png`.
+  - Spritesheet: `public/sprites/level-2-shield.png`.
+  - Metadata: `level2Shield`.
+- Neymar agregado como companion/pickup de invencibilidad:
+  - Fuente: `public/sprites/source/level-2-companions-source.png`.
+  - Spritesheet: `public/sprites/level-2-companions.png`.
+  - Metadata: `level2Companion`.
+- Pinches del Nivel 2 agregados como obstaculos fijos con sprite:
+  - Fuente: `public/sprites/source/level-2-hazard-source.png`.
+  - Spritesheet: `public/sprites/level-2-hazard.png`.
+  - Metadata: `level2Hazards`.
+- Messi del Nivel 2 reutiliza el sprite del Nivel 1.
+- Pelotas se mantienen como obstaculo clasico recurrente.
+- QA automatico con `npm run qa:v3.4.6`.
+- QA documentado en `docs/QA_V346.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.4.5 en telefono real. Confirmar especialmente victoria visual y salto cerca de escaleras.
+Playtest manual de V3.4.6 en telefono real. Confirmar especialmente pinches, power-ups de invencibilidad, ritmo de pelotas y ajuste visual del Tutorial con las pruebas nuevas.
 
 ## Roadmap
 
