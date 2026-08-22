@@ -191,24 +191,24 @@ Criterio de cierre:
 - El tutorial queda entendido como prologo.
 - La historia tiene una direccion clara antes de crear Nivel 1 real.
 
-### V3.2.4 - Recortes Rescatados Y Plan De Assets
+### V3.2.4 - Portada Limpia Y Plan De Assets
 
-Objetivo: rescatar solo assets utiles de la nueva hoja externa y documentar lo que falta crear.
+Objetivo: liberar la portada de controles jugables, mantener sprites propios y documentar proporciones para assets futuros.
 
 Estado: en cierre tecnico.
 
 Alcance:
 
-- Preservar la hoja fuente en `public/sprites/source`.
-- Recortar iconos utiles para el prologo.
-- Descartar recortes que no lean bien en UI chica.
-- Integrar iconos en el camino Tutorial + Nivel 1 a Nivel 5.
+- Preservar la hoja fuente solo como referencia.
+- Descartar recortes externos de la UI principal.
+- Renderizar controles jugables solo durante partida.
+- Documentar proporciones para fondos, sprites, power-ups, companeros y portadas.
 - Crear README de disenos pendientes por nivel.
 - Crear README de jugabilidad pendiente.
 
 Criterio de cierre:
 
-- Los recortes se usan solo como UI/narrativa.
+- La portada no queda bloqueada por controles jugables.
 - La jugabilidad estable no cambia.
 - Los proximos assets y sistemas quedan planificados.
 

@@ -540,9 +540,9 @@ Estado: en cierre tecnico.
 Estado: en cierre tecnico.
 
 - Hoja externa nueva preservada en `public/sprites/source/chatgpt-story-sheet-20260821-230304.png`.
-- Recortes rescatados para UI narrativa en `public/assets/story/`.
-- Los iconos rescatados se usan en el prologo de Tutorial + Nivel 1 a Nivel 5.
-- Se descartan recortes que no sirven limpios para UI chica.
+- Recortes externos descartados de la UI principal para mantener sprites propios validados.
+- Los controles jugables ya no se renderizan en portada y no bloquean el boton `Audio`.
+- El README de disenos incluye proporciones concretas para pedir assets separados a ChatGPT.
 - README de disenos pendientes: `docs/README_DISENOS_NIVELES.md`.
 - README de jugabilidad pendiente: `docs/README_JUGABILIDAD_PENDIENTE.md`.
 - QA automatico con `npm run qa:v3.2.4`.
