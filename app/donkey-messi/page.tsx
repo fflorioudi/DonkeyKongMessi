@@ -121,6 +121,15 @@ export default function DonkeyMessiPage() {
     void game.audio.unlock().then(() => game.play());
   };
   const restartGame = () => gameRef.current?.restart();
+  const playNextLevel = () => {
+    const nextIndex = snapshot.levelIndex + 1;
+
+    if (nextIndex >= levels.length) {
+      return;
+    }
+
+    playLevel(nextIndex);
+  };
   const showMenu = () => {
     gameRef.current?.menu();
     setShowTraining(false);
@@ -183,7 +192,7 @@ export default function DonkeyMessiPage() {
             <div className={`coverShade ${showTraining || showLevelSelect ? "isTraining" : "isTitle"}`} />
             {!showTraining && !showLevelSelect ? (
               <div className="coverHotspots" aria-label="Menu principal">
-                <p className="buildStamp">Mobile v3.4.2</p>
+                <p className="buildStamp">Mobile v3.4.3</p>
                 <button className="coverHotspot coverHotspotPlay" type="button" onClick={openLevelSelect}>
                   <span className="srOnly">Seleccionar nivel</span>
                 </button>
@@ -277,7 +286,13 @@ export default function DonkeyMessiPage() {
         {snapshot.status === "gameOver" && <GameOver snapshot={snapshot} onRestart={restartGame} onMenu={showMenu} />}
         {snapshot.status === "paused" && <Pause onResume={resumeGame} onRestart={restartGame} onMenu={showMenu} />}
         {snapshot.status === "levelComplete" && (
-          <Victory snapshot={snapshot} onRestart={restartGame} onMenu={showMenu} />
+          <Victory
+            snapshot={snapshot}
+            onRestart={restartGame}
+            onMenu={showMenu}
+            onNextLevel={playNextLevel}
+            canNextLevel={snapshot.levelIndex + 1 < levels.length}
+          />
         )}
 
         {isPlaying && <TouchControls input={inputManager} canClimb={snapshot.canClimb} disabled={false} />}

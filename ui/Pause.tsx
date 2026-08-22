@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type PauseProps = {
   onResume: () => void;
   onRestart: () => void;
@@ -6,20 +8,17 @@ type PauseProps = {
 
 export function Pause({ onResume, onRestart, onMenu }: PauseProps) {
   return (
-    <div className="overlayPanel">
-      <p className="eyebrow">Pausa</p>
-      <h1>Respira y segui</h1>
-      <div className="overlayActions">
-        <button type="button" onClick={onResume}>
-          Seguir
-        </button>
-        <button type="button" className="secondaryButton" onClick={onRestart}>
-          Reiniciar
-        </button>
-        <button type="button" className="secondaryButton" onClick={onMenu}>
-          Inicio
-        </button>
-      </div>
+    <div className="imageOverlay pauseOverlay" role="dialog" aria-label="Pausa">
+      <Image src="/assets/ui/cartel-pausa.png" alt="" fill sizes="390px" priority />
+      <button className="imageHotspot pauseResume" type="button" onClick={onResume}>
+        <span className="srOnly">Seguir</span>
+      </button>
+      <button className="imageHotspot pauseRestart" type="button" onClick={onRestart}>
+        <span className="srOnly">Reiniciar</span>
+      </button>
+      <button className="imageHotspot pauseHome" type="button" onClick={onMenu}>
+        <span className="srOnly">Inicio</span>
+      </button>
     </div>
   );
 }

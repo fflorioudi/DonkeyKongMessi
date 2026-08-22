@@ -31,9 +31,9 @@ pass("level 0 platform sheet has nine frames", sprites.sheets.level0Platforms?.f
 pass("tutorial uses new background", levelsSource.includes('imageSrc: "/assets/levels/level-0-background.png"'));
 pass("tutorial uses level 0 platforms", levelsSource.includes('spriteSheet: "level0Platforms"'));
 pass("selector uses tutorial cover", pageSource.includes("/assets/levels/level-0-cover.png"));
-pass("menu declares v3.4.2", pageSource.includes("Mobile v3.4.2"));
+pass("menu declares v3.4.2 or newer", /Mobile v3\.(?:4\.[2-9]\d*|[5-9]\d*(?:\.\d+)?)/.test(pageSource));
 pass("touch controls clear stale movement before new direction", controlsSource.includes("activeMoves.current.clear()"));
-pass("touch controls reset on mouse and touch end", ["mouseup", "touchend", "touchcancel"].every((event) => controlsSource.includes(`"${event}"`)));
+pass("touch controls reset on mouse up and touch cancel", ["mouseup", "touchcancel"].every((event) => controlsSource.includes(`"${event}"`)));
 pass("touch controls handle leaving the button", controlsSource.includes("onPointerLeave") && controlsSource.includes("onPointerOut"));
 pass("power-up type supports Ronaldinho", typesSource.includes('"golden-boot" | "ronaldinho"'));
 pass("level 1 includes Ronaldinho assist", levelsSource.includes('id: "level-1-ronaldinho-assist"') && levelsSource.includes('label: "Ronaldinho"'));

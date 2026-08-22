@@ -612,9 +612,26 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.4.2`.
 - QA documentado en `docs/QA_V342.md`.
 
+### V3.4.3
+
+Estado: en cierre tecnico.
+
+- Cartel de pausa activo: `public/assets/ui/cartel-pausa.png`.
+- Carteles de victoria activos:
+  - Tutorial: `public/assets/ui/final-level-0.png`.
+  - Nivel 1: `public/assets/ui/final-level-1.png`.
+- Botones de pausa y victoria convertidos en hotspots interactivos reales.
+- Victoria muestra tiempo, puntuacion de la run y mejor puntuacion sobre el cartel.
+- `Siguiente nivel` funciona desde Tutorial hacia Nivel 1.
+- `Siguiente nivel` queda deshabilitado en Nivel 1 hasta que exista Nivel 2.
+- Restaurado el control aereo: soltar salto ya no cancela izquierda/derecha.
+- Ajuste visual de plataformas del Tutorial para que Messi pise la superficie y no parezca flotando.
+- QA automatico con `npm run qa:v3.4.3`.
+- QA documentado en `docs/QA_V343.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.4.2 en telefono real. Confirmar especialmente que izquierda/derecha ya no quedan pegados y que Ronaldinho aparece lejos del Botin.
+Playtest manual de V3.4.3 en telefono real. Confirmar especialmente control aereo, alineacion de plataformas del Tutorial y botones de pausa/victoria.
 
 ## Roadmap
 

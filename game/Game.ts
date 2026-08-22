@@ -107,7 +107,7 @@ export class Game {
   }
 
   selectLevel(index: number) {
-    if (this.status !== "menu") {
+    if (!["menu", "levelComplete", "gameOver"].includes(this.status)) {
       return;
     }
 
@@ -559,13 +559,14 @@ export class Game {
       const isHdPlatform = sheet === "level1Platforms" || sheet === "level0Platforms";
       const artHeight = isHdPlatform ? 46 : 30;
       const artWidthPadding = isHdPlatform ? 16 : 10;
+      const surfaceOffset = platformSurfaceOffset(sheet, frame);
       if (
         !this.sprites.drawTrimmedFrame(
           ctx,
           sheet,
           frame,
           platform.x - artWidthPadding / 2,
-          platform.y,
+          platform.y - surfaceOffset,
           platform.width + artWidthPadding,
           artHeight,
         )
@@ -864,6 +865,15 @@ function platformFrame(color?: string) {
     default:
       return 0;
   }
+}
+
+function platformSurfaceOffset(sheet: string, frame: number) {
+  if (sheet !== "level0Platforms") {
+    return 0;
+  }
+
+  const offsets = [34, 22, 2, 31, 15, 2, 31, 2, 2];
+  return offsets[frame] ?? 0;
 }
 
 function highScoreKey(level: LevelDefinition) {

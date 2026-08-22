@@ -709,6 +709,140 @@
   color: #ffffff;
 }
 
+.imageOverlay {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: 50%;
+  width: min(94%, 390px);
+  max-height: calc(100% - 22px);
+  filter: drop-shadow(0 18px 42px rgba(0, 0, 0, 0.56));
+  transform: translate(-50%, -50%);
+}
+
+.pauseOverlay {
+  aspect-ratio: 1172 / 1285;
+  width: min(94%, 382px);
+}
+
+.victoryOverlay {
+  aspect-ratio: 1024 / 1536;
+  width: min(94%, 374px);
+}
+
+.imageOverlay img {
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.imageHotspot {
+  position: absolute;
+  z-index: 2;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: transparent;
+  touch-action: manipulation;
+}
+
+.imageHotspot:focus-visible {
+  outline: 3px solid rgba(255, 228, 92, 0.96);
+  outline-offset: 2px;
+  background: rgba(255, 228, 92, 0.08);
+}
+
+.imageHotspot:active:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.imageHotspot:disabled {
+  cursor: not-allowed;
+  background: rgba(16, 24, 32, 0.34);
+}
+
+.pauseResume {
+  left: 16.2%;
+  top: 46.4%;
+  width: 67.6%;
+  height: 11.5%;
+}
+
+.pauseRestart {
+  left: 16.2%;
+  top: 61.8%;
+  width: 67.6%;
+  height: 10.8%;
+}
+
+.pauseHome {
+  left: 16.2%;
+  top: 75.2%;
+  width: 67.6%;
+  height: 10.8%;
+}
+
+.victoryStat {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(12px, 3.2vw, 18px);
+  font-weight: 1000;
+  line-height: 1;
+  text-align: center;
+  text-shadow:
+    0 2px 0 #06101d,
+    0 0 10px rgba(52, 128, 246, 0.5);
+  white-space: nowrap;
+}
+
+.victoryTime {
+  left: 26%;
+  top: 59.1%;
+  width: 20%;
+  height: 3.8%;
+}
+
+.victoryBest {
+  left: 63.2%;
+  top: 59.1%;
+  width: 21.5%;
+  height: 3.8%;
+}
+
+.victoryScore {
+  left: 36%;
+  top: 69.4%;
+  width: 42%;
+  height: 4%;
+  font-size: clamp(14px, 4vw, 22px);
+}
+
+.victoryNext {
+  left: 8.5%;
+  top: 76.4%;
+  width: 83%;
+  height: 7.3%;
+}
+
+.victoryRestart {
+  left: 9.8%;
+  top: 86.1%;
+  width: 39%;
+  height: 5.9%;
+}
+
+.victoryHome {
+  left: 54%;
+  top: 86.1%;
+  width: 36.5%;
+  height: 5.9%;
+}
+
 @media (max-width: 360px) {
   .touchControls {
     min-height: 106px;

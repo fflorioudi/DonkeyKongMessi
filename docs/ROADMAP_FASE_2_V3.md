@@ -296,6 +296,25 @@ Criterio de cierre:
 - El pickup desaparece al tomarlo.
 - Soltar direccion detiene a Messi en mobile.
 
+### V3.4.3 - Carteles Interactivos Y Control Aereo
+
+Objetivo: reemplazar overlays genericos por carteles finales y recuperar la agilidad principal de salto con movimiento en aire.
+
+Alcance:
+
+- Cartel de pausa con hotspots reales.
+- Carteles de victoria por nivel con datos dinamicos.
+- Boton `Siguiente nivel` desde Tutorial hacia Nivel 1.
+- Boton `Siguiente nivel` deshabilitado si no existe nivel siguiente.
+- Ajuste del input tactil para que soltar salto no limpie movimiento.
+- Alineacion visual de plataformas nuevas del Tutorial.
+
+Criterio de cierre:
+
+- El control aereo vuelve a sentirse agil.
+- Los carteles no son solo imagen: sus botones funcionan.
+- El flujo de victoria no puede navegar a un nivel inexistente.
+
 ## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.

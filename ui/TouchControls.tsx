@@ -94,7 +94,6 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
     window.addEventListener("pointerup", releasePointer);
     window.addEventListener("pointercancel", releasePointer);
     window.addEventListener("mouseup", resetAll);
-    window.addEventListener("touchend", resetAll);
     window.addEventListener("touchcancel", resetAll);
     window.addEventListener("blur", resetAll);
     document.addEventListener("visibilitychange", resetAll);
@@ -104,7 +103,6 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
       window.removeEventListener("pointerup", releasePointer);
       window.removeEventListener("pointercancel", releasePointer);
       window.removeEventListener("mouseup", resetAll);
-      window.removeEventListener("touchend", resetAll);
       window.removeEventListener("touchcancel", resetAll);
       window.removeEventListener("blur", resetAll);
       document.removeEventListener("visibilitychange", resetAll);

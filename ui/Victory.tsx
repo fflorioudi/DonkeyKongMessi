@@ -1,43 +1,32 @@
+import Image from "next/image";
 import type { GameSnapshot } from "@/game/types";
 
 type VictoryProps = {
   snapshot: GameSnapshot;
   onRestart: () => void;
   onMenu: () => void;
+  onNextLevel: () => void;
+  canNextLevel: boolean;
 };
 
-export function Victory({ snapshot, onRestart, onMenu }: VictoryProps) {
+export function Victory({ snapshot, onRestart, onMenu, onNextLevel, canNextLevel }: VictoryProps) {
+  const imageSrc = snapshot.levelIndex === 0 ? "/assets/ui/final-level-0.png" : "/assets/ui/final-level-1.png";
+
   return (
-    <div className="overlayPanel">
-      <p className="eyebrow">Level Complete</p>
-      <h1>La 10 ya esta arriba</h1>
-      <p>
-        Puntos: {snapshot.score}
-        {snapshot.isNewHighScore && <strong className="recordBadge"> Nuevo max</strong>}
-      </p>
-      <div className="scoreSummary" aria-label="Resumen de puntos">
-        <span>Progreso</span>
-        <strong>{snapshot.scoreBreakdown.progress}</strong>
-        <span>Meta</span>
-        <strong>{snapshot.scoreBreakdown.completion}</strong>
-        <span>Vidas</span>
-        <strong>{snapshot.scoreBreakdown.lives}</strong>
-        <span>Tiempo</span>
-        <strong>{snapshot.scoreBreakdown.time}</strong>
-      </div>
-      <p>
-        Tiempo: {formatTime(snapshot.elapsedTime)}
-        {snapshot.bestTime > 0 && ` / Mejor ${formatTime(snapshot.bestTime)}`}
-        {snapshot.isNewBestTime && <strong className="recordBadge"> Nuevo tiempo</strong>}
-      </p>
-      <div className="overlayActions">
-        <button type="button" onClick={onRestart}>
-          Jugar de nuevo
-        </button>
-        <button type="button" className="secondaryButton" onClick={onMenu}>
-          Inicio
-        </button>
-      </div>
+    <div className="imageOverlay victoryOverlay" role="dialog" aria-label="Nivel completo">
+      <Image src={imageSrc} alt="" fill sizes="390px" priority />
+      <strong className="victoryStat victoryTime">{formatTime(snapshot.elapsedTime)}</strong>
+      <strong className="victoryStat victoryBest">{snapshot.highScore}</strong>
+      <strong className="victoryStat victoryScore">{snapshot.score}</strong>
+      <button className="imageHotspot victoryNext" type="button" disabled={!canNextLevel} onClick={onNextLevel}>
+        <span className="srOnly">Siguiente nivel</span>
+      </button>
+      <button className="imageHotspot victoryRestart" type="button" onClick={onRestart}>
+        <span className="srOnly">Jugar de nuevo</span>
+      </button>
+      <button className="imageHotspot victoryHome" type="button" onClick={onMenu}>
+        <span className="srOnly">Inicio</span>
+      </button>
     </div>
   );
 }
