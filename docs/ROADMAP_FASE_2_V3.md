@@ -191,6 +191,27 @@ Criterio de cierre:
 - El tutorial queda entendido como prologo.
 - La historia tiene una direccion clara antes de crear Nivel 1 real.
 
+### V3.2.4 - Recortes Rescatados Y Plan De Assets
+
+Objetivo: rescatar solo assets utiles de la nueva hoja externa y documentar lo que falta crear.
+
+Estado: en cierre tecnico.
+
+Alcance:
+
+- Preservar la hoja fuente en `public/sprites/source`.
+- Recortar iconos utiles para el prologo.
+- Descartar recortes que no lean bien en UI chica.
+- Integrar iconos en el camino Tutorial + Nivel 1 a Nivel 5.
+- Crear README de disenos pendientes por nivel.
+- Crear README de jugabilidad pendiente.
+
+Criterio de cierre:
+
+- Los recortes se usan solo como UI/narrativa.
+- La jugabilidad estable no cambia.
+- Los proximos assets y sistemas quedan planificados.
+
 ## V3.3 - Power-Up Basico
 
 Objetivo: agregar una ventaja simple que cambie decisiones sin complicar controles.

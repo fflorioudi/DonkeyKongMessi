@@ -366,15 +366,22 @@
 
 .campaignPath li {
   display: grid;
-  grid-template-columns: 66px minmax(0, 1fr) 58px;
+  grid-template-columns: 34px 66px minmax(0, 1fr) 58px;
   gap: 8px;
   align-items: center;
-  min-height: 33px;
+  min-height: 42px;
   padding: 6px 8px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 8px;
   background: rgba(2, 8, 18, 0.46);
   color: #ffffff;
+}
+
+.campaignIcon {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.56));
 }
 
 .campaignPath span,

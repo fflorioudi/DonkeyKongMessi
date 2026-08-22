@@ -535,9 +535,22 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.2.3`.
 - QA documentado en `docs/QA_V323.md`.
 
+### V3.2.4
+
+Estado: en cierre tecnico.
+
+- Hoja externa nueva preservada en `public/sprites/source/chatgpt-story-sheet-20260821-230304.png`.
+- Recortes rescatados para UI narrativa en `public/assets/story/`.
+- Los iconos rescatados se usan en el prologo de Tutorial + Nivel 1 a Nivel 5.
+- Se descartan recortes que no sirven limpios para UI chica.
+- README de disenos pendientes: `docs/README_DISENOS_NIVELES.md`.
+- README de jugabilidad pendiente: `docs/README_JUGABILIDAD_PENDIENTE.md`.
+- QA automatico con `npm run qa:v3.2.4`.
+- QA documentado en `docs/QA_V324.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.2.3 en telefono real. Si portada, hotspots y prologo funcionan comodos, avanzar a V3.3: power-up basico.
+Playtest manual de V3.2.4 en telefono real. Si portada, hotspots y prologo funcionan comodos, avanzar a V3.3: power-up basico.
 
 ## Roadmap
 

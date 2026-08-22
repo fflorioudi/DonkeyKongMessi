@@ -30,6 +30,7 @@ pass("hotspots stay visually quiet", stylesSource.includes("background: transpar
 pass("menu audio is embedded in cover", pageSource.includes("coverHotspotAudio") && pageSource.includes("testAudio"));
 pass("top sound button hidden on menu", pageSource.includes('snapshot.status !== "menu"'));
 pass("campaign path plants tutorial plus five levels", pageSource.includes("Tutorial") && pageSource.includes("Nivel 1") && pageSource.includes("Nivel 5"));
+pass("menu declares v3.2.3 or newer", /Mobile v3\.2\.\d+/.test(pageSource));
 pass("tutorial has display label", typesSource.includes("stageLabel?: string") && levelsSource.includes('stageLabel: "Tutorial"'));
 pass("snapshot exposes display label", typesSource.includes("levelLabel: string") && gameSource.includes("levelLabel: this.level.stageLabel"));
 pass("hud uses display label", hudSource.includes("snapshot.levelLabel"));

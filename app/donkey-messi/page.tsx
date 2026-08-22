@@ -41,12 +41,12 @@ const initialSnapshot: GameSnapshot = {
 };
 
 const campaignPath = [
-  { step: "Tutorial", title: "Rosario / Primer ascenso", status: "Jugable" },
-  { step: "Nivel 1", title: "Barcelona / Nace el 10", status: "Proximo" },
-  { step: "Nivel 2", title: "Europa / Noches grandes", status: "Bloqueado" },
-  { step: "Nivel 3", title: "Seleccion / Peso de la camiseta", status: "Bloqueado" },
-  { step: "Nivel 4", title: "Semifinal / Todo o nada", status: "Bloqueado" },
-  { step: "Nivel 5", title: "Final / La Copa vuelve", status: "Bloqueado" },
+  { step: "Tutorial", title: "Rosario / Primer ascenso", status: "Jugable", icon: "/assets/story/story-icon-tutorial-messi.png" },
+  { step: "Nivel 1", title: "Barcelona / Nace el 10", status: "Proximo", icon: "/assets/story/story-icon-level1-platform.png" },
+  { step: "Nivel 2", title: "Europa / Noches grandes", status: "Bloqueado", icon: "/assets/story/story-icon-level2-fireball.png" },
+  { step: "Nivel 3", title: "Seleccion / Peso de la camiseta", status: "Bloqueado", icon: "/assets/story/story-icon-level3-netball.png" },
+  { step: "Nivel 4", title: "Semifinal / Todo o nada", status: "Bloqueado", icon: "/assets/story/story-icon-level4-hazard.png" },
+  { step: "Nivel 5", title: "Final / La Copa vuelve", status: "Bloqueado", icon: "/assets/story/story-icon-level5-cup.png" },
 ];
 
 export default function DonkeyMessiPage() {
@@ -142,7 +142,7 @@ export default function DonkeyMessiPage() {
             <div className={`coverShade ${showTraining ? "isTraining" : "isTitle"}`} />
             {!showTraining ? (
               <div className="coverHotspots" aria-label="Menu principal">
-                <p className="buildStamp">Mobile v3.2.3</p>
+                <p className="buildStamp">Mobile v3.2.4</p>
                 <button className="coverHotspot coverHotspotPlay" type="button" onClick={startGame}>
                   <span className="srOnly">Jugar tutorial</span>
                 </button>
@@ -161,6 +161,7 @@ export default function DonkeyMessiPage() {
                 <ol className="campaignPath" aria-label="Camino de historia">
                   {campaignPath.map((chapter) => (
                     <li key={chapter.step}>
+                      <Image className="campaignIcon" src={chapter.icon} alt="" width={34} height={34} />
                       <span>{chapter.step}</span>
                       <strong>{chapter.title}</strong>
                       <em>{chapter.status}</em>
