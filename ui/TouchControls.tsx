@@ -117,7 +117,7 @@ export function TouchControls({ input, canClimb, disabled }: TouchControlsProps)
       </div>
 
       <div className="actionCluster">
-        <div className={`climbCluster ${canClimb ? "isActive" : ""}`} aria-hidden={!canClimb}>
+        <div className={`climbCluster ${canClimb ? "isActive" : ""}`} aria-hidden={false}>
           <TouchButton label="Subir" text="^" onDown={(pointerId) => setClimb(pointerId, -1)} onUp={stopClimb} />
           <TouchButton label="Bajar" text="v" onDown={(pointerId) => setClimb(pointerId, 1)} onUp={stopClimb} />
         </div>

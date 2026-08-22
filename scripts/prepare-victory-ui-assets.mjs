@@ -20,9 +20,9 @@ const assets = [
 ];
 
 const covers = [
-  { x: 250, y: 870, width: 252, height: 104, radius: 12 },
-  { x: 632, y: 870, width: 248, height: 104, radius: 12 },
-  { x: 326, y: 1020, width: 472, height: 124, radius: 14 },
+  { x: 274, y: 932, width: 188, height: 40, radius: 9 },
+  { x: 664, y: 932, width: 174, height: 40, radius: 9 },
+  { x: 354, y: 1036, width: 340, height: 82, radius: 12 },
 ];
 
 for (const asset of assets) {

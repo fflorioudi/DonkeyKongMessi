@@ -721,9 +721,22 @@ Estado: en desarrollo validado.
   - Stroke mas fino.
   - Numeros tabulares para mejor centrado.
 
+### V3.4.9
+
+Estado: en desarrollo validado.
+
+- Controles de escalera cambiados a modo arcade:
+  - Subir/bajar quedan siempre disponibles como pre-input.
+  - Cuando no hay escalera se ven apagados, pero se pueden mantener presionados antes de llegar.
+  - Al cruzar una escalera con arriba/abajo, Messi se engancha.
+- Zona de agarre de escalera ampliada sin volverla solida.
+- Carteles de victoria regenerados con tapas mas quirurgicas:
+  - Los rotulos `TIEMPO`, `MEJOR PUNTUACION` y `PUNTOS` quedan visibles.
+  - Los numeros quedan mas bajos, finos y contenidos dentro de los visores.
+
 ## Siguiente Paso
 
-Playtest manual de V3.4.8 en telefono real. Confirmar especialmente salto hacia escalera, agarre en aire y que los pinches del Nivel 2 sean evitables sin sentirse regalados.
+Playtest manual de V3.4.9 en telefono real. Confirmar especialmente mantener arriba antes de tocar escalera, salto con agarre en aire y lectura de numeros de victoria.
 
 ## Roadmap
 

@@ -178,10 +178,10 @@ export class Player {
 function findUsableLadder(rect: Rect, ladders: Ladder[]) {
   const centerX = rect.x + rect.width / 2;
   const probe = {
-    x: centerX - 10,
-    y: rect.y + 5,
-    width: 20,
-    height: rect.height - 7,
+    x: centerX - 18,
+    y: rect.y + 1,
+    width: 36,
+    height: rect.height + 2,
   };
 
   return ladders.find((ladder) => rectsOverlap(probe, ladder));

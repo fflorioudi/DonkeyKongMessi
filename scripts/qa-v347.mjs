@@ -6,6 +6,7 @@ const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"))
 const playerSource = readFileSync(join(root, "entities", "Player.ts"), "utf8");
 const gameSource = readFileSync(join(root, "game", "Game.ts"), "utf8");
 const victorySource = readFileSync(join(root, "ui", "Victory.tsx"), "utf8");
+const controlsSource = readFileSync(join(root, "ui", "TouchControls.tsx"), "utf8");
 const pageSource = readFileSync(join(root, "app", "donkey-messi", "page.tsx"), "utf8");
 const readmeSource = readFileSync(join(root, "README.md"), "utf8");
 
@@ -21,6 +22,7 @@ pass("qa script is registered", packageJson.scripts["qa:v3.4.7"] === "node scrip
 pass("jump launch has priority", playerSource.includes("const startsJump = input.jump && canJump"));
 pass("airborne ladder grab is allowed by climb input", playerSource.includes("const wantsClimb = input.climb !== 0 && Boolean(ladder) && !startsJump"));
 pass("climb controls can appear while airborne", playerSource.includes("return Boolean(findUsableLadder(this.rect, ladders))"));
+pass("climb controls support pre-input", controlsSource.includes("aria-hidden={false}"));
 pass("tutorial surface offsets were recalibrated", gameSource.includes("const offsets = [18, 20, 3, 18, 16, 14, 19, 4, 4]"));
 pass("level 2 victory source exists", existsSync(join(root, "public", "assets", "ui", "final-level-2.png")));
 pass("level 2 victory clean asset exists", existsSync(join(root, "public", "assets", "ui", "final-level-2-clean.png")));

@@ -405,6 +405,24 @@ Criterio de cierre:
 - La escalera se agarra cuando se busca, no por roce.
 - Los numeros de victoria se ven mas finos y centrados.
 
+### V3.4.9 - Escalera Arcade Y Victoria Integrada
+
+Objetivo: recuperar la simpleza de Donkey Kong original en el input de escaleras.
+
+Alcance:
+
+- Mantener botones de subir/bajar siempre disponibles para pre-input.
+- Mostrar el estado activo con opacidad, no bloqueando el toque.
+- Ampliar zona de agarre sin hacer la escalera solida.
+- Regenerar carteles de victoria con tapas mas pequenas y mejor posicionadas.
+- Ajustar texto numerico para no pisar rotulos.
+
+Criterio de cierre:
+
+- El jugador puede mantener arriba antes de llegar a una escalera.
+- El agarre en aire no depende de tocar en el frame exacto.
+- Los numeros se integran al cartel sin tapar labels.
+
 ## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.
