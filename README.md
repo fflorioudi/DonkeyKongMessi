@@ -704,9 +704,26 @@ Estado: en desarrollo validado.
 - QA automatico acotado con `npm run qa:v3.4.7`.
 - QA documentado en `docs/QA_V347.md`.
 
+### V3.4.8
+
+Estado: en desarrollo validado.
+
+- Pinches del Nivel 2 rebalanceados:
+  - Menos ancho visual y fisico.
+  - Hitbox mas baja/fina.
+  - Ubicaciones movidas para dejar ruta jugable.
+- Escaleras ajustadas para evitar el efecto pared/iman:
+  - El agarre usa el centro del cuerpo de Messi.
+  - Si Messi deja de estar realmente sobre una escalera, sale de `climb` y vuelve a fisica normal.
+  - Si esta quieto en una escalera, puede quedarse colgado sin caerse.
+- Numeros de victoria refinados:
+  - Menor grosor.
+  - Stroke mas fino.
+  - Numeros tabulares para mejor centrado.
+
 ## Siguiente Paso
 
-Playtest manual de V3.4.7 en telefono real. Confirmar especialmente salto hacia escalera, agarre en aire y alineacion de Messi sobre plataformas del Tutorial.
+Playtest manual de V3.4.8 en telefono real. Confirmar especialmente salto hacia escalera, agarre en aire y que los pinches del Nivel 2 sean evitables sin sentirse regalados.
 
 ## Roadmap
 

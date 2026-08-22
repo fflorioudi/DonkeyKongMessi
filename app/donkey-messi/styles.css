@@ -789,16 +789,17 @@
   place-items: center;
   overflow: hidden;
   color: #ffffff;
-  font-family: Impact, Haettenschweiler, "Arial Black", var(--font-geist-sans), Arial, sans-serif;
-  font-size: clamp(16px, 4.6vw, 26px);
-  font-weight: 1000;
-  line-height: 1;
+  font-family: var(--font-geist-sans), "Arial Black", Arial, sans-serif;
+  font-size: clamp(15px, 4.1vw, 22px);
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  line-height: 0.95;
   text-align: center;
-  -webkit-text-stroke: 1px rgba(3, 8, 16, 0.92);
+  -webkit-text-stroke: 0.45px rgba(3, 8, 16, 0.88);
   text-shadow:
-    0 2px 0 #020814,
-    0 3px 0 rgba(0, 0, 0, 0.42),
-    0 0 12px rgba(95, 190, 255, 0.42);
+    0 1px 0 #020814,
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 0 9px rgba(95, 190, 255, 0.36);
   white-space: nowrap;
 }
 
@@ -821,7 +822,7 @@
   top: 68.7%;
   width: 45.6%;
   height: 5.3%;
-  font-size: clamp(18px, 5.5vw, 32px);
+  font-size: clamp(18px, 4.9vw, 28px);
 }
 
 .victoryNext {

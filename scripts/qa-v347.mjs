@@ -25,7 +25,7 @@ pass("tutorial surface offsets were recalibrated", gameSource.includes("const of
 pass("level 2 victory source exists", existsSync(join(root, "public", "assets", "ui", "final-level-2.png")));
 pass("level 2 victory clean asset exists", existsSync(join(root, "public", "assets", "ui", "final-level-2-clean.png")));
 pass("victory chooses level 2 image", victorySource.includes("final-level-2-clean.png") && victorySource.includes("victoryImages[snapshot.levelIndex]"));
-pass("menu declares v3.4.7", pageSource.includes("Mobile v3.4.7"));
+pass("menu declares v3.4.7 or newer", /Mobile v3\.(?:4\.[7-9]\d*|[5-9]\d*(?:\.\d+)?)/.test(pageSource));
 pass("readme documents v3.4.7", readmeSource.includes("### V3.4.7"));
 
 console.log("V3.4.7 airborne ladder grab, tutorial surface, and level 2 victory checks passed.");

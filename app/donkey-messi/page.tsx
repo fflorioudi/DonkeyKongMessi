@@ -200,7 +200,7 @@ export default function DonkeyMessiPage() {
             <div className={`coverShade ${showTraining || showLevelSelect ? "isTraining" : "isTitle"}`} />
             {!showTraining && !showLevelSelect ? (
               <div className="coverHotspots" aria-label="Menu principal">
-                <p className="buildStamp">Mobile v3.4.7</p>
+                <p className="buildStamp">Mobile v3.4.8</p>
                 <button className="coverHotspot coverHotspotPlay" type="button" onClick={openLevelSelect}>
                   <span className="srOnly">Seleccionar nivel</span>
                 </button>

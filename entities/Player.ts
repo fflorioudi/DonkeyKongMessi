@@ -64,8 +64,13 @@ export class Player {
       return;
     }
 
-    if (this.state === "climb" && input.move === 0 && !input.jump) {
+    if (this.state === "climb" && !ladder) {
+      this.state = "jump";
+    }
+
+    if (this.state === "climb" && ladder && input.move === 0 && input.climb === 0 && !input.jump) {
       this.vy = 0;
+      this.grounded = false;
       return;
     }
 
@@ -171,11 +176,12 @@ export class Player {
 }
 
 function findUsableLadder(rect: Rect, ladders: Ladder[]) {
+  const centerX = rect.x + rect.width / 2;
   const probe = {
-    x: rect.x - 8,
-    y: rect.y + 2,
-    width: rect.width + 16,
-    height: rect.height,
+    x: centerX - 10,
+    y: rect.y + 5,
+    width: 20,
+    height: rect.height - 7,
   };
 
   return ladders.find((ladder) => rectsOverlap(probe, ladder));

@@ -386,6 +386,25 @@ Criterio de cierre:
 - La escalera no actua como pared ni como iman involuntario.
 - Messi pisa visualmente las plataformas del Tutorial.
 
+### V3.4.8 - Pinches Jugables Y Escalera Fina
+
+Objetivo: bajar la injusticia del Nivel 2 y eliminar el efecto de escalera que frena al jugador por roce.
+
+Alcance:
+
+- Reducir ancho y alto de los pinches del Nivel 2.
+- Afinar hitboxes de pinches.
+- Mover pinches para dejar ruta de salto y escalera.
+- Reducir el probe lateral de escalera al centro de Messi.
+- Evitar que `climb` deje a Messi clavado cuando ya no esta sobre una escalera.
+- Refinar tipografia numerica de victoria.
+
+Criterio de cierre:
+
+- Los pinches se pueden esquivar con salto/control normal.
+- La escalera se agarra cuando se busca, no por roce.
+- Los numeros de victoria se ven mas finos y centrados.
+
 ## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.
