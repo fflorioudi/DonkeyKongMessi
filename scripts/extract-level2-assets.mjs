@@ -7,6 +7,7 @@ const sourceRoot = "C:/Users/ffeli/Downloads";
 const paths = {
   background: join(sourceRoot, "level-2-background.png"),
   platforms: join(sourceRoot, "level-2-platforms.png"),
+  rival: join(sourceRoot, "level-2-rival.png"),
 };
 const metadataPath = join(root, "public", "sprites", "sprites.json");
 
@@ -17,6 +18,7 @@ for (const [label, path] of Object.entries(paths)) {
 }
 
 copySource(paths.platforms, "level-2-platforms-source.png");
+copySource(paths.rival, "level-2-rival-source.png");
 
 const levelsDir = join(root, "public", "assets", "levels");
 mkdirSync(levelsDir, { recursive: true });
@@ -65,6 +67,27 @@ await normalizeSheet({
     speedPad: [13],
     portal: [14],
     longLight: [15],
+  },
+});
+
+await normalizeSheet({
+  input: paths.rival,
+  output: join(root, "public", "sprites", "level-2-rival.png"),
+  frameWidth: 280,
+  frameHeight: 360,
+  maxWidth: 256,
+  maxHeight: 342,
+  boxes: [
+    { x: 13, y: 174, width: 191, height: 386 },
+    { x: 229, y: 176, width: 206, height: 382 },
+    { x: 445, y: 147, width: 202, height: 411 },
+  ],
+  sheetKey: "level2Rival",
+  animations: {
+    idle: [0, 1],
+    throw: [2],
+    guard: [1],
+    victory: [1],
   },
 });
 
@@ -119,7 +142,7 @@ async function normalizeSheet({ input, output, frameWidth, frameHeight, maxWidth
 
   const metadata = JSON.parse(readFileSync(metadataPath, "utf8"));
   metadata.sheets[sheetKey] = {
-    src: "/sprites/level-2-platforms.png",
+    src: `/sprites/${output.split(/[\\/]/).pop()}`,
     frameWidth,
     frameHeight,
     frames: boxes.length,

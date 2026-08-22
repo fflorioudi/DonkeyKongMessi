@@ -25,7 +25,7 @@ pass("pause image exists", existsSync(join(root, "public", "assets", "ui", "cart
 pass("tutorial victory image exists", existsSync(join(root, "public", "assets", "ui", "final-level-0.png")));
 pass("level 1 victory image exists", existsSync(join(root, "public", "assets", "ui", "final-level-1.png")));
 pass("pause uses image overlay hotspots", pauseSource.includes("/assets/ui/cartel-pausa.png") && pauseSource.includes("pauseResume") && pauseSource.includes("pauseRestart") && pauseSource.includes("pauseHome"));
-pass("victory uses level-specific images", victorySource.includes("/assets/ui/final-level-0.png") && victorySource.includes("/assets/ui/final-level-1.png"));
+pass("victory uses level-specific images", victorySource.includes("final-level-0") && victorySource.includes("final-level-1"));
 pass("victory renders dynamic stats", ["victoryTime", "victoryBest", "victoryScore"].every((token) => victorySource.includes(token)));
 pass("victory exposes next level action", victorySource.includes("onNextLevel") && victorySource.includes("canNextLevel"));
 pass("page wires next level safely", pageSource.includes("playNextLevel") && pageSource.includes("nextIndex >= levels.length") && pageSource.includes("canNextLevel={snapshot.levelIndex + 1 < levels.length}"));

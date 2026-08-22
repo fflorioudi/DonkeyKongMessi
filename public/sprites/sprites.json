@@ -1186,6 +1186,51 @@
           "h": 118
         }
       ]
+    },
+    "level2Rival": {
+      "src": "/sprites/level-2-rival.png",
+      "frameWidth": 280,
+      "frameHeight": 360,
+      "frames": 3,
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "throw": [
+          2
+        ],
+        "guard": [
+          1
+        ],
+        "victory": [
+          1
+        ]
+      },
+      "pivot": {
+        "x": 160,
+        "y": 144
+      },
+      "trims": [
+        {
+          "x": 56,
+          "y": 12,
+          "w": 169,
+          "h": 342
+        },
+        {
+          "x": 48,
+          "y": 12,
+          "w": 184,
+          "h": 342
+        },
+        {
+          "x": 56,
+          "y": 12,
+          "w": 168,
+          "h": 342
+        }
+      ]
     }
   }
 }

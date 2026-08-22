@@ -10,14 +10,15 @@ type VictoryProps = {
 };
 
 export function Victory({ snapshot, onRestart, onMenu, onNextLevel, canNextLevel }: VictoryProps) {
-  const imageSrc = snapshot.levelIndex === 0 ? "/assets/ui/final-level-0.png" : "/assets/ui/final-level-1.png";
+  const imageSrc = snapshot.levelIndex === 0 ? "/assets/ui/final-level-0-clean.png" : "/assets/ui/final-level-1-clean.png";
+  const bestScore = Math.max(snapshot.highScore, snapshot.score);
 
   return (
     <div className="imageOverlay victoryOverlay" role="dialog" aria-label="Nivel completo">
       <Image src={imageSrc} alt="" fill sizes="390px" priority />
-      <strong className="victoryStat victoryTime">{formatTime(snapshot.elapsedTime)}</strong>
-      <strong className="victoryStat victoryBest">{snapshot.highScore}</strong>
-      <strong className="victoryStat victoryScore">{snapshot.score}</strong>
+      <strong className="victoryStat victoryTime">{formatTimeValue(snapshot.elapsedTime)}</strong>
+      <strong className="victoryStat victoryBest">{formatScore(bestScore)}</strong>
+      <strong className="victoryStat victoryScore">{formatScore(snapshot.score)}</strong>
       <button className="imageHotspot victoryNext" type="button" disabled={!canNextLevel} onClick={onNextLevel}>
         <span className="srOnly">Siguiente nivel</span>
       </button>
@@ -31,6 +32,10 @@ export function Victory({ snapshot, onRestart, onMenu, onNextLevel, canNextLevel
   );
 }
 
-function formatTime(seconds: number) {
-  return `${Math.max(0, seconds).toFixed(1)}s`;
+function formatTimeValue(seconds: number) {
+  return Math.max(0, seconds).toFixed(1).replace(".", ",");
+}
+
+function formatScore(score: number) {
+  return Math.max(0, Math.floor(score)).toLocaleString("es-AR");
 }

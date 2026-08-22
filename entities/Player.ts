@@ -49,8 +49,8 @@ export class Player {
 
   update(dt: number, input: InputSnapshot, platforms: Platform[], ladders: Ladder[], worldWidth: number) {
     const ladder = findUsableLadder(this.rect, ladders);
-    const isRisingJump = this.state === "jump" && this.vy < 0;
-    const wantsClimb = input.climb !== 0 && !input.jump && !isRisingJump && ladder;
+    const canGrabLadder = this.grounded || this.state === "climb";
+    const wantsClimb = input.climb !== 0 && !input.jump && canGrabLadder && ladder;
 
     if (wantsClimb) {
       this.state = "climb";
@@ -116,7 +116,7 @@ export class Player {
   }
 
   canUseLadder(ladders: Ladder[]) {
-    return Boolean(findUsableLadder(this.rect, ladders));
+    return (this.grounded || this.state === "climb") && Boolean(findUsableLadder(this.rect, ladders));
   }
 
   draw(ctx: CanvasRenderingContext2D, isProtected = false, sprites?: SpriteManager, time = 0, spriteSheet = "messi") {

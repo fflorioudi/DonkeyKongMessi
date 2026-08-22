@@ -789,37 +789,39 @@
   place-items: center;
   overflow: hidden;
   color: #ffffff;
-  font-family: var(--font-geist-sans), Arial, sans-serif;
-  font-size: clamp(12px, 3.2vw, 18px);
+  font-family: Impact, Haettenschweiler, "Arial Black", var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(16px, 4.6vw, 26px);
   font-weight: 1000;
   line-height: 1;
   text-align: center;
+  -webkit-text-stroke: 1px rgba(3, 8, 16, 0.92);
   text-shadow:
-    0 2px 0 #06101d,
-    0 0 10px rgba(52, 128, 246, 0.5);
+    0 2px 0 #020814,
+    0 3px 0 rgba(0, 0, 0, 0.42),
+    0 0 12px rgba(95, 190, 255, 0.42);
   white-space: nowrap;
 }
 
 .victoryTime {
-  left: 26%;
-  top: 59.1%;
-  width: 20%;
-  height: 3.8%;
+  left: 25.8%;
+  top: 57.9%;
+  width: 21.8%;
+  height: 4.8%;
 }
 
 .victoryBest {
-  left: 63.2%;
-  top: 59.1%;
-  width: 21.5%;
-  height: 3.8%;
+  left: 62.9%;
+  top: 57.9%;
+  width: 22%;
+  height: 4.8%;
 }
 
 .victoryScore {
-  left: 36%;
-  top: 69.4%;
-  width: 42%;
-  height: 4%;
-  font-size: clamp(14px, 4vw, 22px);
+  left: 32.5%;
+  top: 68.7%;
+  width: 45.6%;
+  height: 5.3%;
+  font-size: clamp(18px, 5.5vw, 32px);
 }
 
 .victoryNext {

@@ -645,9 +645,29 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.4.4`.
 - QA documentado en `docs/QA_V344.md`.
 
+### V3.4.5
+
+Estado: en cierre tecnico.
+
+- Carteles de victoria limpiados para tapar guiones internos de los recuadros.
+- Nuevos assets runtime:
+  - `public/assets/ui/final-level-0-clean.png`.
+  - `public/assets/ui/final-level-1-clean.png`.
+- Tipografia de victoria ajustada para numeros centrados y mas legibles.
+- Tiempo de victoria ya no muestra doble `s`.
+- Puntuacion y mejor puntuacion se normalizan sin valores negativos visuales.
+- Fix de escalera endurecido: Messi no engancha escalera mientras esta en el aire.
+- Controles de escalera ocultos mientras Messi esta airborne.
+- Rival de Nivel 2 preparado:
+  - Fuente: `public/sprites/source/level-2-rival-source.png`.
+  - Spritesheet: `public/sprites/level-2-rival.png`.
+  - Metadata: `level2Rival`.
+- QA automatico con `npm run qa:v3.4.5`.
+- QA documentado en `docs/QA_V345.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.4.4 en telefono real. Confirmar especialmente salto cerca de escaleras y pies de Messi sobre plataformas del Tutorial.
+Playtest manual de V3.4.5 en telefono real. Confirmar especialmente victoria visual y salto cerca de escaleras.
 
 ## Roadmap
 

@@ -332,6 +332,23 @@ Criterio de cierre:
 - Tutorial y Nivel 1 mantienen su flujo.
 - `level2Platforms` queda disponible para armar el proximo nivel.
 
+### V3.4.5 - Victoria Limpia Y Rival Nivel 2
+
+Objetivo: dejar la recompensa visual profesional y cerrar el retroceso de escalera en salto.
+
+Alcance:
+
+- Limpiar recuadros de victoria para datos dinamicos.
+- Ajustar tipografia y centrado de tiempo/puntos/maximo.
+- Bloquear agarre de escalera mientras Messi esta en aire.
+- Preparar spritesheet de rival Nivel 2.
+
+Criterio de cierre:
+
+- Victoria no muestra guiones ni textos torcidos.
+- La escalera no corta saltos.
+- `level2Rival` queda disponible sin frames rotos.
+
 ## V3.5 - Rescate Opcional Simple
 
 Objetivo: sumar una meta secundaria sin crear complejidad narrativa.
