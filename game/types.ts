@@ -27,6 +27,19 @@ export type Goal = Rect & {
   label: string;
 };
 
+export type PowerUpEffectDefinition = {
+  kind: "invincibility";
+  duration: number;
+};
+
+export type PowerUpDefinition = Rect & {
+  id: string;
+  kind: "golden-boot";
+  label: string;
+  effect: PowerUpEffectDefinition;
+  scoreBonus: number;
+};
+
 export type BallDefinition = {
   x: number;
   y: number;
@@ -103,6 +116,7 @@ export type LevelDefinition = {
   playerSpawn: Vec2;
   platforms: Platform[];
   ladders: Ladder[];
+  powerUps: PowerUpDefinition[];
   ballSpawner: BallSpawnerDefinition;
   obstacleSpawners: ObstacleSpawnerDefinition[];
   goal: Goal;
@@ -168,10 +182,16 @@ export type HudSnapshot = {
   levelLabel: string;
   levelName: string;
   levelTheme: string;
+  activePowerUp: ActivePowerUpSnapshot | null;
 };
 
 export type GameSnapshot = HudSnapshot & {
   canClimb: boolean;
+};
+
+export type ActivePowerUpSnapshot = {
+  label: string;
+  remaining: number;
 };
 
 export type ScoreBreakdown = {

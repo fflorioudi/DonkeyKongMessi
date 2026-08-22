@@ -35,13 +35,13 @@ Ya existe:
 
 ### 3. Power-Ups
 
-- Crear `PowerUpDefinition`.
+- `PowerUpDefinition` creado para pickups declarados por nivel.
 - Spawn data-driven por nivel.
-- Pickup con sprite propio.
-- Duracion y cooldown.
-- Feedback visual y sonoro.
-- Primer power-up recomendado: Botin de Oro.
-- Definir si destruye obstaculos, da invulnerabilidad o mejora salto.
+- Primer power-up implementado: Botin de Oro.
+- Efecto actual: invencibilidad temporal con contador en HUD.
+- Pickup con sprite propio y sonido de activacion.
+- Pendiente: balancear duracion, frecuencia y posicion por nivel.
+- Pendiente: definir power-ups futuros como vida extra, gambeta o limpieza de obstaculos.
 
 ### 4. Companeros / Rescates
 
@@ -128,7 +128,7 @@ Ya existe:
 ## Orden Recomendado
 
 1. Cerrar V3.2.x con tutorial, portada y prologo.
-2. V3.3: power-up basico.
+2. V3.3: power-up basico con Botin de Oro.
 3. V3.4: separar Tutorial y Nivel 1 real.
 4. V3.5: selector/desbloqueo de campana.
 5. V3.6: companero/rescate.

@@ -216,20 +216,20 @@ Criterio de cierre:
 
 Objetivo: agregar una ventaja simple que cambie decisiones sin complicar controles.
 
-Power-up recomendado para empezar: `Botin de Oro`.
+Power-up implementado para empezar: `Botin de Oro`.
 
 Alcance:
 
 - Pickup con sprite pixel art propio.
-- Estado temporal de poder.
-- Messi puede destruir o ignorar obstaculos por pocos segundos.
-- Feedback visual y sonoro.
+- Estado temporal de poder: invencibilidad por pocos segundos.
+- Messi puede destruir o ignorar obstaculos durante el efecto.
+- Feedback visual, sonoro y contador en HUD.
 - Duracion definida por datos.
 
 Entregables:
 
 - `PowerUpDefinition`.
-- Estado de power-up en snapshot/HUD si hace falta.
+- Estado de power-up en snapshot/HUD.
 - QA automatico `npm run qa:v3.3`.
 - Documento `docs/QA_V33.md`.
 
@@ -238,6 +238,7 @@ Criterio de cierre:
 - El power-up se entiende sin texto largo.
 - No rompe el balance del Nivel 1.
 - El efecto termina claramente.
+- Se puede mover o tunear desde `LevelDefinition`.
 
 ## V3.4 - Nivel 2: Barcelona / Ascenso
 

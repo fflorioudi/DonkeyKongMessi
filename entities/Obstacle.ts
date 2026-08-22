@@ -55,6 +55,28 @@ export class Obstacle {
     return this.ball?.alive ?? this.aliveState;
   }
 
+  get bounds(): Rect {
+    if (this.ball) {
+      return {
+        x: this.ball.x - this.ball.radius,
+        y: this.ball.y - this.ball.radius,
+        width: this.ball.radius * 2,
+        height: this.ball.radius * 2,
+      };
+    }
+
+    return this.rect;
+  }
+
+  destroy() {
+    if (this.ball) {
+      this.ball.alive = false;
+      return;
+    }
+
+    this.aliveState = false;
+  }
+
   update(dt: number, platforms: Platform[], worldWidth: number, worldHeight: number) {
     if (this.ball) {
       this.ball.update(dt, platforms, worldWidth, worldHeight);

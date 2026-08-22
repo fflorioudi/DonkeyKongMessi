@@ -218,15 +218,15 @@ Orden sugerido:
 
 Fase uno solo necesita pelota rodante.
 
-## Power-Ups Futuros
+## Power-Ups
 
-- Botin de Oro: permite romper obstaculos por 5 a 7 segundos.
+- Botin de Oro: implementado en V3.3 como invencibilidad temporal para romper/ignorar obstaculos por 5.5 segundos.
 - Camiseta 10: invencibilidad por 4 a 5 segundos.
 - Mate: recupera una vida.
 - Copa America: multiplicador de puntuacion.
 - Pelota especial: proyectil de un uso.
 
-No son necesarios para fase uno.
+El tutorial usa el Botin de Oro como banco de prueba antes de llevar power-ups al Nivel 1.
 
 ## Niveles Planeados
 
@@ -548,9 +548,24 @@ Estado: en cierre tecnico.
 - QA automatico con `npm run qa:v3.2.4`.
 - QA documentado en `docs/QA_V324.md`.
 
+### V3.3
+
+Estado: en cierre tecnico.
+
+- Primer power-up jugable: Botin de Oro.
+- Asset fuente guardado en `public/sprites/source/power-up-botin-de-oro-source.png`.
+- Spritesheet runtime en `public/sprites/power-up-botin-de-oro.png`.
+- Metadata `goldenBoot` agregada a `public/sprites/sprites.json`.
+- El tutorial declara el pickup desde `LevelDefinition`.
+- Efecto elegido: invencibilidad temporal, no vida extra.
+- Durante el efecto, Messi no pierde vida contra obstaculos y los destruye.
+- HUD muestra contador activo de Botin.
+- QA automatico con `npm run qa:v3.3`.
+- QA documentado en `docs/QA_V33.md`.
+
 ## Siguiente Paso
 
-Playtest manual de V3.2.4 en telefono real. Si portada, hotspots y prologo funcionan comodos, avanzar a V3.3: power-up basico.
+Playtest manual de V3.3 en telefono real. Si el Botin de Oro se siente claro y justo, avanzar a separar Tutorial y Nivel 1 real.
 
 ## Roadmap
 

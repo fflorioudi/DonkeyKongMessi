@@ -66,6 +66,22 @@ export const levels: LevelDefinition[] = [
       { x: 146, y: 218, width: 34, height: 104 },
       { x: 296, y: 110, width: 34, height: 108 },
     ],
+    powerUps: [
+      {
+        id: "tutorial-golden-boot",
+        kind: "golden-boot",
+        label: "Botin de Oro",
+        x: 158,
+        y: 892,
+        width: 52,
+        height: 52,
+        effect: {
+          kind: "invincibility",
+          duration: 5.5,
+        },
+        scoreBonus: 350,
+      },
+    ],
     ballSpawner: {
       x: 316,
       y: 97,

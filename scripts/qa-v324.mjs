@@ -21,7 +21,7 @@ pass("qa doc exists", existsSync(join(root, "docs", "QA_V324.md")));
 pass("menu does not render gameplay touch controls", pageSource.includes("{isPlaying && <TouchControls"));
 pass("hidden touch controls cannot block menu", stylesSource.includes('.touchControls[aria-hidden="true"]') && stylesSource.includes("display: none"));
 pass("campaign no longer uses rescued sheet icons", !pageSource.includes("/assets/story/story-icon-") && !stylesSource.includes(".campaignIcon"));
-pass("menu declares v3.2.4", pageSource.includes("Mobile v3.2.4"));
+pass("menu declares v3.2.4 or newer", /Mobile v3\.(?:2\.[4-9]\d*|[3-9]\d*(?:\.\d+)?)/.test(pageSource));
 pass("design readme exists", existsSync(join(root, "docs", "README_DISENOS_NIVELES.md")));
 pass("design readme covers required asset areas", ["Fondos", "Historia", "Plataformas", "Rival", "Power-up", "Companero"].every((word) => designReadme.includes(word)));
 pass("design readme defines proportions", ["390x720", "1080x1920", "separado", "transparente"].every((word) => designReadme.includes(word)));

@@ -51,6 +51,30 @@
   text-align: center;
 }
 
+.hudPower {
+  grid-column: 1 / -1;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 98px;
+  border-color: rgba(255, 228, 92, 0.42) !important;
+  background: rgba(63, 48, 8, 0.8) !important;
+}
+
+.hudPower span {
+  color: #ffe45c;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.hudPower strong {
+  display: inline;
+  color: #ffffff;
+  font-size: 13px;
+}
+
 .hud > div {
   min-width: 0;
   padding: 7px 8px;

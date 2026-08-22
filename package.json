@@ -22,6 +22,8 @@
     "qa:v3.2.2": "node scripts/qa-v322.mjs",
     "qa:v3.2.3": "node scripts/qa-v323.mjs",
     "qa:v3.2.4": "node scripts/qa-v324.mjs",
+    "qa:v3.3": "node scripts/qa-v33.mjs",
+    "assets:powerup:botin": "node scripts/extract-powerup-botin.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

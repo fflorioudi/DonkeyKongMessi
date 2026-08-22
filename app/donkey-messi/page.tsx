@@ -37,6 +37,7 @@ const initialSnapshot: GameSnapshot = {
   levelLabel: "Tutorial",
   levelName: "Rosario / Primer ascenso",
   levelTheme: "Prologo jugable: aprender a subir, esquivar y llegar a la Copa antes del Nivel 1.",
+  activePowerUp: null,
   canClimb: false,
 };
 
@@ -142,7 +143,7 @@ export default function DonkeyMessiPage() {
             <div className={`coverShade ${showTraining ? "isTraining" : "isTitle"}`} />
             {!showTraining ? (
               <div className="coverHotspots" aria-label="Menu principal">
-                <p className="buildStamp">Mobile v3.2.4</p>
+                <p className="buildStamp">Mobile v3.3</p>
                 <button className="coverHotspot coverHotspotPlay" type="button" onClick={startGame}>
                   <span className="srOnly">Jugar tutorial</span>
                 </button>

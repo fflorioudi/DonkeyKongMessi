@@ -48,7 +48,7 @@ pass("canvas scales to viewport, not full world", gameSource.includes("this.leve
 pass("render clears only visible viewport", gameSource.includes("ctx.clearRect(0, 0, this.level.viewportWidth, this.level.viewportHeight)"));
 pass("render translates world by camera", gameSource.includes("ctx.translate(0, -this.cameraY)"));
 pass("screen flash respects visible camera window", gameSource.includes("ctx.fillRect(0, this.cameraY, this.level.viewportWidth, this.level.viewportHeight)"));
-pass("menu declares v3.2 or newer", /Mobile v3\.2(?:\.\d+)?/.test(pageSource));
+pass("menu declares v3.2 or newer", /Mobile v3\.(?:2(?:\.\d+)?|[3-9]\d*(?:\.\d+)?)/.test(pageSource));
 pass("roadmap includes v3.2 camera", roadmapSource.includes("V3.2 - Camara Vertical"));
 pass("readme includes v3.2 camera", readmeSource.includes("### V3.2") && readmeSource.includes("camara vertical"));
 

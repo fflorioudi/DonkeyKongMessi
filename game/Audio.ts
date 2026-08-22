@@ -155,6 +155,14 @@ export class AudioManager {
     ]);
   }
 
+  playPowerUp() {
+    this.playSequence([
+      { frequency: 659, duration: 0.07, type: "square", volume: 0.09 },
+      { frequency: 880, duration: 0.08, type: "square", volume: 0.09, delay: 0.08 },
+      { frequency: 1175, duration: 0.12, type: "square", volume: 0.08, delay: 0.17 },
+    ]);
+  }
+
   private playSequence(tones: ToneOptions[]) {
     tones.forEach((tone) => this.playTone(tone));
   }

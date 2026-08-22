@@ -21,6 +21,12 @@ export function HUD({ snapshot }: HUDProps) {
           {snapshot.score}/{snapshot.highScore}
         </strong>
       </div>
+      {snapshot.activePowerUp && (
+        <div className="hudPower">
+          <span>Botin</span>
+          <strong>{formatTime(snapshot.activePowerUp.remaining)}</strong>
+        </div>
+      )}
       {snapshot.message && <div className="hudMessage">{snapshot.message}</div>}
     </div>
   );

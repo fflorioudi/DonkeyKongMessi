@@ -4,7 +4,16 @@ import { AudioManager } from "./Audio";
 import { rectsOverlap } from "./collision";
 import { InputManager } from "./Input";
 import { SpriteManager } from "./Sprites";
-import type { GameSnapshot, GameStatus, HudSnapshot, Ladder, LevelDefinition, ObstacleSpawnerDefinition, Rect } from "./types";
+import type {
+  GameSnapshot,
+  GameStatus,
+  HudSnapshot,
+  Ladder,
+  LevelDefinition,
+  ObstacleSpawnerDefinition,
+  PowerUpDefinition,
+  Rect,
+} from "./types";
 
 const LEGACY_HIGH_SCORE_KEY = "donkey-messi-high-score";
 const LEGACY_BEST_TIME_KEY = "donkey-messi-best-time";
@@ -15,6 +24,10 @@ type FloatText = {
   text: string;
   ttl: number;
   color: string;
+};
+
+type RuntimePowerUp = PowerUpDefinition & {
+  collected: boolean;
 };
 
 export class Game {
@@ -28,6 +41,7 @@ export class Game {
   private level: LevelDefinition;
   private player: Player;
   private obstacles: Obstacle[];
+  private powerUps: RuntimePowerUp[];
   private status: GameStatus = "menu";
   private lives = 0;
   private score = 0;
@@ -44,6 +58,9 @@ export class Game {
   private lastTime = 0;
   private hitCooldown = 0;
   private respawnGrace = 0;
+  private invincibilityTimer = 0;
+  private invincibilityDuration = 0;
+  private powerUpFlash = 0;
   private obstacleSpawnTimers = new Map<string, number>();
   private cameraY = 0;
   private hitFlash = 0;
@@ -78,6 +95,7 @@ export class Game {
     this.player = new Player(this.level.playerSpawn);
     this.bestY = this.level.playerSpawn.y;
     this.obstacles = [];
+    this.powerUps = createPowerUps(this.level);
     this.onSnapshot = onSnapshot;
     this.highScore = this.loadHighScore();
     this.bestTime = this.loadBestTime();
@@ -155,6 +173,9 @@ export class Game {
     this.isNewBestTime = false;
     this.hitCooldown = 0;
     this.respawnGrace = 0;
+    this.invincibilityTimer = 0;
+    this.invincibilityDuration = 0;
+    this.powerUpFlash = 0;
     this.obstacleSpawnTimers = createObstacleSpawnTimers(this.level);
     this.hitFlash = 0;
     this.goalFlash = 0;
@@ -164,6 +185,7 @@ export class Game {
     this.floatTexts = [];
     this.player.reset(this.level.playerSpawn);
     this.obstacles = [];
+    this.powerUps = createPowerUps(this.level);
     this.cameraY = this.targetCameraY();
     this.input.reset();
   }
@@ -177,6 +199,9 @@ export class Game {
     this.status = "menu";
     this.hitCooldown = 0;
     this.respawnGrace = 0;
+    this.invincibilityTimer = 0;
+    this.invincibilityDuration = 0;
+    this.powerUpFlash = 0;
     this.obstacleSpawnTimers = new Map();
     this.hitFlash = 0;
     this.goalFlash = 0;
@@ -217,6 +242,8 @@ export class Game {
 
     this.hitCooldown = Math.max(0, this.hitCooldown - dt);
     this.respawnGrace = Math.max(0, this.respawnGrace - dt);
+    this.invincibilityTimer = Math.max(0, this.invincibilityTimer - dt);
+    this.powerUpFlash = Math.max(0, this.powerUpFlash - dt);
     this.hitFlash = Math.max(0, this.hitFlash - dt);
     this.goalFlash = Math.max(0, this.goalFlash - dt);
     this.throwCue = Math.max(0, this.throwCue - dt);
@@ -234,6 +261,7 @@ export class Game {
     if (canJumpBeforeUpdate) {
       this.audio.playJump();
     }
+    this.collectPowerUps();
     this.updateScore(dt);
     this.spawnObstaclesIfReady();
     this.obstacles.forEach((obstacle) =>
@@ -250,6 +278,14 @@ export class Game {
     if (this.hitCooldown === 0 && this.respawnGrace === 0) {
       for (const obstacle of this.obstacles) {
         if (obstacle.collidesWith(this.player.rect)) {
+          if (this.invincibilityTimer > 0) {
+            obstacle.destroy();
+            this.score += 120;
+            this.scoreBreakdown.progress += 120;
+            this.addFloatText(this.player.x + 15, this.player.y - 6, "+120", "#ffe45c");
+            continue;
+          }
+
           this.damagePlayer();
           return;
         }
@@ -268,6 +304,9 @@ export class Game {
     this.addFloatText(this.player.x + 14, this.player.y - 8, "-1 vida", "#ff5c7a");
     this.setMessage(this.lives <= 0 ? "Game Over" : "Respawn limpio", 1.5);
     this.audio.playHit();
+    this.invincibilityTimer = 0;
+    this.invincibilityDuration = 0;
+    this.powerUpFlash = 0;
 
     if (this.lives <= 0) {
       this.status = "gameOver";
@@ -413,6 +452,31 @@ export class Game {
     this.obstacleSpawnTimers.set(spawner.id, nextSpawnDelaySeconds(spawner));
   }
 
+  private collectPowerUps() {
+    for (const powerUp of this.powerUps) {
+      if (powerUp.collected || !rectsOverlap(insetRect(powerUp, 8), this.player.rect)) {
+        continue;
+      }
+
+      powerUp.collected = true;
+      this.activatePowerUp(powerUp);
+    }
+  }
+
+  private activatePowerUp(powerUp: RuntimePowerUp) {
+    if (powerUp.effect.kind === "invincibility") {
+      this.invincibilityTimer = Math.max(this.invincibilityTimer, powerUp.effect.duration);
+      this.invincibilityDuration = powerUp.effect.duration;
+      this.powerUpFlash = 0.6;
+    }
+
+    this.score += powerUp.scoreBonus;
+    this.scoreBreakdown.progress += powerUp.scoreBonus;
+    this.addFloatText(powerUp.x + powerUp.width / 2, powerUp.y - 4, `+${powerUp.scoreBonus}`, "#ffe45c");
+    this.setMessage("Botin dorado: invencible", 1.8);
+    this.audio.playPowerUp();
+  }
+
   private updateFloatTexts(dt: number) {
     this.floatTexts = this.floatTexts
       .map((floatText) => ({
@@ -494,9 +558,11 @@ export class Game {
     });
 
     this.drawGoal(ctx);
+    this.powerUps.forEach((powerUp) => this.drawPowerUp(ctx, powerUp));
     this.obstacles.forEach((obstacle) => obstacle.draw(ctx, this.sprites));
     this.drawCristiano(ctx);
     this.drawFloatTexts(ctx);
+    this.drawInvincibilityAura(ctx);
     this.player.draw(ctx, this.respawnGrace > 0, this.sprites, this.lastTime / 1000);
     this.drawGoalFlash(ctx);
     ctx.restore();
@@ -603,6 +669,48 @@ export class Game {
     ctx.restore();
   }
 
+  private drawPowerUp(ctx: CanvasRenderingContext2D, powerUp: RuntimePowerUp) {
+    if (powerUp.collected) {
+      return;
+    }
+
+    const time = this.lastTime / 1000;
+    const bob = Math.sin(time * 4.2) * 3;
+    const frame = this.sprites.animationFrame("goldenBoot", "pulse", time, 8);
+    this.sprites.drawTrimmedFrame(
+      ctx,
+      "goldenBoot",
+      frame,
+      powerUp.x - 6,
+      powerUp.y - 9 + bob,
+      powerUp.width + 12,
+      powerUp.height + 16,
+    );
+  }
+
+  private drawInvincibilityAura(ctx: CanvasRenderingContext2D) {
+    if (this.invincibilityTimer <= 0) {
+      return;
+    }
+
+    const body = this.player.drawRect;
+    const progress = this.invincibilityDuration > 0 ? this.invincibilityTimer / this.invincibilityDuration : 0;
+    const pulse = 0.5 + Math.sin(this.lastTime / 80) * 0.5;
+    const alpha = Math.max(0.2, Math.min(0.72, progress * 0.55 + pulse * 0.17 + this.powerUpFlash * 0.28));
+
+    ctx.save();
+    ctx.strokeStyle = `rgba(255, 228, 92, ${alpha})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(body.x + body.width / 2, body.y + body.height / 2 + 1, 22 + pulse * 4, 31 + pulse * 3, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.72})`;
+    ctx.beginPath();
+    ctx.arc(body.x + body.width / 2 + 12, body.y + 8, 2 + pulse * 1.5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
   private drawFloatTexts(ctx: CanvasRenderingContext2D) {
     ctx.save();
     ctx.font = "bold 12px Arial";
@@ -659,6 +767,13 @@ export class Game {
       levelLabel: this.level.stageLabel ?? String(this.level.id),
       levelName: this.level.name,
       levelTheme: this.level.theme,
+      activePowerUp:
+        this.invincibilityTimer > 0
+          ? {
+              label: "Botin",
+              remaining: Number(this.invincibilityTimer.toFixed(1)),
+            }
+          : null,
     };
 
     return {
@@ -703,6 +818,19 @@ function bestTimeKey(level: LevelDefinition) {
 
 function createObstacleSpawnTimers(level: LevelDefinition) {
   return new Map(level.obstacleSpawners.map((spawner) => [spawner.id, initialSpawnDelaySeconds(spawner)]));
+}
+
+function createPowerUps(level: LevelDefinition): RuntimePowerUp[] {
+  return level.powerUps.map((powerUp) => ({ ...powerUp, collected: false }));
+}
+
+function insetRect(rect: Rect, inset: number): Rect {
+  return {
+    x: rect.x + inset,
+    y: rect.y + inset,
+    width: Math.max(1, rect.width - inset * 2),
+    height: Math.max(1, rect.height - inset * 2),
+  };
 }
 
 function initialSpawnDelaySeconds(spawner: ObstacleSpawnerDefinition) {
